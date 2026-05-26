@@ -3761,26 +3761,24 @@
       } catch (e) { console.warn('Supabase unreachable:', e); }
     }
 
-    /* Load orders from Supabase into state (called on admin init) */
+    /* Load ALL orders from Supabase — replaces local state entirely so every browser sees the same data */
     async function syncOrdersFromDB() {
       try {
         const { data, error } = await db.from('orders').select('*').order('created_at', { ascending: false });
         if (error) { console.warn('Supabase orders fetch:', error.message); return; }
-        if (data && data.length > 0) {
-          // Merge DB records with local, DB takes precedence by id
-          const localIds = new Set(state.orders.map(o => o.id));
-          data.forEach(o => { if (!localIds.has(o.id)) state.orders.push(o); });
+        if (data) {
+          state.orders = data;
           localStorage.setItem('btech_orders', JSON.stringify(state.orders));
         }
       } catch (e) { console.warn('Supabase unreachable:', e); }
     }
 
-    /* Load contacts from Supabase into state */
+    /* Load ALL contacts from Supabase — replaces local state entirely */
     async function syncContactsFromDB() {
       try {
         const { data, error } = await db.from('contacts').select('*').order('created_at', { ascending: false });
         if (error) { console.warn('Supabase contacts fetch:', error.message); return; }
-        if (data && data.length > 0) {
+        if (data) {
           state.contacts = data;
           localStorage.setItem('btech_contacts', JSON.stringify(state.contacts));
         }
