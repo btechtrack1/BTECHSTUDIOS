@@ -3548,18 +3548,19 @@
     }
 
     function initAdmin() {
-      // Pull latest data from Supabase then refresh the UI
-      Promise.all([syncOrdersFromDB(), syncContactsFromDB()]).then(() => {
-        document.getElementById('kpi-orders').textContent = state.orders.length;
-        document.getElementById('kpi-contacts').textContent = state.contacts.length;
-        renderAdminOrders();
-      });
+      // Render immediately from local state so admin page shows without delay
       document.getElementById('kpi-orders').textContent = state.orders.length;
       document.getElementById('kpi-contacts').textContent = state.contacts.length;
       document.getElementById('kpi-portfolio').textContent = state.portfolio.length;
       document.getElementById('kpi-testimonials').textContent = state.testimonials.filter(t => t.approved).length;
       renderAdminOrders();
       setTimeout(() => { initOrdersChart(); initServicesChart(); }, 100);
+      // Silently sync from Supabase in the background
+      Promise.all([syncOrdersFromDB(), syncContactsFromDB()]).then(() => {
+        document.getElementById('kpi-orders').textContent = state.orders.length;
+        document.getElementById('kpi-contacts').textContent = state.contacts.length;
+        renderAdminOrders();
+      }).catch(() => { /* Supabase unavailable - local data still shown */ });
     }
 
     function renderAdminOrders() {
