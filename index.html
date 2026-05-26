@@ -3421,6 +3421,7 @@
       if (!name || !email) { fb.style.color = 'var(--red-bright)'; fb.textContent = 'Please fill in your name and email.'; return; }
       const c = { id: Date.now(), name, email, phone, service, message, status: 'new', created_at: new Date().toISOString() };
       state.contacts.push(c); localStorage.setItem('btech_contacts', JSON.stringify(state.contacts));
+      saveContactToDB(c); // also persist to Supabase
       fb.style.color = '#16A34A'; fb.textContent = "✓ Message sent! We'll be in touch within 2 hours.";
       ['contact-name', 'contact-email', 'contact-phone', 'contact-message'].forEach(id => document.getElementById(id).value = '');
       document.getElementById('contact-service').value = '';
@@ -3438,6 +3439,7 @@
       const orderId = 'BS-' + Date.now().toString().slice(-6);
       const order = { id: orderId, name, email, phone, service: selectedService, details, budget, status: 'pending', created_at: new Date().toISOString() };
       state.orders.push(order); localStorage.setItem('btech_orders', JSON.stringify(state.orders));
+      saveOrderToDB(order); // also persist to Supabase
       fb.style.color = '#16A34A'; fb.textContent = '✓ Order submitted! Generating your receipt...';
       showToast('Order placed! Downloading receipt... ✓');
       setTimeout(() => generateReceiptPDF(order), 800);
@@ -3546,10 +3548,21 @@
     }
 
     function initAdmin() {
+      // Pull latest data from Supabase then refresh the UI
+      Promise.all([syncOrdersFromDB(), syncContactsFromDB()]).then(() => {
+        document.getElementById('kpi-orders').textContent = state.orders.length;
+        document.getElementById('kpi-contacts').textContent = state.contacts.length;
+        renderAdminOrders();
+      });
       document.getElementById('kpi-orders').textContent = state.orders.length;
       document.getElementById('kpi-contacts').textContent = state.contacts.length;
       document.getElementById('kpi-portfolio').textContent = state.portfolio.length;
       document.getElementById('kpi-testimonials').textContent = state.testimonials.filter(t => t.approved).length;
+      renderAdminOrders();
+      setTimeout(() => { initOrdersChart(); initServicesChart(); }, 100);
+    }
+
+    function renderAdminOrders() {
       const tbody = document.getElementById('admin-orders-tbody');
       if (tbody) tbody.innerHTML = state.orders.slice(-5).reverse().map(o => `<tr><td>${o.name}</td><td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;">${o.service}</td><td>${o.budget || '—'}</td><td><span class="status-badge ${o.status}">${o.status}</span></td><td>${new Date(o.created_at).toLocaleDateString('en-KE')}</td><td><button class="admin-save-btn" style="padding:5px 12px;font-size:0.75rem;" onclick='generateReceiptPDF(${JSON.stringify(o)})'>📄 PDF</button></td></tr>`).join('') || '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-muted);">No orders yet.</td></tr>';
       const allO = document.getElementById('all-orders-tbody');
@@ -3558,7 +3571,18 @@
       if (allC) allC.innerHTML = state.contacts.slice().reverse().map(c => `<tr><td>${c.name}</td><td>${c.email}</td><td>${c.phone || '—'}</td><td>${c.service || '—'}</td><td style="max-width:180px;">${(c.message || '').slice(0, 50)}…</td><td><span class="status-badge ${c.status || 'new'}">${c.status || 'new'}</span></td><td>${new Date(c.created_at).toLocaleDateString('en-KE')}</td></tr>`).join('') || '<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-muted);">No messages yet.</td></tr>';
       setTimeout(() => { initOrdersChart(); initServicesChart(); }, 100);
     }
-    function updateStatus(id, status) { const o = state.orders.find(o => o.id === id); if (o) { o.status = status; localStorage.setItem('btech_orders', JSON.stringify(state.orders)); showToast('Status updated!'); } }
+    function updateStatus(id, status) {
+      const o = state.orders.find(o => o.id === id);
+      if (o) {
+        o.status = status;
+        localStorage.setItem('btech_orders', JSON.stringify(state.orders));
+        // Sync status update to Supabase
+        db.from('orders').update({ status }).eq('id', id).then(({ error }) => {
+          if (error) console.warn('Supabase status update:', error.message);
+        });
+        showToast('Status updated!');
+      }
+    }
 
     /* SERVICES ADMIN */
     function renderAdminServices() {
@@ -3695,35 +3719,72 @@
       document.addEventListener('keydown', e => { if (e.ctrlKey && e.shiftKey && e.key === 'A') navigate('auth'); });
     });
 
-    /*
-      SUPABASE INTEGRATION (Optional)
-      ================================
-      1. Go to https://supabase.com and create a project
-      2. Run this SQL in your Supabase SQL editor:
-    
-      CREATE TABLE orders (
-        id text PRIMARY KEY, name text, email text, phone text,
-        service text, details text, budget text, status text DEFAULT 'pending',
-        created_at timestamptz DEFAULT now()
-      );
-      CREATE TABLE contacts (
-        id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
-        name text, email text, phone text, service text, message text,
-        status text DEFAULT 'new', created_at timestamptz DEFAULT now()
-      );
-      CREATE TABLE services (
-        id serial PRIMARY KEY, icon text, name text, description text,
-        price integer, category text, status text DEFAULT 'active',
-        created_at timestamptz DEFAULT now()
-      );
-      CREATE TABLE cyber_services (
-        id serial PRIMARY KEY, service_name text, description text,
-        price integer, status text DEFAULT 'active', created_at timestamptz DEFAULT now()
-      );
-    
-      3. Initialize client:
-      const supabase = window.supabase.createClient('YOUR_URL','YOUR_ANON_KEY');
-    */
+    /* =============================================
+       SUPABASE INTEGRATION — BTECH STUDIOS
+       ============================================= */
+    const SUPABASE_URL  = 'https://vsdwhwfakexpgxojorvy.supabase.co';
+    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZzZHdod2Zha2V4cGd4b2pvcnZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3OTcwNzUsImV4cCI6MjA5NTM3MzA3NX0.ue0Q2PC8G_VAffZW0fSJHZsiZQIiEaERU40wwIehTW8';
+    const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+    /* Save an order to Supabase (non-blocking, localStorage is primary) */
+    async function saveOrderToDB(order) {
+      try {
+        const { error } = await db.from('orders').insert([{
+          id: order.id,
+          name: order.name,
+          email: order.email,
+          phone: order.phone,
+          service: order.service,
+          details: order.details,
+          budget: order.budget,
+          status: order.status,
+          created_at: order.created_at
+        }]);
+        if (error) console.warn('Supabase order save:', error.message);
+      } catch (e) { console.warn('Supabase unreachable:', e); }
+    }
+
+    /* Save a contact message to Supabase (non-blocking) */
+    async function saveContactToDB(contact) {
+      try {
+        const { error } = await db.from('contacts').insert([{
+          name: contact.name,
+          email: contact.email,
+          phone: contact.phone,
+          service: contact.service,
+          message: contact.message,
+          status: contact.status,
+          created_at: contact.created_at
+        }]);
+        if (error) console.warn('Supabase contact save:', error.message);
+      } catch (e) { console.warn('Supabase unreachable:', e); }
+    }
+
+    /* Load orders from Supabase into state (called on admin init) */
+    async function syncOrdersFromDB() {
+      try {
+        const { data, error } = await db.from('orders').select('*').order('created_at', { ascending: false });
+        if (error) { console.warn('Supabase orders fetch:', error.message); return; }
+        if (data && data.length > 0) {
+          // Merge DB records with local, DB takes precedence by id
+          const localIds = new Set(state.orders.map(o => o.id));
+          data.forEach(o => { if (!localIds.has(o.id)) state.orders.push(o); });
+          localStorage.setItem('btech_orders', JSON.stringify(state.orders));
+        }
+      } catch (e) { console.warn('Supabase unreachable:', e); }
+    }
+
+    /* Load contacts from Supabase into state */
+    async function syncContactsFromDB() {
+      try {
+        const { data, error } = await db.from('contacts').select('*').order('created_at', { ascending: false });
+        if (error) { console.warn('Supabase contacts fetch:', error.message); return; }
+        if (data && data.length > 0) {
+          state.contacts = data;
+          localStorage.setItem('btech_contacts', JSON.stringify(state.contacts));
+        }
+      } catch (e) { console.warn('Supabase unreachable:', e); }
+    }
   </script>
 </body>
 
