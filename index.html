@@ -13,10 +13,10 @@
   <meta property="og:title" content="BTECH STUDIOS — Design Simplicity" />
   <meta property="og:description" content="Creative Digital Solutions For Modern Businesses" />
   <meta property="og:type" content="website" />
-  <!-- Favicon - BTECH Studios -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230A1F44'/%3E%3Crect x='0' y='56' width='64' height='8' rx='0' fill='%238B0000'/%3E%3Ctext x='32' y='44' font-family='Arial Black,Arial' font-weight='900' font-size='28' fill='white' text-anchor='middle'%3EBT%3C/text%3E%3C/svg%3E" />
-  <link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230A1F44'/%3E%3Crect x='0' y='56' width='64' height='8' fill='%238B0000'/%3E%3Ctext x='32' y='44' font-family='Arial Black,Arial' font-weight='900' font-size='28' fill='white' text-anchor='middle'%3EBT%3C/text%3E%3C/svg%3E" />
-  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230A1F44'/%3E%3Crect x='0' y='56' width='64' height='8' fill='%238B0000'/%3E%3Ctext x='32' y='44' font-family='Arial Black,Arial' font-weight='900' font-size='28' fill='white' text-anchor='middle'%3EBT%3C/text%3E%3C/svg%3E" />
+  <!-- Favicon - BTECH Studios text logo -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230A1F44'/%3E%3Crect x='0' y='54' width='64' height='10' rx='0' fill='%238B0000'/%3E%3Ctext x='8' y='46' font-family='Arial Black%2CArial' font-weight='900' font-size='38' fill='%23C0001A'%3EB%3C/text%3E%3Ctext x='32' y='44' font-family='Arial Black%2CArial' font-weight='900' font-size='20' fill='white'%3ET%3C/text%3E%3C/svg%3E" />
+  <link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230A1F44'/%3E%3Crect x='0' y='54' width='64' height='10' fill='%238B0000'/%3E%3Ctext x='8' y='46' font-family='Arial Black%2CArial' font-weight='900' font-size='38' fill='%23C0001A'%3EB%3C/text%3E%3Ctext x='32' y='44' font-family='Arial Black%2CArial' font-weight='900' font-size='20' fill='white'%3ET%3C/text%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230A1F44'/%3E%3Crect x='0' y='54' width='64' height='10' fill='%238B0000'/%3E%3Ctext x='8' y='46' font-family='Arial Black%2CArial' font-weight='900' font-size='38' fill='%23C0001A'%3EB%3C/text%3E%3Ctext x='32' y='44' font-family='Arial Black%2CArial' font-weight='900' font-size='20' fill='white'%3ET%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link
     href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap"
@@ -134,37 +134,78 @@
       transition: var(--transition);
     }
 
+    /* ── BTECH Text Logo System ─────────────────────────── */
+    .btech-logo {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+      cursor: pointer;
+      user-select: none;
+      gap: 1px;
+    }
+    .btech-logo-main {
+      display: flex;
+      align-items: baseline;
+      gap: 0px;
+    }
+    .btech-logo-b {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, #C0001A 0%, #8B0000 50%, #0A1F44 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 8px rgba(139,0,0,0.5));
+      letter-spacing: -0.02em;
+    }
+    .btech-logo-tech {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: 0.12em;
+      line-height: 1;
+      padding-bottom: 2px;
+    }
+    .btech-logo-studios {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      padding-left: 2px;
+    }
+    .btech-logo-slogan {
+      font-size: 0.42rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, rgba(192,0,26,0.7), rgba(255,255,255,0.3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      padding-left: 2px;
+      margin-top: 1px;
+    }
+    /* Dark background variant (footer, auth, admin) */
+    .btech-logo.on-dark .btech-logo-tech  { color: var(--white); }
+    .btech-logo.on-dark .btech-logo-studios { color: rgba(255,255,255,0.38); }
+    /* Light background variant (footer brand area) */
+    .btech-logo.on-light .btech-logo-tech  { color: var(--navy); }
+    .btech-logo.on-light .btech-logo-studios { color: rgba(10,31,68,0.45); }
+    .btech-logo.on-light .btech-logo-b {
+      background: linear-gradient(135deg, #C0001A 0%, #8B0000 60%);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    /* Nav logo wrapper */
     .nav-logo {
       display: flex;
       align-items: center;
       gap: 10px;
       cursor: pointer;
-    }
-
-    .nav-logo img {
-      height: 42px;
-      width: auto;
-      filter: brightness(1.1);
-    }
-
-    .nav-logo-text {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
-    }
-
-    .nav-logo-text .brand {
-      font-size: 1rem;
-      font-weight: 800;
-      color: var(--white);
-      letter-spacing: 0.05em;
-    }
-
-    .nav-logo-text .slogan {
-      font-size: 0.6rem;
-      color: var(--gray-400);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
     }
 
     .nav-links {
@@ -2142,105 +2183,172 @@
     }
 
     @media(max-width:900px) {
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .mvv-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .about-hero-grid {
-        grid-template-columns: 1fr;
-      }
-
+      .stats-grid         { grid-template-columns: repeat(2, 1fr); }
+      .mvv-grid           { grid-template-columns: 1fr; }
+      .about-hero-grid    { grid-template-columns: 1fr; gap: 40px; }
       .contact-grid,
-      .order-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .portfolio-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .portfolio-item:first-child {
-        grid-column: span 2;
-      }
-
-      .offer-card {
-        flex-direction: column;
-        padding: 36px;
-      }
-
-      .offer-cta {
-        align-items: flex-start;
-      }
+      .order-grid         { grid-template-columns: 1fr; }
+      .portfolio-grid     { grid-template-columns: 1fr 1fr; }
+      .portfolio-item:first-child { grid-column: span 2; }
+      .offer-card         { flex-direction: column; padding: 30px 24px; gap: 20px; }
+      .offer-cta          { align-items: flex-start; }
+      /* Reduce section padding on tablet */
+      .hero               { padding: 100px 5% 60px; }
+      .about-hero         { padding: 100px 5% 70px; }
     }
 
     @media(max-width:768px) {
-      .nav-links {
-        display: none;
-      }
-
+      /* ── Navigation ── */
+      .nav-links { display: none; }
       .nav-links.open {
-        display: flex;
-        flex-direction: column;
-        position: fixed;
-        top: 72px;
-        left: 0;
-        right: 0;
-        background: rgba(10, 31, 68, 0.98);
-        padding: 24px;
-        gap: 4px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex; flex-direction: column; position: fixed;
+        top: 66px; left: 0; right: 0;
+        background: rgba(10,31,68,0.98);
+        padding: 16px 20px; gap: 4px;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        z-index: 999;
       }
+      .hamburger { display: flex; }
+      .social-sidebar { display: none; }
 
-      .hamburger {
-        display: flex;
+      /* ── Hero — reduce massive 100vh empty space on mobile ── */
+      .hero {
+        min-height: 75vh;
+        padding: 80px 5% 50px;
       }
+      .hero h1 { font-size: clamp(1.8rem, 6vw, 2.8rem); line-height: 1.2; }
+      .hero p  { font-size: 0.95rem; }
+      .hero-btns { flex-direction: column; gap: 10px; }
+      .hero-btns .btn-primary,
+      .hero-btns .btn-outline { width: 100%; text-align: center; }
 
+      /* ── Section padding — cut desktop values in half ── */
+      section, .section { padding-top: 50px !important; padding-bottom: 50px !important; }
+      .about-hero      { padding: 80px 5% 50px !important; }
+      .contact-hero    { padding: 50px 5% 30px !important; }
+
+      /* ── Grids → single column ── */
       .services-grid,
-      .testimonials-grid {
-        grid-template-columns: 1fr;
-      }
+      .testimonials-grid,
+      .portfolio-grid,
+      .stats-grid,
+      .footer-grid { grid-template-columns: 1fr; gap: 16px; }
 
-      .portfolio-grid {
-        grid-template-columns: 1fr;
-      }
+      .footer-grid { gap: 28px; }
 
-      .portfolio-item:first-child {
-        grid-column: 1;
-        aspect-ratio: 4/3;
-      }
+      .portfolio-item:first-child { grid-column: 1; aspect-ratio: 4/3; }
 
-      .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
+      /* ── Cards — remove excess inner padding ── */
+      .service-card    { padding: 24px 20px; }
+      .contact-form-card { padding: 22px 18px; }
+      .auth-card       { padding: 28px 20px; }
+      .order-form-card { padding: 22px 18px; }
+      .kpi-card        { padding: 16px; }
 
-      .admin-sidebar {
-        width: 220px;
-      }
+      /* ── Section header spacing ── */
+      .section-header  { margin-bottom: 24px !important; }
+      .section-title   { font-size: clamp(1.4rem, 5vw, 2rem); }
 
-      .admin-content {
-        margin-left: 220px;
-      }
+      /* ── Stats section ── */
+      .stats-section   { padding: 40px 5% !important; }
+      .stat-number     { font-size: 2rem; }
 
-      .admin-kpi-grid {
-        grid-template-columns: 1fr 1fr;
-      }
+      /* ── Offer card ── */
+      .offer-card      { flex-direction: column; padding: 24px 20px; gap: 20px; }
+      .offer-cta       { align-items: flex-start; }
 
-      .contact-form-card {
-        padding: 28px;
-      }
+      /* ── About page ── */
+      .about-hero-grid { grid-template-columns: 1fr; gap: 30px; }
+      .mvv-grid        { grid-template-columns: 1fr; gap: 16px; }
 
-      .auth-card {
-        padding: 36px 24px;
-      }
+      /* ── Contact/Order grids ── */
+      .contact-grid,
+      .order-grid { grid-template-columns: 1fr; gap: 20px; }
 
-      .social-sidebar {
-        display: none;
-      }
+      /* ── Admin — stack sidebar on mobile ── */
+      .admin-layout    { flex-direction: column; }
+      .admin-sidebar   { width: 100%; position: relative; height: auto; min-height: unset; flex-direction: row; flex-wrap: wrap; padding: 12px 16px; }
+      .admin-content   { margin-left: 0; padding: 16px; }
+      .admin-nav       { display: flex; flex-wrap: wrap; gap: 6px; flex-direction: row; margin-top: 8px; width: 100%; }
+      .admin-nav-item  { padding: 6px 10px; font-size: 0.72rem; border-radius: 6px; }
+      .admin-nav-label { display: none; }
+      .admin-logo      { padding: 8px 0; }
+      .admin-kpi-grid  { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .admin-table     { overflow-x: auto; }
+      .admin-table table { min-width: 560px; }
+      .admin-charts-row { grid-template-columns: 1fr; }
+      .admin-panel-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+    }
+
+    /* ── Extra-small phones (≤480px) ── */
+    @media(max-width:480px) {
+      .hero            { min-height: 65vh; padding: 70px 4% 40px; }
+      .hero h1         { font-size: clamp(1.5rem, 7vw, 2rem); }
+      .hero-badge      { font-size: 0.72rem; }
+      .nav-logo img    { height: 36px; }
+      .admin-kpi-grid  { grid-template-columns: 1fr; }
+      .kpi-card        { padding: 14px; }
+      .auth-card       { padding: 22px 16px; margin: 12px; }
+      .section-title   { font-size: clamp(1.2rem, 6vw, 1.6rem); }
+      .btn-primary, .btn-outline { padding: 12px 20px; font-size: 0.88rem; }
+      .footer-grid     { gap: 20px; }
+      .service-card    { padding: 18px 16px; }
+      .contact-form-card, .order-form-card { padding: 18px 14px; }
+      .testimonial-card { padding: 20px 16px; }
+    }
+
+    /* ── Skeleton loaders ────────────────────────────────── */
+    @keyframes shimmer {
+      0%   { background-position: -468px 0; }
+      100% { background-position: 468px 0; }
+    }
+    .skeleton {
+      background: linear-gradient(90deg, rgba(255,255,255,0.06) 25%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.06) 75%);
+      background-size: 468px 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: 8px;
+    }
+    .skeleton-card { height: 220px; border-radius: 16px; }
+    .skeleton-row  { height: 44px; border-radius: 8px; margin-bottom: 8px; }
+
+    /* ── Portfolio image items ───────────────────────────── */
+    .portfolio-item-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .portfolio-item:hover .portfolio-item-img { transform: scale(1.06); }
+
+    /* ── Admin portfolio upload zone ─────────────────────── */
+    .upload-zone {
+      border: 2px dashed rgba(139,0,0,0.4);
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: rgba(139,0,0,0.04);
+    }
+    .upload-zone:hover, .upload-zone.drag-over {
+      border-color: var(--red);
+      background: rgba(139,0,0,0.08);
+    }
+    .upload-zone input[type=file] { display: none; }
+    .upload-preview {
+      width: 100%; max-height: 160px;
+      object-fit: cover; border-radius: 8px;
+      margin-top: 10px; display: none;
+    }
+    /* ── Realtime indicator ──────────────────────────────── */
+    .rt-dot {
+      display: inline-block; width: 8px; height: 8px;
+      border-radius: 50%; background: #22c55e;
+      margin-right: 6px;
+      animation: pulse-green 2s infinite;
+    }
+    @keyframes pulse-green {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.5; transform: scale(0.8); }
     }
   </style>
 </head>
@@ -2250,13 +2358,14 @@
   <!-- NAVIGATION -->
   <nav id="main-nav">
     <div class="nav-logo" onclick="navigate('home')">
-      <img
-        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iNDIiIHZpZXdCb3g9IjAgMCAxMjAgNDIiPgogIDxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iNDIiIHJ4PSI2IiBmaWxsPSIjOEIwMDAwIi8+CiAgPHRleHQgeD0iMTAiIHk9IjI4IiBmb250LWZhbWlseT0iQXJpYWwgQmxhY2ssIEFyaWFsIiBmb250LXdlaWdodD0iOTAwIiBmb250LXNpemU9IjE4IiBmaWxsPSJ3aGl0ZSIgbGV0dGVyLXNwYWNpbmc9IjEiPkJURUNIPC90ZXh0PgogIDxyZWN0IHg9IjEwIiB5PSIzMiIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIyIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNCkiIHJ4PSIxIi8+CiAgPHRleHQgeD0iMTAiIHk9IjQwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNyIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjYpIiBsZXR0ZXItc3BhY2luZz0iMiI+U1RVRElPUzwvdGV4dD4KPC9zdmc+"
-        alt="BTECH STUDIOS" />
-      <div class="nav-logo-text">
-        <span class="brand">BTECH STUDIOS</span>
-        <span class="slogan">Design Simplicity</span>
+      <div class="btech-logo on-dark" onclick="navigate('home')">
+      <div class="btech-logo-main">
+        <span class="btech-logo-b" style="font-size:2rem;">B</span>
+        <span class="btech-logo-tech" style="font-size:1.1rem;">TECH</span>
       </div>
+      <div class="btech-logo-studios" style="font-size:0.55rem;">STUDIOS</div>
+      <div class="btech-logo-slogan" style="font-size:0.42rem;">— design simplicity —</div>
+    </div>
     </div>
     <div class="nav-links" id="nav-links">
       <button class="nav-link active" onclick="navigate('home')">Home</button>
@@ -2371,9 +2480,14 @@
     <footer>
       <div class="footer-grid">
         <div class="footer-brand">
-          <img
-            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iNDIiIHZpZXdCb3g9IjAgMCAxMjAgNDIiPgogIDxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iNDIiIHJ4PSI2IiBmaWxsPSIjOEIwMDAwIi8+CiAgPHRleHQgeD0iMTAiIHk9IjI4IiBmb250LWZhbWlseT0iQXJpYWwgQmxhY2ssIEFyaWFsIiBmb250LXdlaWdodD0iOTAwIiBmb250LXNpemU9IjE4IiBmaWxsPSJ3aGl0ZSIgbGV0dGVyLXNwYWNpbmc9IjEiPkJURUNIPC90ZXh0PgogIDxyZWN0IHg9IjEwIiB5PSIzMiIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIyIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNCkiIHJ4PSIxIi8+CiAgPHRleHQgeD0iMTAiIHk9IjQwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNyIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjYpIiBsZXR0ZXItc3BhY2luZz0iMiI+U1RVRElPUzwvdGV4dD4KPC9zdmc+"
-            alt="BTECH STUDIOS" />
+          <div class="btech-logo on-light">
+      <div class="btech-logo-main">
+        <span class="btech-logo-b" style="font-size:2rem;">B</span>
+        <span class="btech-logo-tech" style="font-size:1.1rem;">TECH</span>
+      </div>
+      <div class="btech-logo-studios" style="font-size:0.55rem;">STUDIOS</div>
+      <div class="btech-logo-slogan" style="font-size:0.42rem;">— design simplicity —</div>
+    </div>
           <p>Creative digital solutions for modern businesses. Design, development &amp; digital marketing in Nairobi,
             Kenya.</p>
           <div class="footer-social">
@@ -2804,14 +2918,15 @@
     <div class="auth-page">
       <div class="auth-bg"></div>
       <div class="auth-card">
-        <div class="auth-logo">
-          <img
-            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iNDIiIHZpZXdCb3g9IjAgMCAxMjAgNDIiPgogIDxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iNDIiIHJ4PSI2IiBmaWxsPSIjOEIwMDAwIi8+CiAgPHRleHQgeD0iMTAiIHk9IjI4IiBmb250LWZhbWlseT0iQXJpYWwgQmxhY2ssIEFyaWFsIiBmb250LXdlaWdodD0iOTAwIiBmb250LXNpemU9IjE4IiBmaWxsPSJ3aGl0ZSIgbGV0dGVyLXNwYWNpbmc9IjEiPkJURUNIPC90ZXh0PgogIDxyZWN0IHg9IjEwIiB5PSIzMiIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIyIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNCkiIHJ4PSIxIi8+CiAgPHRleHQgeD0iMTAiIHk9IjQwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNyIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjYpIiBsZXR0ZXItc3BhY2luZz0iMiI+U1RVRElPUzwvdGV4dD4KPC9zdmc+"
-            alt="BTECH STUDIOS" style="height:64px;margin-bottom:14px;filter:brightness(1.2);" />
-          <div style="font-family:var(--font-display);font-size:1.5rem;color:var(--white);margin-bottom:4px;">BTECH
-            STUDIOS</div>
-          <div style="font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.35);">
-            Design Simplicity</div>
+        <div class="auth-logo" style="display:flex;flex-direction:column;align-items:center;margin-bottom:24px;">
+          <div class="btech-logo on-dark">
+      <div class="btech-logo-main">
+        <span class="btech-logo-b" style="font-size:2.8rem;">B</span>
+        <span class="btech-logo-tech" style="font-size:1.5rem;">TECH</span>
+      </div>
+      <div class="btech-logo-studios" style="font-size:0.7rem;">STUDIOS</div>
+      <div class="btech-logo-slogan" style="font-size:0.55rem;">— design simplicity —</div>
+    </div>
         </div>
         <div class="auth-title">Admin Portal</div>
         <div class="auth-subtitle">Sign in to access the dashboard</div>
@@ -2829,14 +2944,16 @@
   <div class="page" id="page-admin">
     <div class="admin-layout">
       <aside class="admin-sidebar">
-        <div class="admin-logo">
-          <img
-            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iNDIiIHZpZXdCb3g9IjAgMCAxMjAgNDIiPgogIDxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iNDIiIHJ4PSI2IiBmaWxsPSIjOEIwMDAwIi8+CiAgPHRleHQgeD0iMTAiIHk9IjI4IiBmb250LWZhbWlseT0iQXJpYWwgQmxhY2ssIEFyaWFsIiBmb250LXdlaWdodD0iOTAwIiBmb250LXNpemU9IjE4IiBmaWxsPSJ3aGl0ZSIgbGV0dGVyLXNwYWNpbmc9IjEiPkJURUNIPC90ZXh0PgogIDxyZWN0IHg9IjEwIiB5PSIzMiIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIyIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNCkiIHJ4PSIxIi8+CiAgPHRleHQgeD0iMTAiIHk9IjQwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNyIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjYpIiBsZXR0ZXItc3BhY2luZz0iMiI+U1RVRElPUzwvdGV4dD4KPC9zdmc+"
-            alt="BTECH STUDIOS" style="height:36px;filter:brightness(1.2);" />
-          <div>
-            <div class="admin-logo-text">BTECH STUDIOS</div>
-            <div class="admin-logo-sub">Admin Dashboard</div>
-          </div>
+        <div class="admin-logo" style="padding:16px 0 10px;">
+          <div class="btech-logo on-dark">
+      <div class="btech-logo-main">
+        <span class="btech-logo-b" style="font-size:1.5rem;">B</span>
+        <span class="btech-logo-tech" style="font-size:0.85rem;">TECH</span>
+      </div>
+      <div class="btech-logo-studios" style="font-size:0.45rem;">STUDIOS</div>
+      <div class="btech-logo-slogan" style="font-size:0.36rem;">— design simplicity —</div>
+    </div>
+          <div class="admin-logo-sub" style="margin-top:4px;font-size:0.65rem;opacity:0.5;letter-spacing:0.12em;">ADMIN DASHBOARD</div>
         </div>
         <nav class="admin-nav">
           <div class="admin-nav-label">Main</div>
@@ -3087,31 +3204,63 @@
 
           <!-- PORTFOLIO PANEL -->
           <div class="admin-panel" id="panel-portfolio">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
-              <div class="admin-table">
-                <div class="admin-table-header">
-                  <h3>Portfolio Items</h3>
+            <div class="admin-panel-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+              <h2 style="font-size:1.2rem;font-weight:800;">Portfolio Management</h2>
+              <span style="font-size:0.72rem;color:var(--text-muted);"><span class="rt-dot"></span>Live sync active</span>
+            </div>
+
+            <!-- Existing items list -->
+            <div class="admin-table" style="margin-bottom:24px;">
+              <div class="admin-table-header"><h3>Current Portfolio Items</h3></div>
+              <div id="admin-portfolio-list" style="padding:8px;"></div>
+            </div>
+
+            <!-- Upload new item -->
+            <div class="admin-table">
+              <div class="admin-table-header"><h3>Add New Portfolio Item</h3></div>
+              <div style="padding:20px;display:grid;gap:14px;">
+                <!-- Upload zone -->
+                <div>
+                  <label style="font-size:0.78rem;font-weight:600;color:var(--text-muted);display:block;margin-bottom:6px;">PROJECT IMAGE</label>
+                  <div class="upload-zone" id="port-upload-zone">
+                    <div style="font-size:2rem;margin-bottom:6px;">📁</div>
+                    <div style="font-size:0.85rem;font-weight:600;">Click or drag image here</div>
+                    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">PNG, JPG, WEBP — max 5MB</div>
+                    <input type="file" id="port-file-input" accept="image/*" />
+                  </div>
+                  <img id="port-upload-preview" class="upload-preview" alt="Preview" />
                 </div>
-                <div style="padding:16px;" id="admin-portfolio-list"></div>
-              </div>
-              <div class="chart-card">
-                <h3>Add Portfolio Item</h3>
-                <div class="form-group"><label class="form-label">Title</label><input class="form-input" id="port-title"
-                    placeholder="Project title" /></div>
-                <div class="form-group"><label class="form-label">Category</label><input class="form-input"
-                    id="port-cat" placeholder="Websites / Logos / Marketing" /></div>
-                <div class="form-group"><label class="form-label">Description</label><input class="form-input"
-                    id="port-desc" placeholder="Short description" /></div>
-                <div class="form-group"><label class="form-label">Emoji Icon</label><input class="form-input"
-                    id="port-emoji" placeholder="💻" /></div>
-                <div class="form-group"><label class="form-label">Background</label><input class="form-input"
-                    id="port-color" placeholder="linear-gradient(135deg,#0A1F44,#1a3a6e)" /></div>
-                <button class="admin-save-btn" onclick="addPortfolioItem()">Add Item</button>
+
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                  <div>
+                    <label style="font-size:0.78rem;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">TITLE *</label>
+                    <input id="port-title-input" class="admin-input" placeholder="e.g. E-Commerce Website" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--white);font-family:var(--font);" />
+                  </div>
+                  <div>
+                    <label style="font-size:0.78rem;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">CATEGORY</label>
+                    <select id="port-cat-input" class="admin-input" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--white);font-family:var(--font);">
+                      <option value="Websites">Websites</option>
+                      <option value="Logos">Logos</option>
+                      <option value="Marketing">Marketing</option>
+                      <option value="Editing">Editing</option>
+                      <option value="Branding">Branding</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label style="font-size:0.78rem;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">DESCRIPTION</label>
+                  <input id="port-desc-input" class="admin-input" placeholder="Brief project description…" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--white);font-family:var(--font);" />
+                </div>
+
+                <div id="port-upload-fb" style="font-size:0.78rem;min-height:16px;"></div>
+                <button id="port-upload-btn" class="admin-save-btn" style="padding:10px 20px;font-size:0.88rem;" onclick="uploadPortfolioItem()">Add to Portfolio</button>
               </div>
             </div>
           </div>
 
-          <!-- TESTIMONIALS PANEL -->
+          <!-- TESTIMONIALS<!-- TESTIMONIALS PANEL -->
           <div class="admin-panel" id="panel-testimonials">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
               <div class="admin-table">
@@ -3269,12 +3418,12 @@
       orders: JSON.parse(localStorage.getItem('btech_orders') || '[]'),
       contacts: JSON.parse(localStorage.getItem('btech_contacts') || '[]'),
       portfolio: JSON.parse(localStorage.getItem('btech_portfolio') || JSON.stringify([
-        { id: 1, title: 'BTECHTRACK App', cat: 'Websites', desc: 'Banking-grade financial tracker', emoji: '💳', color: 'linear-gradient(135deg,#0A1F44,#1a3a6e)' },
-        { id: 2, title: 'Brand Identity Package', cat: 'Logos', desc: 'Complete brand redesign', emoji: '✨', color: 'linear-gradient(135deg,#8B0000,#C0001A)' },
-        { id: 3, title: 'E-Commerce Website', cat: 'Websites', desc: 'Full online store build', emoji: '🛍️', color: 'linear-gradient(135deg,#1a3a6e,#0A1F44)' },
-        { id: 4, title: 'Social Media Campaign', cat: 'Marketing', desc: '3-month SMM campaign', emoji: '📱', color: 'linear-gradient(135deg,#C0001A,#8B0000)' },
-        { id: 5, title: 'Logo Design Series', cat: 'Logos', desc: '5 logo concepts', emoji: '🎨', color: 'linear-gradient(135deg,#0F2D5E,#0A1F44)' },
-        { id: 6, title: 'Portrait Editing', cat: 'Editing', desc: 'Professional photo edit', emoji: '📸', color: 'linear-gradient(135deg,#8B0000,#0A1F44)' },
+        { id: 1, title: 'BTECHTRACK App', category: 'Websites', description: 'Banking-grade financial tracker', image_url: null, emoji: '💳', color: 'linear-gradient(135deg,#0A1F44,#1a3a6e)' },
+        { id: 2, title: 'Brand Identity Package', category: 'Logos', description: 'Complete brand redesign', image_url: null, emoji: '✨', color: 'linear-gradient(135deg,#8B0000,#C0001A)' },
+        { id: 3, title: 'E-Commerce Website', category: 'Websites', description: 'Full online store build', image_url: null, emoji: '🛍️', color: 'linear-gradient(135deg,#1a3a6e,#0A1F44)' },
+        { id: 4, title: 'Social Media Campaign', category: 'Marketing', description: '3-month SMM campaign', image_url: null, emoji: '📱', color: 'linear-gradient(135deg,#C0001A,#8B0000)' },
+        { id: 5, title: 'Logo Design Series', category: 'Logos', description: '5 logo concepts', image_url: null, emoji: '🎨', color: 'linear-gradient(135deg,#0F2D5E,#0A1F44)' },
+        { id: 6, title: 'Portrait Editing', category: 'Editing', description: 'Professional photo edit', image_url: null, emoji: '📸', color: 'linear-gradient(135deg,#8B0000,#0A1F44)' },
       ])),
       testimonials: JSON.parse(localStorage.getItem('btech_testimonials') || JSON.stringify([
         { id: 1, name: 'Michael Odhiambo', role: 'CEO, StartupKE', text: 'BTECH STUDIOS delivered a world-class website that exceeded all our expectations. Professional, fast, and incredibly talented.', rating: 5, approved: true },
@@ -3407,26 +3556,74 @@
     </div>`).join('');
     }
 
-    /* PORTFOLIO */
+    /* ── PORTFOLIO RENDER — supports real images + emoji fallback ── */
+    function portfolioItemHTML(p, showDelete = false) {
+      const cat = p.category || p.cat || 'General';
+      const desc = p.description || p.desc || '';
+      const bg = p.color || 'linear-gradient(135deg,#0A1F44,#8B0000)';
+      const emoji = p.emoji || '🖼️';
+      const inner = p.image_url
+        ? `<img src="${p.image_url}" alt="${p.title}" class="portfolio-item-img" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+           <div class="portfolio-item-bg" style="background:${bg};display:none;">${emoji}</div>`
+        : `<div class="portfolio-item-bg" style="background:${bg};">${emoji}</div>`;
+      const deleteBtn = showDelete
+        ? `<button onclick="deletePortfolioItem('${p.id}',event)" style="position:absolute;top:8px;right:8px;z-index:10;background:rgba(139,0,0,0.85);color:#fff;border:none;border-radius:6px;padding:4px 8px;font-size:0.7rem;cursor:pointer;">✕ Delete</button>`
+        : '';
+      return `<div class="portfolio-item" style="position:relative;">
+      ${deleteBtn}
+      ${inner}
+      <div class="portfolio-overlay"><div>
+        <div class="portfolio-item-title">${p.title}</div>
+        <div class="portfolio-item-cat">${cat}${desc ? ' · ' + desc : ''}</div>
+      </div></div>
+    </div>`;
+    }
+
     function renderPortfolio(targetId, limit = null) {
       const el = document.getElementById(targetId); if (!el) return;
       const items = limit ? state.portfolio.slice(0, limit) : state.portfolio;
-      el.innerHTML = items.map(p => `
-    <div class="portfolio-item">
-      <div class="portfolio-item-bg" style="background:${p.color}">${p.emoji}</div>
-      <div class="portfolio-overlay"><div><div class="portfolio-item-title">${p.title}</div><div class="portfolio-item-cat">${p.cat} · ${p.desc}</div></div></div>
-    </div>`).join('');
+      if (!items.length) { el.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;opacity:0.5;">No portfolio items yet.</div>'; return; }
+      el.innerHTML = items.map(p => portfolioItemHTML(p)).join('');
     }
+
     function renderFullPortfolio(filter = 'All') {
       const el = document.getElementById('full-portfolio-grid'); if (!el) return;
-      const items = filter === 'All' ? state.portfolio : state.portfolio.filter(p => p.cat === filter);
-      el.innerHTML = items.map(p => `
-    <div class="portfolio-item">
-      <div class="portfolio-item-bg" style="background:${p.color}">${p.emoji}</div>
-      <div class="portfolio-overlay"><div><div class="portfolio-item-title">${p.title}</div><div class="portfolio-item-cat">${p.cat} · ${p.desc}</div></div></div>
-    </div>`).join('');
+      const all = state.portfolio;
+      const items = filter === 'All' ? all : all.filter(p => (p.category||p.cat) === filter);
+      if (!items.length) { el.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;opacity:0.5;">No items in this category yet.</div>'; return; }
+      el.innerHTML = items.map(p => portfolioItemHTML(p)).join('');
     }
-    function filterPortfolio(cat, btn) { document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); renderFullPortfolio(cat); }
+
+    function filterPortfolio(cat, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderFullPortfolio(cat);
+    }
+
+    /* Delete portfolio item (admin only) */
+    async function deletePortfolioItem(id, e) {
+      e && e.stopPropagation();
+      if (!confirm('Delete this portfolio item?')) return;
+      try {
+        const { error } = await db.from('portfolio').delete().eq('id', id);
+        if (error) throw error;
+        state.portfolio = state.portfolio.filter(p => String(p.id) !== String(id));
+        localStorage.setItem('btech_portfolio', JSON.stringify(state.portfolio));
+        renderPortfolio('home-portfolio-grid', 6);
+        renderFullPortfolio();
+        renderAdminPortfolio();
+        showToast('Portfolio item deleted. ✓');
+      } catch (err) {
+        console.error('[BTECH] deletePortfolio error:', err);
+        // fallback: local only
+        state.portfolio = state.portfolio.filter(p => String(p.id) !== String(id));
+        localStorage.setItem('btech_portfolio', JSON.stringify(state.portfolio));
+        renderPortfolio('home-portfolio-grid', 6);
+        renderFullPortfolio();
+        renderAdminPortfolio();
+        showToast('Deleted locally.');
+      }
+    }
 
     /* OFFER */
     function renderOffer() {
@@ -3605,16 +3802,18 @@
         const { jsPDF } = window.jspdf; const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
         const W = 210; const H = 297;
         // Header bg
-        doc.setFillColor(10, 31, 68); doc.rect(0, 0, W, 52, 'F');
+                doc.setFillColor(10, 31, 68); doc.rect(0, 0, W, 52, 'F');
         doc.setFillColor(139, 0, 0); doc.rect(0, 48, W, 4, 'F');
-        // Title
-        doc.setTextColor(255, 255, 255); doc.setFontSize(24); doc.setFont('helvetica', 'bold');
-        doc.text('BTECH STUDIOS', W / 2, 22, { align: 'center' });
-        doc.setFontSize(9); doc.setFont('helvetica', 'normal'); doc.setTextColor(180, 180, 210);
-        doc.text('— design simplicity —', W / 2, 30, { align: 'center' });
+        // Text logo in PDF (no image dependency)
+        doc.setTextColor(192, 0, 26); doc.setFontSize(28); doc.setFont('helvetica', 'bold');
+        doc.text('B', 14, 28);
+        doc.setTextColor(255,255,255); doc.setFontSize(16);
+        doc.text('TECH', 26, 28);
+        doc.setTextColor(160,170,200); doc.setFontSize(7); doc.setFont('helvetica','normal');
+        doc.text('STUDIOS  —  design simplicity', 14, 35);
         doc.setFontSize(7.5); doc.setTextColor(160, 170, 200);
-        doc.text('Muratha Road, Nairobi KE  |  +254 706 675 009  |  btechstudios01@gmail.com', W / 2, 38, { align: 'center' });
-        doc.text('Facebook: BTECH STUDIOS  |  Instagram: @btech_studios1  |  TikTok: btech studios', W / 2, 44, { align: 'center' });
+        doc.text('Muratha Road, Nairobi KE  |  +254 706 675 009  |  btechstudios01@gmail.com', W / 2, 42, { align: 'center' });
+        doc.text('Facebook: BTECH STUDIOS  |  Instagram: @btech_studios1  |  TikTok: btech studios', W / 2, 47, { align: 'center' });
         // Body bg
         doc.setFillColor(248, 249, 252); doc.rect(0, 52, W, H - 52, 'F');
         // Receipt heading
@@ -3703,11 +3902,12 @@
       const titles = { overview: 'Dashboard Overview', orders: 'All Orders', contacts: 'Contact Messages', services: 'Services & Prices', cyber: 'Cyber Services Management', portfolio: 'Portfolio Management', testimonials: 'Testimonials', offers: 'Weekly Offers', analytics: 'Analytics' };
       document.getElementById('admin-panel-title').textContent = titles[panel] || 'Admin';
       if (panel === 'overview')     initAdmin();
-      if (panel === 'orders')       refreshDashboard();   // always fetch latest
-      if (panel === 'contacts')     refreshDashboard();   // always fetch latest
+      if (panel === 'orders')       refreshDashboard();
+      if (panel === 'contacts')     refreshDashboard();
+      if (panel === 'portfolio')    { renderAdminPortfolio(); setTimeout(initPortfolioUpload, 100); }
       if (panel === 'services')     renderAdminServices();
       if (panel === 'cyber')        renderAdminCyber();
-      if (panel === 'portfolio')    renderAdminPortfolio();
+
       if (panel === 'testimonials') renderAdminTestimonials();
       if (panel === 'offers') { const o = state.offer; document.getElementById('offer-title-input').value = o.title; document.getElementById('offer-desc-input').value = o.desc; document.getElementById('offer-old-input').value = o.oldPrice; document.getElementById('offer-new-input').value = o.newPrice; }
       if (panel === 'analytics')    initAnalytics();
@@ -3891,25 +4091,130 @@
     /* PORTFOLIO ADMIN */
     function renderAdminPortfolio() {
       const el = document.getElementById('admin-portfolio-list'); if (!el) return;
-      el.innerHTML = state.portfolio.map(p => `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--off-white);border-radius:8px;margin-bottom:8px;border:1px solid var(--gray-200);">
-    <div style="display:flex;align-items:center;gap:10px;">
-      <div style="width:36px;height:36px;border-radius:8px;background:${p.color};display:flex;align-items:center;justify-content:center;font-size:1.2rem;">${p.emoji}</div>
-      <div><div style="font-weight:700;font-size:0.85rem;">${p.title}</div><div style="font-size:0.72rem;color:var(--text-muted);">${p.cat}</div></div>
-    </div>
-    <button class="admin-danger-btn" onclick="deletePort(${p.id})">✕</button></div>`).join('');
+      if (!state.portfolio.length) {
+        el.innerHTML = '<div style="text-align:center;padding:40px;opacity:0.5;">No portfolio items yet. Upload one below.</div>';
+        return;
+      }
+      el.innerHTML = state.portfolio.map(p => {
+        const cat = p.category || p.cat || 'General';
+        const desc = p.description || p.desc || '';
+        const bg = p.color || 'linear-gradient(135deg,#0A1F44,#8B0000)';
+        const emoji = p.emoji || '🖼️';
+        const thumb = p.image_url
+          ? `<img src="${p.image_url}" style="width:52px;height:52px;object-fit:cover;border-radius:8px;" loading="lazy">`
+          : `<div style="width:52px;height:52px;border-radius:8px;background:${bg};display:flex;align-items:center;justify-content:center;font-size:1.5rem;">${emoji}</div>`;
+        return `<div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:10px;margin-bottom:8px;">
+          ${thumb}
+          <div style="flex:1;min-width:0;">
+            <div style="font-weight:700;font-size:0.88rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.title}</div>
+            <div style="font-size:0.72rem;color:var(--text-muted);">${cat}${desc?' · '+desc.slice(0,35)+'…':''}</div>
+          </div>
+          <button class="admin-danger-btn" style="padding:4px 10px;font-size:0.7rem;flex-shrink:0;" onclick="deletePortfolioItem('${p.id}',event)">✕</button>
+        </div>`;
+      }).join('');
     }
-    function addPortfolioItem() {
-      const title = document.getElementById('port-title').value.trim();
-      const cat = document.getElementById('port-cat').value.trim();
-      const desc = document.getElementById('port-desc').value.trim();
-      const emoji = document.getElementById('port-emoji').value.trim() || '💼';
-      const color = document.getElementById('port-color').value.trim() || 'linear-gradient(135deg,#0A1F44,#1a3a6e)';
-      if (!title) return;
-      state.portfolio.push({ id: Date.now(), title, cat, desc, emoji, color });
-      localStorage.setItem('btech_portfolio', JSON.stringify(state.portfolio));
-      renderAdminPortfolio(); renderPortfolio('home-portfolio-grid', 6); showToast('Portfolio item added! ✓');
+
+    /* Legacy addPortfolioItem → delegates to uploadPortfolioItem */
+    function addPortfolioItem() { uploadPortfolioItem(); }
+    function deletePort(id) { deletePortfolioItem(id, null); }
+
+    /* ── Portfolio Upload to Supabase Storage ───────────────────── */
+    let _uploadFile = null;
+
+    function initPortfolioUpload() {
+      const zone  = document.getElementById('port-upload-zone');
+      const input = document.getElementById('port-file-input');
+      const prev  = document.getElementById('port-upload-preview');
+      if (!zone || !input) return;
+      zone.addEventListener('dragover',  e => { e.preventDefault(); zone.classList.add('drag-over'); });
+      zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+      zone.addEventListener('drop', e => {
+        e.preventDefault(); zone.classList.remove('drag-over');
+        const f = e.dataTransfer.files[0];
+        if (f && f.type.startsWith('image/')) { _uploadFile = f; _showPreview(f, prev); }
+      });
+      zone.addEventListener('click', () => input.click());
+      input.addEventListener('change', () => { if (input.files[0]) { _uploadFile = input.files[0]; _showPreview(input.files[0], prev); } });
     }
-    function deletePort(id) { state.portfolio = state.portfolio.filter(p => p.id !== id); localStorage.setItem('btech_portfolio', JSON.stringify(state.portfolio)); renderAdminPortfolio(); renderPortfolio('home-portfolio-grid', 6); showToast('Deleted.'); }
+    function _showPreview(file, el) {
+      if (!el) return;
+      const r = new FileReader();
+      r.onload = e => { el.src = e.target.result; el.style.display = 'block'; };
+      r.readAsDataURL(file);
+    }
+
+    async function uploadPortfolioItem() {
+      const title = (document.getElementById('port-title-input') || document.getElementById('port-title'))?.value.trim();
+      const desc  = (document.getElementById('port-desc-input')  || document.getElementById('port-desc'))?.value.trim();
+      const cat   = (document.getElementById('port-cat-input')   || document.getElementById('port-cat'))?.value.trim() || 'Websites';
+      const fb    = document.getElementById('port-upload-fb');
+      const btn   = document.getElementById('port-upload-btn');
+      if (!title) { if(fb){fb.style.color='var(--red-bright)';fb.textContent='Please enter a title.';} return; }
+      if (btn) { btn.disabled=true; btn.textContent='Uploading…'; }
+      if (fb)  { fb.style.color='var(--text-muted)'; fb.textContent='Saving…'; }
+
+      let image_url = null;
+      if (_uploadFile) {
+        try {
+          if(fb) fb.textContent='Uploading image to storage…';
+          const ext  = _uploadFile.name.split('.').pop().toLowerCase();
+          const path = `portfolio/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+          const { error: upErr } = await db.storage.from('portfolio-images').upload(path, _uploadFile, { cacheControl:'3600', upsert:false });
+          if (upErr) { console.warn('[BTECH] Upload error:', upErr.message); }
+          else { const { data: urlData } = db.storage.from('portfolio-images').getPublicUrl(path); image_url = urlData?.publicUrl || null; }
+        } catch(e) { console.warn('[BTECH] Storage unavailable:', e); }
+      }
+
+      try {
+        const { error } = await db.from('portfolio').insert([{ title, description: desc||'', category: cat, image_url }]);
+        if (error) throw error;
+        if(fb){fb.style.color='#16A34A';fb.textContent='✓ Portfolio item saved!';}
+        showToast('Portfolio item added! ✓');
+        await fetchPortfolio();
+      } catch(dbErr) {
+        console.error('[BTECH] Portfolio DB error:', dbErr);
+        const newItem = { id: Date.now(), title, description: desc, category: cat, image_url, emoji:'🖼️', color:'linear-gradient(135deg,#0A1F44,#8B0000)', created_at: new Date().toISOString() };
+        state.portfolio.unshift(newItem);
+        localStorage.setItem('btech_portfolio', JSON.stringify(state.portfolio));
+        renderAdminPortfolio(); renderPortfolio('home-portfolio-grid', 6);
+        if(fb){fb.style.color='#F59E0B';fb.textContent='⚠ Saved locally (DB error: '+dbErr.message+')';}
+      } finally {
+        ['port-title-input','port-title','port-desc-input','port-desc','port-cat-input','port-cat'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+        const p=document.getElementById('port-upload-preview'); if(p){p.style.display='none';p.src='';}
+        _uploadFile=null;
+        const fi=document.getElementById('port-file-input'); if(fi) fi.value='';
+        if(btn){btn.disabled=false;btn.textContent='Add to Portfolio';}
+      }
+    }
+
+    async function deletePortfolioItem(id, e) {
+      if(e) e.stopPropagation();
+      if (!confirm('Delete this portfolio item?')) return;
+      try {
+        const { error } = await db.from('portfolio').delete().eq('id', id);
+        if (error) throw error;
+        state.portfolio = state.portfolio.filter(p => String(p.id) !== String(id));
+        localStorage.setItem('btech_portfolio', JSON.stringify(state.portfolio));
+        renderAdminPortfolio(); renderPortfolio('home-portfolio-grid', 6); renderFullPortfolio();
+        showToast('Deleted. ✓');
+      } catch(err) {
+        state.portfolio = state.portfolio.filter(p => String(p.id) !== String(id));
+        localStorage.setItem('btech_portfolio', JSON.stringify(state.portfolio));
+        renderAdminPortfolio(); renderPortfolio('home-portfolio-grid', 6); renderFullPortfolio();
+        showToast('Deleted locally.');
+      }
+    }
+
+    async function fetchPortfolio() {
+      try {
+        const { data, error } = await db.from('portfolio').select('*').order('created_at', { ascending: false });
+        if (error) { console.warn('[BTECH] fetchPortfolio:', error.message); return; }
+        if (data) { state.portfolio = data; localStorage.setItem('btech_portfolio', JSON.stringify(state.portfolio)); }
+        renderPortfolio('home-portfolio-grid', 6);
+        renderFullPortfolio();
+        renderAdminPortfolio();
+      } catch(e) { console.warn('[BTECH] fetchPortfolio unreachable:', e); }
+    }
 
     /* TESTIMONIALS ADMIN */
     function renderAdminTestimonials() {
@@ -3982,12 +4287,96 @@
         if (location.hash === '#admin' || location.hash === '#auth') navigate('auth');
       }
       document.addEventListener('keydown', e => { if (e.ctrlKey && e.shiftKey && e.key === 'A') navigate('auth'); });
+      // Init public realtime for visitors (portfolio, services)
+      setupPublicRealtime();
+      // Fetch dynamic content on page load
+      fetchPortfolio();
+      fetchServices();
+      fetchTestimonials();
+      // Init portfolio upload drag-drop after DOM is ready
+      setTimeout(initPortfolioUpload, 500);
     });
 
     /* =============================================
        SUPABASE — db client initialized in <head>
        ============================================= */
     // db is already defined above — do not redeclare
+
+    /* ════════════════════════════════════════════════════════════
+       BTECH REALTIME CONTENT SYNC — services, portfolio, offers
+       ════════════════════════════════════════════════════════════
+       When admin updates services/portfolio/offers, ALL browsers
+       update instantly without refresh.
+    ═════════════════════════════════════════════════════════════*/
+
+    /* Fetch services from Supabase (public table) */
+    async function fetchServices() {
+      try {
+        const { data, error } = await db.from('services').select('*').eq('status','active').order('created_at',{ascending:true});
+        if (error) { console.warn('[BTECH] fetchServices:', error.message); return; }
+        if (data && data.length > 0) {
+          state.services = data;
+          localStorage.setItem('btech_services', JSON.stringify(state.services));
+          renderServices('home-services-grid', 4);
+          renderFullServices();
+          renderOrderServices();
+        }
+      } catch(e) { console.warn('[BTECH] fetchServices unreachable:', e); }
+    }
+
+    /* Fetch testimonials from Supabase */
+    async function fetchTestimonials() {
+      try {
+        const { data, error } = await db.from('testimonials').select('*').eq('approved',true).order('created_at',{ascending:false});
+        if (error) { console.warn('[BTECH] fetchTestimonials:', error.message); return; }
+        if (data && data.length > 0) {
+          state.testimonials = data;
+          localStorage.setItem('btech_testimonials', JSON.stringify(state.testimonials));
+          renderTestimonials();
+        }
+      } catch(e) { console.warn('[BTECH] fetchTestimonials unreachable:', e); }
+    }
+
+    /* ── Public realtime subscriptions (for visitors too) ─────── */
+    let _publicRealtimeSetup = false;
+    function setupPublicRealtime() {
+      if (_publicRealtimeSetup) return;
+      _publicRealtimeSetup = true;
+
+      // Services realtime
+      db.channel('btech-services-public')
+        .on('postgres_changes', { event:'*', schema:'public', table:'services' }, () => {
+          console.log('[BTECH] Services updated — refreshing…');
+          fetchServices();
+        }).subscribe();
+
+      // Portfolio realtime
+      db.channel('btech-portfolio-public')
+        .on('postgres_changes', { event:'*', schema:'public', table:'portfolio' }, payload => {
+          console.log('[BTECH] Portfolio updated:', payload.eventType);
+          if (payload.eventType === 'INSERT') {
+            state.portfolio.unshift(payload.new);
+          } else if (payload.eventType === 'UPDATE') {
+            const idx = state.portfolio.findIndex(p => p.id === payload.new.id);
+            if (idx !== -1) state.portfolio[idx] = payload.new; else state.portfolio.unshift(payload.new);
+          } else if (payload.eventType === 'DELETE') {
+            state.portfolio = state.portfolio.filter(p => p.id !== payload.old.id);
+          }
+          localStorage.setItem('btech_portfolio', JSON.stringify(state.portfolio));
+          renderPortfolio('home-portfolio-grid', 6);
+          renderFullPortfolio();
+          if (state.isLoggedIn) renderAdminPortfolio();
+        }).subscribe();
+
+      // Testimonials realtime
+      db.channel('btech-testimonials-public')
+        .on('postgres_changes', { event:'*', schema:'public', table:'testimonials' }, () => {
+          fetchTestimonials();
+          if (state.isLoggedIn) renderAdminTestimonials();
+        }).subscribe();
+
+      console.log('[BTECH] Public realtime channels active.');
+    }
 
     /* ================================================================
        BTECH ADMIN — LIVE DATA SYSTEM
@@ -4078,22 +4467,18 @@
     /* ── Full dashboard refresh ─────────────────────────────────── */
     async function refreshDashboard() {
       console.log('[BTECH] Refreshing dashboard…');
-
-      // Show loading indicator in overview table
       const tbody = document.getElementById('admin-orders-tbody');
       if (tbody && tbody.innerHTML === '') {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text-muted);">⏳ Loading orders…</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text-muted);">⏳ Loading…</td></tr>';
       }
-
-      await Promise.all([fetchOrders(), fetchContacts()]);
+      await Promise.all([fetchOrders(), fetchContacts(), fetchPortfolio(), fetchServices()]);
       updateKPIs();
       renderAdminOrders();
       setTimeout(() => { initOrdersChart(); initServicesChart(); }, 100);
     }
 
-    /* ── Realtime subscriptions (live push from Supabase) ────────── */
+    /* ── Admin realtime subscriptions ──────────────────────────── */
     function setupRealtimeSubscriptions() {
-      // Clean up any existing channels first
       if (_realtimeOrders)   { db.removeChannel(_realtimeOrders);   _realtimeOrders   = null; }
       if (_realtimeContacts) { db.removeChannel(_realtimeContacts); _realtimeContacts = null; }
 
