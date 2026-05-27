@@ -10,6 +10,10 @@
   <meta property="og:title" content="BTECH STUDIOS — Design Simplicity" />
   <meta property="og:description" content="Creative Digital Solutions For Modern Businesses" />
   <meta property="og:type" content="website" />
+  <!-- Favicon - BTECH Studios -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230A1F44'/%3E%3Crect x='0' y='56' width='64' height='8' rx='0' fill='%238B0000'/%3E%3Ctext x='32' y='44' font-family='Arial Black,Arial' font-weight='900' font-size='28' fill='white' text-anchor='middle'%3EBT%3C/text%3E%3C/svg%3E" />
+  <link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230A1F44'/%3E%3Crect x='0' y='56' width='64' height='8' fill='%238B0000'/%3E%3Ctext x='32' y='44' font-family='Arial Black,Arial' font-weight='900' font-size='28' fill='white' text-anchor='middle'%3EBT%3C/text%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230A1F44'/%3E%3Crect x='0' y='56' width='64' height='8' fill='%238B0000'/%3E%3Ctext x='32' y='44' font-family='Arial Black,Arial' font-weight='900' font-size='28' fill='white' text-anchor='middle'%3EBT%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link
     href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap"
@@ -2937,6 +2941,7 @@
               <table>
                 <thead>
                   <tr>
+                    <th>Order #</th>
                     <th>Client</th>
                     <th>Service</th>
                     <th>Budget</th>
@@ -2952,19 +2957,21 @@
 
           <!-- ORDERS PANEL -->
           <div class="admin-panel" id="panel-orders">
-            <div class="admin-table">
+            <div class="admin-table" style="overflow-x:auto;">
               <div class="admin-table-header">
                 <h3>All Orders</h3>
               </div>
               <table>
                 <thead>
                   <tr>
+                    <th>Order #</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Service</th>
                     <th>Budget</th>
                     <th>Status</th>
+                    <th>Date</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -2989,6 +2996,7 @@
                     <th>Message</th>
                     <th>Status</th>
                     <th>Date</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody id="all-contacts-tbody"></tbody>
@@ -3411,21 +3419,59 @@
     }
 
     /* FORMS */
-    function submitContact() {
+    async function submitContact() {
       const name = document.getElementById('contact-name').value.trim();
       const email = document.getElementById('contact-email').value.trim();
       const phone = document.getElementById('contact-phone').value.trim();
       const service = document.getElementById('contact-service').value;
       const message = document.getElementById('contact-message').value.trim();
       const fb = document.getElementById('contact-feedback');
-      if (!name || !email) { fb.style.color = 'var(--red-bright)'; fb.textContent = 'Please fill in your name and email.'; return; }
-      const c = { id: Date.now(), name, email, phone, service, message, status: 'new', created_at: new Date().toISOString() };
-      state.contacts.push(c); localStorage.setItem('btech_contacts', JSON.stringify(state.contacts));
-      saveContactToDB(c); // also persist to Supabase
-      fb.style.color = '#16A34A'; fb.textContent = "✓ Message sent! We'll be in touch within 2 hours.";
-      ['contact-name', 'contact-email', 'contact-phone', 'contact-message'].forEach(id => document.getElementById(id).value = '');
-      document.getElementById('contact-service').value = '';
-      showToast('Message sent! ✓');
+      const btn = document.querySelector('#page-contact .btn-primary') || document.querySelector('[onclick="submitContact()"]');
+
+      // Validation
+      if (!name) { fb.style.color = 'var(--red-bright)'; fb.textContent = 'Please enter your name.'; return; }
+      if (!email || !/^[^@]+@[^@]+\.[^@]+$/.test(email)) { fb.style.color = 'var(--red-bright)'; fb.textContent = 'Please enter a valid email address.'; return; }
+      if (!message) { fb.style.color = 'var(--red-bright)'; fb.textContent = 'Please enter your message.'; return; }
+
+      // Loading state
+      fb.style.color = 'var(--text-muted)'; fb.textContent = 'Sending your message…';
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+
+      try {
+        const { data, error } = await db.from('contacts').insert([{
+          name, email, phone, service, message, status: 'new'
+        }]).select().single();
+
+        if (error) throw error;
+
+        // Update local state with returned record
+        const c = data || { name, email, phone, service, message, status: 'new', created_at: new Date().toISOString() };
+        state.contacts.unshift(c);
+        localStorage.setItem('btech_contacts', JSON.stringify(state.contacts));
+
+        fb.style.color = '#16A34A';
+        fb.textContent = "✓ Message sent! We'll be in touch within 2 hours.";
+        ['contact-name', 'contact-email', 'contact-phone', 'contact-message'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('contact-service').value = '';
+        showToast('Message sent! ✓');
+      } catch (e) {
+        console.error('Contact save error:', e);
+        fb.style.color = 'var(--red-bright)';
+        fb.textContent = 'Failed to send message. Please try WhatsApp or call us directly.';
+        showToast('Send failed — try WhatsApp instead.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = 'Send Message'; }
+      }
+    }
+
+    /* Generate sequential order number e.g. BS-100001 */
+    async function generateOrderNumber() {
+      try {
+        const { count } = await db.from('orders').select('*', { count: 'exact', head: true });
+        return 'BS-' + String(100001 + (count || 0)).slice(-6);
+      } catch (e) {
+        return 'BS-' + (100000 + Math.floor(Math.random() * 9000));
+      }
     }
 
     async function submitOrder() {
@@ -3435,19 +3481,61 @@
       const details = document.getElementById('order-details').value.trim();
       const budget = document.getElementById('order-budget').value;
       const fb = document.getElementById('order-feedback');
-      if (!name || !email || !selectedService) { fb.style.color = 'var(--red-bright)'; fb.textContent = 'Please select a service and fill in your name and email.'; return; }
-      const orderId = 'BS-' + Date.now().toString().slice(-6);
-      const order = { id: orderId, name, email, phone, service: selectedService, details, budget, status: 'pending', created_at: new Date().toISOString() };
-      state.orders.push(order); localStorage.setItem('btech_orders', JSON.stringify(state.orders));
-      saveOrderToDB(order); // also persist to Supabase
-      fb.style.color = '#16A34A'; fb.textContent = '✓ Order submitted! Generating your receipt...';
-      showToast('Order placed! Downloading receipt... ✓');
-      setTimeout(() => generateReceiptPDF(order), 800);
-      ['order-name', 'order-email', 'order-phone', 'order-details'].forEach(id => document.getElementById(id).value = '');
-      document.getElementById('order-budget').value = '';
-      selectedService = ''; selectedCyber = '';
-      document.querySelectorAll('.order-service-item').forEach(i => i.classList.remove('selected'));
-      document.querySelectorAll('.cyber-sub-items').forEach(s => s.classList.remove('open'));
+      const btn = document.querySelector('[onclick="submitOrder()"]');
+
+      // Full validation
+      if (!selectedService) { fb.style.color = 'var(--red-bright)'; fb.textContent = 'Please select a service first.'; return; }
+      if (!name) { fb.style.color = 'var(--red-bright)'; fb.textContent = 'Please enter your full name.'; return; }
+      if (!email || !/^[^@]+@[^@]+\.[^@]+$/.test(email)) { fb.style.color = 'var(--red-bright)'; fb.textContent = 'Please enter a valid email address.'; return; }
+      if (!phone) { fb.style.color = 'var(--red-bright)'; fb.textContent = 'Please enter your phone/WhatsApp number.'; return; }
+
+      // Loading state
+      fb.style.color = 'var(--text-muted)'; fb.textContent = 'Submitting your order…';
+      if (btn) { btn.disabled = true; btn.textContent = 'Submitting…'; }
+
+      try {
+        const order_number = await generateOrderNumber();
+
+        // Insert WITHOUT id — let Supabase generate the UUID
+        const { data, error } = await db.from('orders').insert([{
+          order_number,
+          name,
+          email,
+          phone,
+          service: selectedService,
+          details,
+          budget,
+          status: 'pending'
+        }]).select().single();
+
+        if (error) throw error;
+
+        const order = data;
+
+        // Update local state
+        state.orders.unshift(order);
+        localStorage.setItem('btech_orders', JSON.stringify(state.orders));
+
+        fb.style.color = '#16A34A';
+        fb.textContent = '✓ Order #' + order_number + ' submitted! Generating your receipt…';
+        showToast('Order placed! Downloading receipt… ✓');
+        setTimeout(() => generateReceiptPDF(order), 800);
+
+        // Reset form
+        ['order-name', 'order-email', 'order-phone', 'order-details'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('order-budget').value = '';
+        selectedService = ''; selectedCyber = '';
+        document.querySelectorAll('.order-service-item').forEach(i => i.classList.remove('selected'));
+        document.querySelectorAll('.cyber-sub-items').forEach(s => s.classList.remove('open'));
+
+      } catch (e) {
+        console.error('Order save error:', e);
+        fb.style.color = 'var(--red-bright)';
+        fb.textContent = 'Failed to submit order. Please try again or contact us on WhatsApp.';
+        showToast('Order failed — please try WhatsApp.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = 'Place Order'; }
+      }
     }
 
     /* PDF RECEIPT */
@@ -3478,7 +3566,7 @@
         doc.setFontSize(7.5); doc.setTextColor(90, 97, 128); doc.setFont('helvetica', 'normal');
         doc.text('ORDER NUMBER', 26, 87); doc.text('DATE', 100, 87); doc.text('STATUS', 165, 87);
         doc.setTextColor(10, 18, 36); doc.setFont('helvetica', 'bold'); doc.setFontSize(10);
-        doc.text(order.id || 'BS-000000', 26, 94);
+        doc.text(order.order_number || order.id?.slice(0,8) || 'BS-000000', 26, 94);
         doc.text(new Date(order.created_at).toLocaleDateString('en-KE', { day: '2-digit', month: 'short', year: 'numeric' }), 100, 94);
         doc.setTextColor(22, 163, 74); doc.text('CONFIRMED', 165, 94);
         // Customer section
@@ -3516,7 +3604,7 @@
         doc.setTextColor(140, 160, 200); doc.setFontSize(7);
         doc.text('© 2026 BTECH STUDIOS. All Rights Reserved. | Design Simplicity', W / 2, H - 9, { align: 'center' });
         doc.text('+254 706 675 009 | btechstudios01@gmail.com | Muratha Road, Nairobi KE', W / 2, H - 4, { align: 'center' });
-        doc.save('BTECH_Receipt_' + order.id + '.pdf');
+        doc.save('BTECH_Receipt_' + (order.order_number || order.id?.slice(0,8) || 'ORDER') + '.pdf');
         showToast('Receipt downloaded! ✓');
       } catch (e) { console.error('PDF error:', e); showToast('Order saved! Check admin dashboard.'); }
     }
@@ -3525,10 +3613,20 @@
     function doLogin() {
       const email = document.getElementById('auth-email').value.trim();
       const pass = document.getElementById('auth-password').value;
-      if (email === ADMIN_EMAIL && pass === ADMIN_PASS) { state.isLoggedIn = true; document.getElementById('auth-error').textContent = ''; navigate('admin'); }
-      else { document.getElementById('auth-error').textContent = 'Invalid credentials. Please try again.'; }
+      if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
+        state.isLoggedIn = true;
+        sessionStorage.setItem('btech_admin', '1');
+        document.getElementById('auth-error').textContent = '';
+        navigate('admin');
+      } else {
+        document.getElementById('auth-error').textContent = 'Invalid credentials. Please try again.';
+      }
     }
-    function adminLogout() { state.isLoggedIn = false; navigate('home'); }
+    function adminLogout() {
+      state.isLoggedIn = false;
+      sessionStorage.removeItem('btech_admin');
+      navigate('home');
+    }
 
     /* ADMIN */
     function showAdminPanel(panel, el) {
@@ -3564,25 +3662,110 @@
     }
 
     function renderAdminOrders() {
+      // Recent orders (overview panel — last 5)
       const tbody = document.getElementById('admin-orders-tbody');
-      if (tbody) tbody.innerHTML = state.orders.slice(-5).reverse().map(o => `<tr><td>${o.name}</td><td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;">${o.service}</td><td>${o.budget || '—'}</td><td><span class="status-badge ${o.status}">${o.status}</span></td><td>${new Date(o.created_at).toLocaleDateString('en-KE')}</td><td><button class="admin-save-btn" style="padding:5px 12px;font-size:0.75rem;" onclick='generateReceiptPDF(${JSON.stringify(o)})'>📄 PDF</button></td></tr>`).join('') || '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-muted);">No orders yet.</td></tr>';
+      if (tbody) tbody.innerHTML = state.orders.slice(0, 5).map(o => `
+        <tr>
+          <td><strong>${o.order_number || o.id?.slice(0,8) || '—'}</strong></td>
+          <td>${o.name}</td>
+          <td style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.service}</td>
+          <td>${o.budget || '—'}</td>
+          <td><span class="status-badge ${o.status}">${o.status}</span></td>
+          <td>${new Date(o.created_at).toLocaleDateString('en-KE')}</td>
+          <td><button class="admin-save-btn" style="padding:4px 10px;font-size:0.72rem;" onclick='generateReceiptPDF(${JSON.stringify(o)})'>📄 PDF</button></td>
+        </tr>`).join('') || '<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-muted);">No orders yet.</td></tr>';
+
+      // All orders table
       const allO = document.getElementById('all-orders-tbody');
-      if (allO) allO.innerHTML = state.orders.slice().reverse().map(o => `<tr><td>${o.name}</td><td>${o.email}</td><td>${o.phone || '—'}</td><td style="max-width:140px;">${o.service}</td><td>${o.budget || '—'}</td><td><span class="status-badge ${o.status}">${o.status}</span></td><td style="white-space:nowrap;"><select onchange="updateStatus('${o.id}',this.value)" style="padding:3px 6px;border:1px solid var(--gray-200);border-radius:5px;font-family:var(--font);font-size:0.75rem;margin-right:4px;"><option value="pending"${o.status === 'pending' ? ' selected' : ''}>Pending</option><option value="done"${o.status === 'done' ? ' selected' : ''}>Done</option><option value="new"${o.status === 'new' ? ' selected' : ''}>New</option></select><button class="admin-save-btn" style="padding:4px 10px;font-size:0.72rem;" onclick='generateReceiptPDF(${JSON.stringify(o)})'>PDF</button></td></tr>`).join('') || '<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-muted);">No orders yet.</td></tr>';
+      if (allO) allO.innerHTML = state.orders.map(o => `
+        <tr>
+          <td><strong style="color:var(--red);">${o.order_number || '—'}</strong></td>
+          <td>${o.name}</td>
+          <td>${o.email}</td>
+          <td>${o.phone || '—'}</td>
+          <td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.service}</td>
+          <td>${o.budget || '—'}</td>
+          <td>
+            <select onchange="updateStatus('${o.id}',this.value)" style="padding:3px 6px;border:1px solid var(--gray-200);border-radius:5px;font-family:var(--font);font-size:0.72rem;">
+              <option value="pending"${o.status==='pending'?' selected':''}>Pending</option>
+              <option value="processing"${o.status==='processing'?' selected':''}>Processing</option>
+              <option value="completed"${o.status==='completed'?' selected':''}>Completed</option>
+              <option value="cancelled"${o.status==='cancelled'?' selected':''}>Cancelled</option>
+            </select>
+          </td>
+          <td>${new Date(o.created_at).toLocaleDateString('en-KE')}</td>
+          <td style="white-space:nowrap;display:flex;gap:4px;">
+            <button class="admin-save-btn" style="padding:4px 8px;font-size:0.7rem;" onclick='generateReceiptPDF(${JSON.stringify(o)})'>PDF</button>
+            <button class="admin-danger-btn" style="padding:4px 8px;font-size:0.7rem;" onclick="deleteOrder('${o.id}')">✕</button>
+          </td>
+        </tr>`).join('') || '<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--text-muted);">No orders yet.</td></tr>';
+
+      // All contacts table
       const allC = document.getElementById('all-contacts-tbody');
-      if (allC) allC.innerHTML = state.contacts.slice().reverse().map(c => `<tr><td>${c.name}</td><td>${c.email}</td><td>${c.phone || '—'}</td><td>${c.service || '—'}</td><td style="max-width:180px;">${(c.message || '').slice(0, 50)}…</td><td><span class="status-badge ${c.status || 'new'}">${c.status || 'new'}</span></td><td>${new Date(c.created_at).toLocaleDateString('en-KE')}</td></tr>`).join('') || '<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-muted);">No messages yet.</td></tr>';
+      if (allC) allC.innerHTML = state.contacts.map(c => `
+        <tr style="${c.status==='new'?'font-weight:600;background:rgba(139,0,0,0.03);':''}">
+          <td>${c.name}</td>
+          <td>${c.email}</td>
+          <td>${c.phone || '—'}</td>
+          <td>${c.service || '—'}</td>
+          <td style="max-width:180px;">${(c.message || '').slice(0,60)}${(c.message||'').length>60?'…':''}</td>
+          <td><span class="status-badge ${c.status||'new'}">${c.status||'new'}</span></td>
+          <td>${new Date(c.created_at).toLocaleDateString('en-KE')}</td>
+          <td style="white-space:nowrap;display:flex;gap:4px;">
+            ${c.status!=='read'?`<button class="admin-save-btn" style="padding:4px 8px;font-size:0.7rem;" onclick="markContactRead('${c.id}')">✓ Read</button>`:''}
+            <button class="admin-danger-btn" style="padding:4px 8px;font-size:0.7rem;" onclick="deleteContact('${c.id}')">✕</button>
+          </td>
+        </tr>`).join('') || '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--text-muted);">No messages yet.</td></tr>';
+
       setTimeout(() => { initOrdersChart(); initServicesChart(); }, 100);
     }
-    function updateStatus(id, status) {
+    async function updateStatus(id, status) {
       const o = state.orders.find(o => o.id === id);
-      if (o) {
-        o.status = status;
-        localStorage.setItem('btech_orders', JSON.stringify(state.orders));
-        // Sync status update to Supabase
-        db.from('orders').update({ status }).eq('id', id).then(({ error }) => {
-          if (error) console.warn('Supabase status update:', error.message);
-        });
-        showToast('Status updated!');
-      }
+      if (!o) return;
+      o.status = status;
+      localStorage.setItem('btech_orders', JSON.stringify(state.orders));
+      renderAdminOrders();
+      try {
+        const { error } = await db.from('orders').update({ status }).eq('id', id);
+        if (error) { console.warn('Supabase status update:', error.message); showToast('Status saved locally only.'); }
+        else { showToast('Status updated! ✓'); }
+      } catch (e) { console.warn('Supabase unreachable:', e); showToast('Status saved locally.'); }
+    }
+
+    async function deleteOrder(id) {
+      if (!confirm('Delete this order permanently?')) return;
+      state.orders = state.orders.filter(o => o.id !== id);
+      localStorage.setItem('btech_orders', JSON.stringify(state.orders));
+      renderAdminOrders();
+      try {
+        const { error } = await db.from('orders').delete().eq('id', id);
+        if (error) console.warn('Supabase delete error:', error.message);
+        else showToast('Order deleted. ✓');
+      } catch (e) { showToast('Deleted locally.'); }
+    }
+
+    async function deleteContact(id) {
+      if (!confirm('Delete this contact message?')) return;
+      state.contacts = state.contacts.filter(c => c.id !== id);
+      localStorage.setItem('btech_contacts', JSON.stringify(state.contacts));
+      renderAdminOrders();
+      try {
+        const { error } = await db.from('contacts').delete().eq('id', id);
+        if (error) console.warn('Supabase delete error:', error.message);
+        else showToast('Contact deleted. ✓');
+      } catch (e) { showToast('Deleted locally.'); }
+    }
+
+    async function markContactRead(id) {
+      const c = state.contacts.find(c => c.id === id);
+      if (!c) return;
+      c.status = 'read';
+      localStorage.setItem('btech_contacts', JSON.stringify(state.contacts));
+      renderAdminOrders();
+      try {
+        await db.from('contacts').update({ status: 'read' }).eq('id', id);
+        showToast('Marked as read. ✓');
+      } catch (e) { showToast('Updated locally.'); }
     }
 
     /* SERVICES ADMIN */
@@ -3690,8 +3873,9 @@
     function initOrdersChart() { const ctx = document.getElementById('ordersChart'); if (!ctx) return; if (oChart) oChart.destroy(); oChart = new Chart(ctx, { type: 'line', data: { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], datasets: [{ label: 'Orders', data: [1, 2, 1, 3, 4, 2, 5, 4, 6, 5, 7, 8], borderColor: '#8B0000', backgroundColor: 'rgba(139,0,0,0.08)', tension: 0.4, fill: true, pointBackgroundColor: '#8B0000', pointRadius: 4 }] }, options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } }, x: { grid: { display: false } } } } }); }
     function initServicesChart() { const ctx = document.getElementById('servicesChart'); if (!ctx) return; if (sChart) sChart.destroy(); sChart = new Chart(ctx, { type: 'doughnut', data: { labels: ['Web Design', 'Graphics', 'Logo', 'SEO', 'Social', 'Cyber'], datasets: [{ data: [35, 20, 18, 12, 10, 5], backgroundColor: ['#8B0000', '#0A1F44', '#C0001A', '#1a3a6e', '#0F2D5E', '#5a0000'], borderWidth: 0 }] }, options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 12 } } } } }); }
     function initAnalytics() {
-      const rev = state.orders.reduce((s, o) => { const m = (o.budget || '').match(/\d+/g); return s + (m ? parseInt(m[0]) : 5000); }, 0);
-      const avg = state.orders.length ? Math.round(rev / state.orders.length) : 0;
+      const completed = state.orders.filter(o => o.status === 'completed');
+      const rev = completed.reduce((s, o) => { const m = (o.budget || '').match(/\d[\d,]*/g); return s + (m ? parseInt(m[0].replace(/,/g,'')) : 0); }, 0);
+      const avg = state.orders.length ? Math.round(rev / Math.max(completed.length, 1)) : 0;
       const kR = document.getElementById('kpi-revenue'); if (kR) kR.textContent = 'KES ' + rev.toLocaleString();
       const kA = document.getElementById('kpi-avg'); if (kA) kA.textContent = 'KES ' + avg.toLocaleString();
       const kS = document.getElementById('kpi-active-svcs'); if (kS) kS.textContent = state.services.filter(s => s.status === 'active').length;
@@ -3716,72 +3900,39 @@
       });
       const d = document.getElementById('admin-panel-date');
       if (d) d.textContent = new Date().toLocaleDateString('en-KE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-      if (location.hash === '#admin' || location.hash === '#auth') navigate('auth');
+      // Restore admin session across page refreshes
+      if (sessionStorage.getItem('btech_admin') === '1') {
+        state.isLoggedIn = true;
+        if (location.hash === '#admin') { navigate('admin'); }
+        else if (location.hash === '#auth') { navigate('admin'); }
+      } else {
+        if (location.hash === '#admin' || location.hash === '#auth') navigate('auth');
+      }
       document.addEventListener('keydown', e => { if (e.ctrlKey && e.shiftKey && e.key === 'A') navigate('auth'); });
     });
 
     /* =============================================
-       SUPABASE INTEGRATION — BTECH STUDIOS
+       SUPABASE — BTECH STUDIOS (Production-Ready)
        ============================================= */
     const SUPABASE_URL  = 'https://vsdwhwfakexpgxojorvy.supabase.co';
     const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZzZHdod2Zha2V4cGd4b2pvcnZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3OTcwNzUsImV4cCI6MjA5NTM3MzA3NX0.ue0Q2PC8G_VAffZW0fSJHZsiZQIiEaERU40wwIehTW8';
     const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-    /* Save an order to Supabase (non-blocking, localStorage is primary) */
-    async function saveOrderToDB(order) {
-      try {
-        const { error } = await db.from('orders').insert([{
-          id: order.id,
-          name: order.name,
-          email: order.email,
-          phone: order.phone,
-          service: order.service,
-          details: order.details,
-          budget: order.budget,
-          status: order.status,
-          created_at: order.created_at
-        }]);
-        if (error) console.warn('Supabase order save:', error.message);
-      } catch (e) { console.warn('Supabase unreachable:', e); }
-    }
-
-    /* Save a contact message to Supabase (non-blocking) */
-    async function saveContactToDB(contact) {
-      try {
-        const { error } = await db.from('contacts').insert([{
-          name: contact.name,
-          email: contact.email,
-          phone: contact.phone,
-          service: contact.service,
-          message: contact.message,
-          status: contact.status,
-          created_at: contact.created_at
-        }]);
-        if (error) console.warn('Supabase contact save:', error.message);
-      } catch (e) { console.warn('Supabase unreachable:', e); }
-    }
-
-    /* Load ALL orders from Supabase — replaces local state entirely so every browser sees the same data */
+    /* Load ALL orders from Supabase — single source of truth */
     async function syncOrdersFromDB() {
       try {
         const { data, error } = await db.from('orders').select('*').order('created_at', { ascending: false });
         if (error) { console.warn('Supabase orders fetch:', error.message); return; }
-        if (data) {
-          state.orders = data;
-          localStorage.setItem('btech_orders', JSON.stringify(state.orders));
-        }
+        if (data) { state.orders = data; localStorage.setItem('btech_orders', JSON.stringify(state.orders)); }
       } catch (e) { console.warn('Supabase unreachable:', e); }
     }
 
-    /* Load ALL contacts from Supabase — replaces local state entirely */
+    /* Load ALL contacts from Supabase — single source of truth */
     async function syncContactsFromDB() {
       try {
         const { data, error } = await db.from('contacts').select('*').order('created_at', { ascending: false });
         if (error) { console.warn('Supabase contacts fetch:', error.message); return; }
-        if (data) {
-          state.contacts = data;
-          localStorage.setItem('btech_contacts', JSON.stringify(state.contacts));
-        }
+        if (data) { state.contacts = data; localStorage.setItem('btech_contacts', JSON.stringify(state.contacts)); }
       } catch (e) { console.warn('Supabase unreachable:', e); }
     }
   </script>
