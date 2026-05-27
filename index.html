@@ -4,6 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>BTECH STUDIOS — Design Simplicity</title>
   <meta name="description"
     content="BTECH STUDIOS — Creative Digital Solutions For Modern Businesses. Web Design, Graphics, SEO, Social Media Marketing & Online Cyber Services in Nairobi, Kenya." />
@@ -20,6 +23,22 @@
     rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    /* =====================================================
+       SUPABASE CLIENT — initialized immediately after CDN
+       so db is available to ALL functions below
+    ===================================================== */
+    const SUPABASE_URL  = 'https://vsdwhwfakexpgxojorvy.supabase.co';
+    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZzZHdod2Zha2V4cGd4b2pvcnZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3OTcwNzUsImV4cCI6MjA5NTM3MzA3NX0.ue0Q2PC8G_VAffZW0fSJHZsiZQIiEaERU40wwIehTW8';
+    const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, {
+      auth: {
+        persistSession: false,      // anon client — no auth session needed
+        autoRefreshToken: false,
+        detectSessionInUrl: false
+      }
+    });
+    console.log('[BTECH] Supabase client ready:', SUPABASE_URL);
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     :root {
@@ -3438,102 +3457,144 @@
       if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
 
       try {
-        const { data, error } = await db.from('contacts').insert([{
+        // INSERT only — no .select() because anon cannot SELECT (RLS)
+        const { error } = await db.from('contacts').insert([{
           name, email, phone, service, message, status: 'new'
-        }]).select().single();
+        }]);
 
-        if (error) throw error;
+        if (error) {
+          console.error('[BTECH] Contact insert error:', error);
+          throw new Error(error.message || 'Database error');
+        }
 
-        // Update local state with returned record
-        const c = data || { name, email, phone, service, message, status: 'new', created_at: new Date().toISOString() };
+        console.log('[BTECH] Contact saved successfully:', email);
+
+        // Build local record without reading back from DB
+        const c = { name, email, phone, service, message, status: 'new', created_at: new Date().toISOString() };
         state.contacts.unshift(c);
         localStorage.setItem('btech_contacts', JSON.stringify(state.contacts));
 
         fb.style.color = '#16A34A';
         fb.textContent = "✓ Message sent! We'll be in touch within 2 hours.";
-        ['contact-name', 'contact-email', 'contact-phone', 'contact-message'].forEach(id => document.getElementById(id).value = '');
-        document.getElementById('contact-service').value = '';
+        ['contact-name', 'contact-email', 'contact-phone', 'contact-message'].forEach(id => {
+          const el = document.getElementById(id); if (el) el.value = '';
+        });
+        const svcEl = document.getElementById('contact-service'); if (svcEl) svcEl.value = '';
         showToast('Message sent! ✓');
       } catch (e) {
-        console.error('Contact save error:', e);
+        console.error('[BTECH] submitContact failed:', e);
         fb.style.color = 'var(--red-bright)';
-        fb.textContent = 'Failed to send message. Please try WhatsApp or call us directly.';
+        fb.textContent = '✗ ' + (e.message || 'Failed to send. Please try WhatsApp or call us directly.');
         showToast('Send failed — try WhatsApp instead.');
       } finally {
         if (btn) { btn.disabled = false; btn.textContent = 'Send Message'; }
       }
     }
 
-    /* Generate sequential order number e.g. BS-100001 */
-    async function generateOrderNumber() {
-      try {
-        const { count } = await db.from('orders').select('*', { count: 'exact', head: true });
-        return 'BS-' + String(100001 + (count || 0)).slice(-6);
-      } catch (e) {
-        return 'BS-' + (100000 + Math.floor(Math.random() * 9000));
-      }
+    /* Generate unique order number — no DB query needed (anon cannot SELECT) */
+    function generateOrderNumber() {
+      const ts   = Date.now().toString().slice(-5);        // last 5 digits of timestamp
+      const rand = Math.floor(Math.random() * 90 + 10);   // 2-digit random
+      return 'BS-' + ts + rand;                           // e.g. BS-5832147
     }
 
+    /* Track in-flight submission to prevent duplicates */
+    let _orderSubmitting = false;
+
     async function submitOrder() {
-      const name = document.getElementById('order-name').value.trim();
-      const email = document.getElementById('order-email').value.trim();
-      const phone = document.getElementById('order-phone').value.trim();
+      if (_orderSubmitting) return;                  // prevent double-tap
+
+      const name    = document.getElementById('order-name').value.trim();
+      const email   = document.getElementById('order-email').value.trim();
+      const phone   = document.getElementById('order-phone').value.trim();
       const details = document.getElementById('order-details').value.trim();
-      const budget = document.getElementById('order-budget').value;
-      const fb = document.getElementById('order-feedback');
-      const btn = document.querySelector('[onclick="submitOrder()"]');
+      const budget  = document.getElementById('order-budget').value.trim();
+      const fb      = document.getElementById('order-feedback');
+      const btn     = document.querySelector('[onclick="submitOrder()"]');
 
-      // Full validation
-      if (!selectedService) { fb.style.color = 'var(--red-bright)'; fb.textContent = 'Please select a service first.'; return; }
-      if (!name) { fb.style.color = 'var(--red-bright)'; fb.textContent = 'Please enter your full name.'; return; }
-      if (!email || !/^[^@]+@[^@]+\.[^@]+$/.test(email)) { fb.style.color = 'var(--red-bright)'; fb.textContent = 'Please enter a valid email address.'; return; }
-      if (!phone) { fb.style.color = 'var(--red-bright)'; fb.textContent = 'Please enter your phone/WhatsApp number.'; return; }
+      // ── Validation ──────────────────────────────────────────────
+      if (!selectedService) {
+        fb.style.color = 'var(--red-bright)';
+        fb.textContent = '⚠ Please select a service first.';
+        return;
+      }
+      if (!name) {
+        fb.style.color = 'var(--red-bright)';
+        fb.textContent = '⚠ Please enter your full name.';
+        return;
+      }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        fb.style.color = 'var(--red-bright)';
+        fb.textContent = '⚠ Please enter a valid email address.';
+        return;
+      }
+      if (!phone) {
+        fb.style.color = 'var(--red-bright)';
+        fb.textContent = '⚠ Please enter your phone/WhatsApp number.';
+        return;
+      }
 
-      // Loading state
-      fb.style.color = 'var(--text-muted)'; fb.textContent = 'Submitting your order…';
+      // ── Loading state ────────────────────────────────────────────
+      _orderSubmitting = true;
+      fb.style.color = 'var(--text-muted)';
+      fb.textContent = '⏳ Submitting your order…';
       if (btn) { btn.disabled = true; btn.textContent = 'Submitting…'; }
 
       try {
-        const order_number = await generateOrderNumber();
+        const order_number = generateOrderNumber();           // sync, no DB call
+        const created_at   = new Date().toISOString();
 
-        // Insert WITHOUT id — let Supabase generate the UUID
-        const { data, error } = await db.from('orders').insert([{
+        console.log('[BTECH] Inserting order:', { order_number, name, email, phone, service: selectedService });
+
+        // ── Supabase INSERT (no .select() — anon cannot SELECT) ───
+        const { error } = await db.from('orders').insert([{
           order_number,
           name,
           email,
           phone,
-          service: selectedService,
-          details,
-          budget,
-          status: 'pending'
-        }]).select().single();
+          service:  selectedService,
+          details:  details  || null,
+          budget:   budget   || null,
+          status:   'pending'
+        }]);
 
-        if (error) throw error;
+        if (error) {
+          console.error('[BTECH] Supabase insert error:', error);
+          throw new Error(error.message || 'Database error');
+        }
 
-        const order = data;
+        console.log('[BTECH] Order saved successfully:', order_number);
 
-        // Update local state
+        // ── Build local order object (no DB read-back needed) ─────
+        const order = { order_number, name, email, phone, service: selectedService, details, budget, status: 'pending', created_at };
         state.orders.unshift(order);
         localStorage.setItem('btech_orders', JSON.stringify(state.orders));
 
+        // ── Success UI ────────────────────────────────────────────
         fb.style.color = '#16A34A';
-        fb.textContent = '✓ Order #' + order_number + ' submitted! Generating your receipt…';
-        showToast('Order placed! Downloading receipt… ✓');
+        fb.textContent = '✓ Order ' + order_number + ' submitted! Generating your receipt…';
+        showToast('Order placed! ✓');
         setTimeout(() => generateReceiptPDF(order), 800);
 
-        // Reset form
-        ['order-name', 'order-email', 'order-phone', 'order-details'].forEach(id => document.getElementById(id).value = '');
-        document.getElementById('order-budget').value = '';
-        selectedService = ''; selectedCyber = '';
+        // ── Reset form ────────────────────────────────────────────
+        ['order-name', 'order-email', 'order-phone', 'order-details'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.value = '';
+        });
+        const budgetEl = document.getElementById('order-budget');
+        if (budgetEl) budgetEl.value = '';
+        selectedService = '';
+        selectedCyber   = '';
         document.querySelectorAll('.order-service-item').forEach(i => i.classList.remove('selected'));
         document.querySelectorAll('.cyber-sub-items').forEach(s => s.classList.remove('open'));
 
-      } catch (e) {
-        console.error('Order save error:', e);
+      } catch (err) {
+        console.error('[BTECH] submitOrder failed:', err);
         fb.style.color = 'var(--red-bright)';
-        fb.textContent = 'Failed to submit order. Please try again or contact us on WhatsApp.';
-        showToast('Order failed — please try WhatsApp.');
+        fb.textContent = '✗ ' + (err.message || 'Submission failed. Please try again or contact us on WhatsApp.');
+        showToast('Order failed — check your connection or try WhatsApp.');
       } finally {
+        _orderSubmitting = false;
         if (btn) { btn.disabled = false; btn.textContent = 'Place Order'; }
       }
     }
@@ -3912,28 +3973,32 @@
     });
 
     /* =============================================
-       SUPABASE — BTECH STUDIOS (Production-Ready)
+       SUPABASE — db client initialized in <head>
        ============================================= */
-    const SUPABASE_URL  = 'https://vsdwhwfakexpgxojorvy.supabase.co';
-    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZzZHdod2Zha2V4cGd4b2pvcnZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3OTcwNzUsImV4cCI6MjA5NTM3MzA3NX0.ue0Q2PC8G_VAffZW0fSJHZsiZQIiEaERU40wwIehTW8';
-    const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+    // db is already defined above — do not redeclare
 
-    /* Load ALL orders from Supabase — single source of truth */
+    /* ── Admin-only: SELECT requires authenticated RLS policy ─────
+       These functions are called only from initAdmin() after login.
+       If SELECT RLS is set to anon, they also work for public users.
+    ──────────────────────────────────────────────────────────── */
     async function syncOrdersFromDB() {
       try {
+        console.log('[BTECH] Fetching orders from Supabase…');
         const { data, error } = await db.from('orders').select('*').order('created_at', { ascending: false });
-        if (error) { console.warn('Supabase orders fetch:', error.message); return; }
+        if (error) { console.warn('[BTECH] Orders fetch error:', error.message, error.code); return; }
+        console.log('[BTECH] Orders fetched:', data?.length ?? 0);
         if (data) { state.orders = data; localStorage.setItem('btech_orders', JSON.stringify(state.orders)); }
-      } catch (e) { console.warn('Supabase unreachable:', e); }
+      } catch (e) { console.warn('[BTECH] syncOrdersFromDB unreachable:', e); }
     }
 
-    /* Load ALL contacts from Supabase — single source of truth */
     async function syncContactsFromDB() {
       try {
+        console.log('[BTECH] Fetching contacts from Supabase…');
         const { data, error } = await db.from('contacts').select('*').order('created_at', { ascending: false });
-        if (error) { console.warn('Supabase contacts fetch:', error.message); return; }
+        if (error) { console.warn('[BTECH] Contacts fetch error:', error.message, error.code); return; }
+        console.log('[BTECH] Contacts fetched:', data?.length ?? 0);
         if (data) { state.contacts = data; localStorage.setItem('btech_contacts', JSON.stringify(state.contacts)); }
-      } catch (e) { console.warn('Supabase unreachable:', e); }
+      } catch (e) { console.warn('[BTECH] syncContactsFromDB unreachable:', e); }
     }
   </script>
 </body>
