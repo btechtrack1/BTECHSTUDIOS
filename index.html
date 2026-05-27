@@ -3673,20 +3673,25 @@
     /* AUTH */
     function doLogin() {
       const email = document.getElementById('auth-email').value.trim();
-      const pass = document.getElementById('auth-password').value;
+      const pass  = document.getElementById('auth-password').value;
       if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
-        state.isLoggedIn = true;
+        _adminInitialized = false;   // force fresh init on each login
+        state.isLoggedIn  = true;
         sessionStorage.setItem('btech_admin', '1');
         document.getElementById('auth-error').textContent = '';
         navigate('admin');
+        console.log('[BTECH] Admin logged in.');
       } else {
         document.getElementById('auth-error').textContent = 'Invalid credentials. Please try again.';
       }
     }
     function adminLogout() {
+      stopAutoRefresh();
+      _adminInitialized = false;
       state.isLoggedIn = false;
       sessionStorage.removeItem('btech_admin');
       navigate('home');
+      console.log('[BTECH] Admin logged out. Realtime stopped.');
     }
 
     /* ADMIN */
@@ -3697,29 +3702,36 @@
       if (el) el.classList.add('active');
       const titles = { overview: 'Dashboard Overview', orders: 'All Orders', contacts: 'Contact Messages', services: 'Services & Prices', cyber: 'Cyber Services Management', portfolio: 'Portfolio Management', testimonials: 'Testimonials', offers: 'Weekly Offers', analytics: 'Analytics' };
       document.getElementById('admin-panel-title').textContent = titles[panel] || 'Admin';
-      if (panel === 'overview') initAdmin();
-      if (panel === 'services') renderAdminServices();
-      if (panel === 'cyber') renderAdminCyber();
-      if (panel === 'portfolio') renderAdminPortfolio();
+      if (panel === 'overview')     initAdmin();
+      if (panel === 'orders')       refreshDashboard();   // always fetch latest
+      if (panel === 'contacts')     refreshDashboard();   // always fetch latest
+      if (panel === 'services')     renderAdminServices();
+      if (panel === 'cyber')        renderAdminCyber();
+      if (panel === 'portfolio')    renderAdminPortfolio();
       if (panel === 'testimonials') renderAdminTestimonials();
       if (panel === 'offers') { const o = state.offer; document.getElementById('offer-title-input').value = o.title; document.getElementById('offer-desc-input').value = o.desc; document.getElementById('offer-old-input').value = o.oldPrice; document.getElementById('offer-new-input').value = o.newPrice; }
-      if (panel === 'analytics') initAnalytics();
+      if (panel === 'analytics')    initAnalytics();
     }
 
-    function initAdmin() {
-      // Render immediately from local state so admin page shows without delay
-      document.getElementById('kpi-orders').textContent = state.orders.length;
-      document.getElementById('kpi-contacts').textContent = state.contacts.length;
-      document.getElementById('kpi-portfolio').textContent = state.portfolio.length;
-      document.getElementById('kpi-testimonials').textContent = state.testimonials.filter(t => t.approved).length;
+    /* Called once when admin first logs in OR navigates back to overview */
+    let _adminInitialized = false;
+    async function initAdmin() {
+      // Render local state immediately so page isn't blank
+      updateKPIs();
       renderAdminOrders();
       setTimeout(() => { initOrdersChart(); initServicesChart(); }, 100);
-      // Silently sync from Supabase in the background
-      Promise.all([syncOrdersFromDB(), syncContactsFromDB()]).then(() => {
-        document.getElementById('kpi-orders').textContent = state.orders.length;
-        document.getElementById('kpi-contacts').textContent = state.contacts.length;
-        renderAdminOrders();
-      }).catch(() => { /* Supabase unavailable - local data still shown */ });
+
+      // Full live fetch + realtime (only set up once per login session)
+      if (!_adminInitialized) {
+        _adminInitialized = true;
+        console.log('[BTECH] Admin dashboard initializing live data…');
+        await refreshDashboard();
+        setupRealtimeSubscriptions();
+        startAutoRefresh();
+      } else {
+        // Already initialized — just refresh data
+        await refreshDashboard();
+      }
     }
 
     function renderAdminOrders() {
@@ -3977,29 +3989,187 @@
        ============================================= */
     // db is already defined above — do not redeclare
 
-    /* ── Admin-only: SELECT requires authenticated RLS policy ─────
-       These functions are called only from initAdmin() after login.
-       If SELECT RLS is set to anon, they also work for public users.
-    ──────────────────────────────────────────────────────────── */
-    async function syncOrdersFromDB() {
-      try {
-        console.log('[BTECH] Fetching orders from Supabase…');
-        const { data, error } = await db.from('orders').select('*').order('created_at', { ascending: false });
-        if (error) { console.warn('[BTECH] Orders fetch error:', error.message, error.code); return; }
-        console.log('[BTECH] Orders fetched:', data?.length ?? 0);
-        if (data) { state.orders = data; localStorage.setItem('btech_orders', JSON.stringify(state.orders)); }
-      } catch (e) { console.warn('[BTECH] syncOrdersFromDB unreachable:', e); }
+    /* ================================================================
+       BTECH ADMIN — LIVE DATA SYSTEM
+       ================================================================
+       Architecture:
+         • fetchOrders() / fetchContacts() — pull full dataset from Supabase
+         • refreshDashboard()              — fetch both + re-render all KPIs
+         • setupRealtimeSubscriptions()    — Supabase realtime channels
+         • startAutoRefresh()              — 30s polling fallback
+         • stopAutoRefresh()               — clean up on logout
+
+       RLS NOTE:
+         SELECT policy must allow 'anon' role for this to work.
+         Run this SQL in Supabase if data isn't loading:
+
+         CREATE POLICY "anon_select_orders"   ON orders   FOR SELECT TO anon USING (true);
+         CREATE POLICY "anon_select_contacts" ON contacts FOR SELECT TO anon USING (true);
+    ================================================================ */
+
+    let _refreshTimer   = null;   // auto-refresh interval handle
+    let _realtimeOrders = null;   // realtime channel for orders
+    let _realtimeContacts = null; // realtime channel for contacts
+
+    /* ── Fetch all orders from Supabase ─────────────────────────── */
+    async function fetchOrders() {
+      const { data, error } = await db
+        .from('orders')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('[BTECH] fetchOrders error:', error.message, '| code:', error.code);
+        // Surface the error in the orders table so admin can see it
+        const el = document.getElementById('all-orders-tbody');
+        if (el) el.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:20px;color:var(--red-bright);">
+          ⚠ Could not load orders: ${error.message}<br>
+          <small style="color:var(--text-muted);">Check Supabase RLS — SELECT must allow anon role.<br>
+          Run: CREATE POLICY "anon_select_orders" ON orders FOR SELECT TO anon USING (true);</small>
+        </td></tr>`;
+        return false;
+      }
+
+      state.orders = data || [];
+      localStorage.setItem('btech_orders', JSON.stringify(state.orders));
+      console.log('[BTECH] Orders fetched:', state.orders.length);
+      return true;
     }
 
-    async function syncContactsFromDB() {
-      try {
-        console.log('[BTECH] Fetching contacts from Supabase…');
-        const { data, error } = await db.from('contacts').select('*').order('created_at', { ascending: false });
-        if (error) { console.warn('[BTECH] Contacts fetch error:', error.message, error.code); return; }
-        console.log('[BTECH] Contacts fetched:', data?.length ?? 0);
-        if (data) { state.contacts = data; localStorage.setItem('btech_contacts', JSON.stringify(state.contacts)); }
-      } catch (e) { console.warn('[BTECH] syncContactsFromDB unreachable:', e); }
+    /* ── Fetch all contacts from Supabase ───────────────────────── */
+    async function fetchContacts() {
+      const { data, error } = await db
+        .from('contacts')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('[BTECH] fetchContacts error:', error.message, '| code:', error.code);
+        const el = document.getElementById('all-contacts-tbody');
+        if (el) el.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--red-bright);">
+          ⚠ Could not load messages: ${error.message}<br>
+          <small style="color:var(--text-muted);">Run: CREATE POLICY "anon_select_contacts" ON contacts FOR SELECT TO anon USING (true);</small>
+        </td></tr>`;
+        return false;
+      }
+
+      state.contacts = data || [];
+      localStorage.setItem('btech_contacts', JSON.stringify(state.contacts));
+      console.log('[BTECH] Contacts fetched:', state.contacts.length);
+      return true;
     }
+
+    /* ── Update all KPI counters ────────────────────────────────── */
+    function updateKPIs() {
+      const totalOrders   = state.orders.length;
+      const totalContacts = state.contacts.length;
+      const pending       = state.orders.filter(o => o.status === 'pending').length;
+      const newMessages   = state.contacts.filter(c => c.status === 'new').length;
+
+      const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+      set('kpi-orders',       totalOrders);
+      set('kpi-contacts',     totalContacts);
+      set('kpi-pending',      pending);
+      set('kpi-new-messages', newMessages);
+      set('kpi-portfolio',    state.portfolio.length);
+      set('kpi-testimonials', state.testimonials.filter(t => t.approved).length);
+    }
+
+    /* ── Full dashboard refresh ─────────────────────────────────── */
+    async function refreshDashboard() {
+      console.log('[BTECH] Refreshing dashboard…');
+
+      // Show loading indicator in overview table
+      const tbody = document.getElementById('admin-orders-tbody');
+      if (tbody && tbody.innerHTML === '') {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text-muted);">⏳ Loading orders…</td></tr>';
+      }
+
+      await Promise.all([fetchOrders(), fetchContacts()]);
+      updateKPIs();
+      renderAdminOrders();
+      setTimeout(() => { initOrdersChart(); initServicesChart(); }, 100);
+    }
+
+    /* ── Realtime subscriptions (live push from Supabase) ────────── */
+    function setupRealtimeSubscriptions() {
+      // Clean up any existing channels first
+      if (_realtimeOrders)   { db.removeChannel(_realtimeOrders);   _realtimeOrders   = null; }
+      if (_realtimeContacts) { db.removeChannel(_realtimeContacts); _realtimeContacts = null; }
+
+      // Orders channel
+      _realtimeOrders = db
+        .channel('btech-orders-live')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'orders' }, payload => {
+          console.log('[BTECH] Realtime orders event:', payload.eventType);
+          if (payload.eventType === 'INSERT') {
+            // Prepend new order instantly
+            state.orders.unshift(payload.new);
+          } else if (payload.eventType === 'UPDATE') {
+            const idx = state.orders.findIndex(o => o.id === payload.new.id);
+            if (idx !== -1) state.orders[idx] = payload.new;
+          } else if (payload.eventType === 'DELETE') {
+            state.orders = state.orders.filter(o => o.id !== payload.old.id);
+          }
+          localStorage.setItem('btech_orders', JSON.stringify(state.orders));
+          updateKPIs();
+          renderAdminOrders();
+          if (payload.eventType === 'INSERT') {
+            showToast('🔔 New order received: ' + (payload.new.order_number || '') + ' from ' + (payload.new.name || 'customer'));
+          }
+        })
+        .subscribe(status => {
+          console.log('[BTECH] Orders realtime status:', status);
+        });
+
+      // Contacts channel
+      _realtimeContacts = db
+        .channel('btech-contacts-live')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'contacts' }, payload => {
+          console.log('[BTECH] Realtime contacts event:', payload.eventType);
+          if (payload.eventType === 'INSERT') {
+            state.contacts.unshift(payload.new);
+          } else if (payload.eventType === 'UPDATE') {
+            const idx = state.contacts.findIndex(c => c.id === payload.new.id);
+            if (idx !== -1) state.contacts[idx] = payload.new;
+          } else if (payload.eventType === 'DELETE') {
+            state.contacts = state.contacts.filter(c => c.id !== payload.old.id);
+          }
+          localStorage.setItem('btech_contacts', JSON.stringify(state.contacts));
+          updateKPIs();
+          renderAdminOrders();
+          if (payload.eventType === 'INSERT') {
+            showToast('💬 New message from ' + (payload.new.name || 'visitor'));
+          }
+        })
+        .subscribe(status => {
+          console.log('[BTECH] Contacts realtime status:', status);
+        });
+    }
+
+    /* ── Auto-refresh every 30s (polling fallback if realtime fails) */
+    function startAutoRefresh() {
+      stopAutoRefresh();
+      _refreshTimer = setInterval(() => {
+        if (state.isLoggedIn) {
+          console.log('[BTECH] Auto-refresh tick');
+          refreshDashboard();
+        } else {
+          stopAutoRefresh();
+        }
+      }, 30000);
+      console.log('[BTECH] Auto-refresh started (30s interval)');
+    }
+
+    function stopAutoRefresh() {
+      if (_refreshTimer) { clearInterval(_refreshTimer); _refreshTimer = null; }
+      if (_realtimeOrders)   { db.removeChannel(_realtimeOrders);   _realtimeOrders   = null; }
+      if (_realtimeContacts) { db.removeChannel(_realtimeContacts); _realtimeContacts = null; }
+    }
+
+    /* ── Keep syncOrdersFromDB/syncContactsFromDB as aliases ────── */
+    async function syncOrdersFromDB()   { return fetchOrders(); }
+    async function syncContactsFromDB() { return fetchContacts(); }
   </script>
 </body>
 
