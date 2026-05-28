@@ -3885,12 +3885,14 @@
       }
     }
     function adminLogout() {
-      stopAutoRefresh();
+      cleanupSubscriptions();
       _adminInitialized = false;
-      state.isLoggedIn = false;
+      state.isLoggedIn  = false;
       sessionStorage.removeItem('btech_admin');
       navigate('home');
-      console.log('[BTECH] Admin logged out. Realtime stopped.');
+      // Re-init public-only realtime for the visitor view
+      setTimeout(() => initializeRealtime(false), 500);
+      console.log('[BTECH] Admin logged out.');
     }
 
     /* ADMIN */
@@ -3921,16 +3923,13 @@
       renderAdminOrders();
       setTimeout(() => { initOrdersChart(); initServicesChart(); }, 100);
 
-      // Full live fetch + realtime (only set up once per login session)
       if (!_adminInitialized) {
         _adminInitialized = true;
         console.log('[BTECH] Admin dashboard initializing live data…');
         await refreshDashboard();
-        setupRealtimeSubscriptions();
-        startAutoRefresh();
+        initializeRealtime(true);  // start admin channels + polling
       } else {
-        // Already initialized — just refresh data
-        await refreshDashboard();
+        await refreshDashboard();  // already subscribed, just refresh data
       }
     }
 
@@ -4054,18 +4053,77 @@
     }
     function clearServiceForm() { document.getElementById('svc-id').value = '';['svc-name', 'svc-desc', 'svc-price', 'svc-cat'].forEach(id => document.getElementById(id).value = ''); document.getElementById('svc-status').value = 'active'; document.getElementById('svc-form-title').textContent = 'Add Service'; }
     function editSvc(id) { const s = state.services.find(s => s.id === id); if (!s) return; document.getElementById('svc-id').value = s.id; document.getElementById('svc-name').value = s.name; document.getElementById('svc-desc').value = s.desc; document.getElementById('svc-price').value = s.price; document.getElementById('svc-cat').value = s.category || ''; document.getElementById('svc-status').value = s.status || 'active'; document.getElementById('svc-form-title').textContent = 'Edit Service'; }
-    function saveService() {
-      const id = document.getElementById('svc-id').value; const name = document.getElementById('svc-name').value.trim();
-      const desc = document.getElementById('svc-desc').value.trim(); const price = parseInt(document.getElementById('svc-price').value) || 0;
-      const category = document.getElementById('svc-cat').value.trim(); const status = document.getElementById('svc-status').value;
+    async function saveService() {
+      const id       = document.getElementById('svc-id')?.value.trim();
+      const name     = document.getElementById('svc-name')?.value.trim();
+      const desc     = document.getElementById('svc-desc')?.value.trim();
+      const price    = parseInt(document.getElementById('svc-price')?.value) || 0;
+      const category = document.getElementById('svc-cat')?.value.trim();
+      const status   = document.getElementById('svc-status')?.value || 'active';
+      const btn      = document.getElementById('svc-save-btn');
       if (!name) { showToast('Service name required.'); return; }
-      if (id) { const s = state.services.find(s => s.id == id); if (s) Object.assign(s, { name, desc, price, category, status }); }
-      else { state.services.push({ id: Date.now(), icon: 'file-check', name, desc, price, category, status }); }
+      if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+
+      // Optimistic local update
+      if (id) {
+        const s = state.services.find(s => String(s.id) === String(id));
+        if (s) Object.assign(s, { name, description: desc, desc, price, category, status });
+      } else {
+        state.services.push({ id: '_tmp_' + Date.now(), name, description: desc, desc, price, category, status, created_at: new Date().toISOString() });
+      }
       localStorage.setItem('btech_services', JSON.stringify(state.services));
-      renderAdminServices(); renderServices('home-services-grid', 6); clearServiceForm(); showToast('Service saved! ✓');
+      renderAdminServices(); renderServices('home-services-grid', 6); renderFullServices(); renderOrderServices();
+      clearServiceForm();
+
+      try {
+        let error;
+        if (id) {
+          ({ error } = await db.from('services').update({ name, description: desc, price, category, status }).eq('id', id));
+        } else {
+          ({ error } = await db.from('services').insert([{ name, description: desc, price, category, status }]));
+        }
+        if (error) throw error;
+        showToast('Service saved! ✓');
+        await fetchServices();  // refresh from DB to get real IDs
+      } catch(err) {
+        console.error('[BTECH] saveService error:', err);
+        showToast('Saved locally (DB: ' + err.message + ')');
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = 'Save Service'; }
+      }
     }
-    function toggleSvcStatus(id) { const s = state.services.find(s => s.id === id); if (s) { s.status = s.status === 'active' ? 'inactive' : 'active'; localStorage.setItem('btech_services', JSON.stringify(state.services)); renderAdminServices(); showToast('Service updated!'); } }
-    function deleteSvc(id) { if (!confirm('Delete this service?')) return; state.services = state.services.filter(s => s.id !== id); localStorage.setItem('btech_services', JSON.stringify(state.services)); renderAdminServices(); renderServices('home-services-grid', 6); showToast('Deleted.'); }
+
+    async function toggleSvcStatus(id) {
+      const s = state.services.find(s => String(s.id) === String(id));
+      if (!s) return;
+      const newStatus = s.status === 'active' ? 'inactive' : 'active';
+      s.status = newStatus;
+      localStorage.setItem('btech_services', JSON.stringify(state.services));
+      renderAdminServices(); renderServices('home-services-grid', 6);
+      try {
+        const { error } = await db.from('services').update({ status: newStatus }).eq('id', id);
+        if (error) throw error;
+        showToast('Service ' + newStatus + '! ✓');
+      } catch(err) {
+        console.error('[BTECH] toggleSvcStatus error:', err);
+        showToast('Updated locally.');
+      }
+    }
+
+    async function deleteSvc(id) {
+      if (!confirm('Delete this service?')) return;
+      state.services = state.services.filter(s => String(s.id) !== String(id));
+      localStorage.setItem('btech_services', JSON.stringify(state.services));
+      renderAdminServices(); renderServices('home-services-grid', 6); renderFullServices(); renderOrderServices();
+      try {
+        const { error } = await db.from('services').delete().eq('id', id);
+        if (error) throw error;
+        showToast('Service deleted. ✓');
+      } catch(err) {
+        console.error('[BTECH] deleteSvc error:', err);
+        showToast('Deleted locally.');
+      }
+    }
 
     /* CYBER ADMIN */
     function renderAdminCyber() {
@@ -4219,31 +4277,122 @@
     /* TESTIMONIALS ADMIN */
     function renderAdminTestimonials() {
       const el = document.getElementById('admin-testimonials-list'); if (!el) return;
-      el.innerHTML = state.testimonials.map(t => `<div style="padding:10px 12px;background:var(--off-white);border-radius:8px;margin-bottom:8px;border:1px solid var(--gray-200);">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-      <div style="font-weight:700;font-size:0.85rem;">${t.name}</div>
-      <div style="display:flex;gap:5px;"><button class="admin-save-btn" style="padding:4px 10px;font-size:0.72rem;" onclick="toggleTestimonial(${t.id})">${t.approved ? 'Hide' : 'Approve'}</button><button class="admin-danger-btn" onclick="deleteTestimonial(${t.id})">✕</button></div>
-    </div>
-    <div style="font-size:0.72rem;color:${t.approved ? '#16A34A' : 'var(--red)'};">${t.approved ? '✓ Published' : '○ Hidden'}</div>
-  </div>`).join('');
+      if (!state.testimonials.length) {
+        el.innerHTML = '<div style="text-align:center;padding:30px;opacity:0.5;">No testimonials yet.</div>';
+        return;
+      }
+      el.innerHTML = state.testimonials.map(t => `
+        <div style="padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;margin-bottom:8px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:4px;">
+            <div>
+              <div style="font-weight:700;font-size:0.88rem;color:var(--white);">${t.name}</div>
+              <div style="font-size:0.72rem;color:var(--text-muted);">${t.role || ''} ${'⭐'.repeat(Math.min(t.rating||5,5))}</div>
+            </div>
+            <div style="display:flex;gap:5px;flex-shrink:0;">
+              <button class="admin-save-btn" style="padding:4px 10px;font-size:0.7rem;" onclick="toggleTestimonial('${t.id}')">${t.approved ? 'Hide' : 'Approve'}</button>
+              <button class="admin-danger-btn" style="padding:4px 8px;font-size:0.7rem;" onclick="deleteTestimonial('${t.id}')">✕</button>
+            </div>
+          </div>
+          <div style="font-size:0.78rem;color:var(--text-muted);margin-top:4px;font-style:italic;">"${(t.text||'').slice(0,100)}${(t.text||'').length>100?'…':''}"</div>
+          <div style="margin-top:6px;font-size:0.68rem;font-weight:600;color:${t.approved?'#16A34A':'#F59E0B'};">
+            ${t.approved ? '✓ Published on website' : '○ Hidden — click Approve to publish'}
+          </div>
+        </div>`).join('');
     }
-    function addTestimonial() {
-      const name = document.getElementById('test-name').value.trim();
-      const role = document.getElementById('test-role').value.trim();
-      const rating = parseInt(document.getElementById('test-rating').value) || 5;
-      const text = document.getElementById('test-text').value.trim();
+    async function addTestimonial() {
+      const name   = document.getElementById('test-name')?.value.trim();
+      const role   = document.getElementById('test-role')?.value.trim();
+      const rating = parseInt(document.getElementById('test-rating')?.value) || 5;
+      const text   = document.getElementById('test-text')?.value.trim();
+      const btn    = document.getElementById('test-add-btn');
       if (!name || !text) { showToast('Fill in name and testimonial text.'); return; }
-      state.testimonials.push({ id: Date.now(), name, role, rating, text, approved: false });
-      localStorage.setItem('btech_testimonials', JSON.stringify(state.testimonials));
-      renderAdminTestimonials(); renderTestimonials(); showToast('Testimonial added! ✓');
-      ['test-name', 'test-role', 'test-text'].forEach(id => document.getElementById(id).value = '');
+      if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+      try {
+        const { error } = await db.from('testimonials').insert([{ name, role, rating, text, approved: false }]);
+        if (error) throw error;
+        showToast('Testimonial added! ✓ Approve it to show on site.');
+        ['test-name','test-role','test-text'].forEach(id => { const e=document.getElementById(id); if(e) e.value=''; });
+        await fetchTestimonials();
+      } catch(err) {
+        console.error('[BTECH] addTestimonial error:', err);
+        // Fallback local
+        state.testimonials.push({ id: Date.now(), name, role, rating, text, approved: false, created_at: new Date().toISOString() });
+        localStorage.setItem('btech_testimonials', JSON.stringify(state.testimonials));
+        renderAdminTestimonials(); renderTestimonials();
+        showToast('Saved locally (DB error: ' + err.message + ')');
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = 'Add Testimonial'; }
+      }
     }
-    function toggleTestimonial(id) { const t = state.testimonials.find(t => t.id === id); if (t) { t.approved = !t.approved; localStorage.setItem('btech_testimonials', JSON.stringify(state.testimonials)); renderAdminTestimonials(); renderTestimonials(); showToast('Updated!'); } }
-    function deleteTestimonial(id) { state.testimonials = state.testimonials.filter(t => t.id !== id); localStorage.setItem('btech_testimonials', JSON.stringify(state.testimonials)); renderAdminTestimonials(); renderTestimonials(); showToast('Deleted.'); }
 
-    function saveOffer() {
-      state.offer = { title: document.getElementById('offer-title-input').value, desc: document.getElementById('offer-desc-input').value, oldPrice: document.getElementById('offer-old-input').value, newPrice: document.getElementById('offer-new-input').value };
-      localStorage.setItem('btech_offer', JSON.stringify(state.offer)); renderOffer(); showToast('Offer updated! ✓');
+    async function toggleTestimonial(id) {
+      const t = state.testimonials.find(t => String(t.id) === String(id));
+      if (!t) return;
+      const newVal = !t.approved;
+      t.approved = newVal;
+      localStorage.setItem('btech_testimonials', JSON.stringify(state.testimonials));
+      renderAdminTestimonials(); renderTestimonials();
+      try {
+        const { error } = await db.from('testimonials').update({ approved: newVal }).eq('id', id);
+        if (error) throw error;
+        showToast(newVal ? 'Testimonial published! ✓' : 'Testimonial hidden.');
+      } catch(err) {
+        console.error('[BTECH] toggleTestimonial error:', err);
+        showToast('Updated locally.');
+      }
+    }
+
+    async function deleteTestimonial(id) {
+      if (!confirm('Delete this testimonial?')) return;
+      state.testimonials = state.testimonials.filter(t => String(t.id) !== String(id));
+      localStorage.setItem('btech_testimonials', JSON.stringify(state.testimonials));
+      renderAdminTestimonials(); renderTestimonials();
+      try {
+        const { error } = await db.from('testimonials').delete().eq('id', id);
+        if (error) throw error;
+        showToast('Testimonial deleted. ✓');
+      } catch(err) {
+        console.error('[BTECH] deleteTestimonial error:', err);
+        showToast('Deleted locally.');
+      }
+    }
+
+    async function saveOffer() {
+      const title    = document.getElementById('offer-title-input')?.value || '';
+      const desc     = document.getElementById('offer-desc-input')?.value  || '';
+      const oldPrice = document.getElementById('offer-old-input')?.value   || '';
+      const newPrice = document.getElementById('offer-new-input')?.value   || '';
+      const btn      = document.getElementById('offer-save-btn');
+      if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+
+      // Optimistic local update
+      state.offer = { title, desc, oldPrice, newPrice };
+      localStorage.setItem('btech_offer', JSON.stringify(state.offer));
+      renderOffer();
+
+      try {
+        // Upsert to offers table (id=1 is the single offer record)
+        const { error } = await db.from('offers').upsert([{
+          id: 1, title, description: desc, old_price: oldPrice, new_price: newPrice
+        }], { onConflict: 'id' });
+        if (error) throw error;
+        showToast('Offer updated across all browsers! ✓');
+      } catch(err) {
+        console.error('[BTECH] saveOffer error:', err);
+        showToast('Saved locally (DB: ' + err.message + ')');
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = 'Save Offer'; }
+      }
+    }
+
+    async function fetchOffer() {
+      try {
+        const { data, error } = await db.from('offers').select('*').eq('id', 1).single();
+        if (error || !data) return;
+        state.offer = { title: data.title, desc: data.description, oldPrice: data.old_price, newPrice: data.new_price };
+        localStorage.setItem('btech_offer', JSON.stringify(state.offer));
+        renderOffer();
+      } catch(e) { console.warn('[BTECH] fetchOffer unreachable:', e); }
     }
 
     /* CHARTS */
@@ -4287,13 +4436,14 @@
         if (location.hash === '#admin' || location.hash === '#auth') navigate('auth');
       }
       document.addEventListener('keydown', e => { if (e.ctrlKey && e.shiftKey && e.key === 'A') navigate('auth'); });
-      // Init public realtime for visitors (portfolio, services)
-      setupPublicRealtime();
-      // Fetch dynamic content on page load
+      // Start realtime for all visitors (public channels)
+      initializeRealtime(false);
+      // Fetch all dynamic content on page load
       fetchPortfolio();
       fetchServices();
       fetchTestimonials();
-      // Init portfolio upload drag-drop after DOM is ready
+      fetchOffer();
+      // Init portfolio upload drag-drop
       setTimeout(initPortfolioUpload, 500);
     });
 
@@ -4309,96 +4459,213 @@
        update instantly without refresh.
     ═════════════════════════════════════════════════════════════*/
 
-    /* Fetch services from Supabase (public table) */
+    /* Fetch services — gets all, renders only active ones on site */
     async function fetchServices() {
       try {
-        const { data, error } = await db.from('services').select('*').eq('status','active').order('created_at',{ascending:true});
+        const { data, error } = await db.from('services').select('*').order('created_at', { ascending: true });
         if (error) { console.warn('[BTECH] fetchServices:', error.message); return; }
-        if (data && data.length > 0) {
+        if (data) {
           state.services = data;
           localStorage.setItem('btech_services', JSON.stringify(state.services));
           renderServices('home-services-grid', 4);
           renderFullServices();
           renderOrderServices();
+          if (state.isLoggedIn) renderAdminServices();
         }
       } catch(e) { console.warn('[BTECH] fetchServices unreachable:', e); }
     }
 
-    /* Fetch testimonials from Supabase */
+    /* Fetch testimonials — gets ALL, renders only approved ones on site */
     async function fetchTestimonials() {
       try {
-        const { data, error } = await db.from('testimonials').select('*').eq('approved',true).order('created_at',{ascending:false});
+        const { data, error } = await db.from('testimonials').select('*').order('created_at', { ascending: false });
         if (error) { console.warn('[BTECH] fetchTestimonials:', error.message); return; }
-        if (data && data.length > 0) {
+        if (data) {
           state.testimonials = data;
           localStorage.setItem('btech_testimonials', JSON.stringify(state.testimonials));
           renderTestimonials();
+          if (state.isLoggedIn) renderAdminTestimonials();
         }
       } catch(e) { console.warn('[BTECH] fetchTestimonials unreachable:', e); }
     }
 
-    /* ── Public realtime subscriptions (for visitors too) ─────── */
-    let _publicRealtimeSetup = false;
-    function setupPublicRealtime() {
-      if (_publicRealtimeSetup) return;
-      _publicRealtimeSetup = true;
+    /* ════════════════════════════════════════════════════════════
+       BTECH REALTIME ENGINE
+       ════════════════════════════════════════════════════════════
+       Single source of truth for ALL subscriptions.
+       - _rtChannels tracks every channel for clean teardown
+       - initializeRealtime() is the ONE entry point
+       - Public channels: portfolio, services, testimonials, offers
+       - Admin channels:  orders, contacts
+       - Auto-refresh polling fallback every 30s (admin only)
+    ═════════════════════════════════════════════════════════════*/
 
-      // Services realtime
-      db.channel('btech-services-public')
-        .on('postgres_changes', { event:'*', schema:'public', table:'services' }, () => {
-          console.log('[BTECH] Services updated — refreshing…');
-          fetchServices();
-        }).subscribe();
+    const _rtChannels = {};   // name → channel reference
+    let   _rtInitialized = false;
+    let   _refreshTimer  = null;
 
-      // Portfolio realtime
-      db.channel('btech-portfolio-public')
-        .on('postgres_changes', { event:'*', schema:'public', table:'portfolio' }, payload => {
-          console.log('[BTECH] Portfolio updated:', payload.eventType);
-          if (payload.eventType === 'INSERT') {
-            state.portfolio.unshift(payload.new);
-          } else if (payload.eventType === 'UPDATE') {
-            const idx = state.portfolio.findIndex(p => p.id === payload.new.id);
-            if (idx !== -1) state.portfolio[idx] = payload.new; else state.portfolio.unshift(payload.new);
-          } else if (payload.eventType === 'DELETE') {
-            state.portfolio = state.portfolio.filter(p => p.id !== payload.old.id);
-          }
-          localStorage.setItem('btech_portfolio', JSON.stringify(state.portfolio));
-          renderPortfolio('home-portfolio-grid', 6);
-          renderFullPortfolio();
-          if (state.isLoggedIn) renderAdminPortfolio();
-        }).subscribe();
-
-      // Testimonials realtime
-      db.channel('btech-testimonials-public')
-        .on('postgres_changes', { event:'*', schema:'public', table:'testimonials' }, () => {
-          fetchTestimonials();
-          if (state.isLoggedIn) renderAdminTestimonials();
-        }).subscribe();
-
-      console.log('[BTECH] Public realtime channels active.');
+    /* ── Safe channel subscribe (deduplicates) ─────────────────── */
+    function _subscribe(name, table, handler) {
+      if (_rtChannels[name]) {
+        try { db.removeChannel(_rtChannels[name]); } catch(e) {}
+        delete _rtChannels[name];
+      }
+      const ch = db.channel(name)
+        .on('postgres_changes', { event: '*', schema: 'public', table }, payload => {
+          console.log('[BTECH RT]', table, payload.eventType, payload);
+          handler(payload);
+        })
+        .subscribe(status => {
+          console.log('[BTECH RT] Channel', name, '→', status);
+        });
+      _rtChannels[name] = ch;
+      return ch;
     }
+
+    /* ── Clean up all channels (called on logout) ───────────────── */
+    function cleanupSubscriptions() {
+      Object.entries(_rtChannels).forEach(([name, ch]) => {
+        try { db.removeChannel(ch); } catch(e) {}
+        delete _rtChannels[name];
+      });
+      if (_refreshTimer) { clearInterval(_refreshTimer); _refreshTimer = null; }
+      _rtInitialized = false;
+      console.log('[BTECH RT] All subscriptions cleaned up.');
+    }
+
+    /* ── Portfolio realtime handler ─────────────────────────────── */
+    function _handlePortfolioChange(payload) {
+      if (payload.eventType === 'INSERT') {
+        if (!state.portfolio.find(p => p.id === payload.new.id))
+          state.portfolio.unshift(payload.new);
+      } else if (payload.eventType === 'UPDATE') {
+        const idx = state.portfolio.findIndex(p => p.id === payload.new.id);
+        if (idx !== -1) state.portfolio[idx] = payload.new;
+        else state.portfolio.unshift(payload.new);
+      } else if (payload.eventType === 'DELETE') {
+        state.portfolio = state.portfolio.filter(p => p.id !== payload.old?.id);
+      }
+      localStorage.setItem('btech_portfolio', JSON.stringify(state.portfolio));
+      renderPortfolio('home-portfolio-grid', 6);
+      renderFullPortfolio();
+      if (state.isLoggedIn) renderAdminPortfolio();
+    }
+
+    /* ── Services realtime handler ──────────────────────────────── */
+    function _handleServicesChange(payload) {
+      if (payload.eventType === 'INSERT') {
+        if (!state.services.find(s => s.id === payload.new.id))
+          state.services.push(payload.new);
+      } else if (payload.eventType === 'UPDATE') {
+        const idx = state.services.findIndex(s => s.id === payload.new.id);
+        if (idx !== -1) state.services[idx] = payload.new;
+      } else if (payload.eventType === 'DELETE') {
+        state.services = state.services.filter(s => s.id !== payload.old?.id);
+      }
+      localStorage.setItem('btech_services', JSON.stringify(state.services));
+      renderServices('home-services-grid', 4);
+      renderFullServices();
+      renderOrderServices();
+      if (state.isLoggedIn) renderAdminServices();
+    }
+
+    /* ── Testimonials realtime handler ──────────────────────────── */
+    function _handleTestimonialsChange() {
+      // Always re-fetch to get full accurate state
+      fetchTestimonials();
+    }
+
+    /* ── Orders realtime handler (admin) ────────────────────────── */
+    function _handleOrdersChange(payload) {
+      if (payload.eventType === 'INSERT') {
+        if (!state.orders.find(o => o.id === payload.new.id))
+          state.orders.unshift(payload.new);
+        showToast('🔔 New order: ' + (payload.new.order_number || '') + ' from ' + (payload.new.name || 'customer'));
+      } else if (payload.eventType === 'UPDATE') {
+        const idx = state.orders.findIndex(o => o.id === payload.new.id);
+        if (idx !== -1) state.orders[idx] = payload.new;
+      } else if (payload.eventType === 'DELETE') {
+        state.orders = state.orders.filter(o => o.id !== payload.old?.id);
+      }
+      localStorage.setItem('btech_orders', JSON.stringify(state.orders));
+      updateKPIs(); renderAdminOrders();
+    }
+
+    /* ── Contacts realtime handler (admin) ──────────────────────── */
+    function _handleContactsChange(payload) {
+      if (payload.eventType === 'INSERT') {
+        if (!state.contacts.find(c => c.id === payload.new.id))
+          state.contacts.unshift(payload.new);
+        showToast('💬 New message from ' + (payload.new.name || 'visitor'));
+      } else if (payload.eventType === 'UPDATE') {
+        const idx = state.contacts.findIndex(c => c.id === payload.new.id);
+        if (idx !== -1) state.contacts[idx] = payload.new;
+      } else if (payload.eventType === 'DELETE') {
+        state.contacts = state.contacts.filter(c => c.id !== payload.old?.id);
+      }
+      localStorage.setItem('btech_contacts', JSON.stringify(state.contacts));
+      updateKPIs(); renderAdminOrders();
+    }
+
+    /* ── Offers realtime handler ─────────────────────────────────── */
+    function _handleOffersChange(payload) {
+      if (payload.new) {
+        state.offer = {
+          title:    payload.new.title        || state.offer.title,
+          desc:     payload.new.description  || state.offer.desc,
+          oldPrice: payload.new.old_price    || state.offer.oldPrice,
+          newPrice: payload.new.new_price    || state.offer.newPrice,
+        };
+        localStorage.setItem('btech_offer', JSON.stringify(state.offer));
+        renderOffer();
+      }
+    }
+
+    /* ── MAIN ENTRY POINT ───────────────────────────────────────── */
+    function initializeRealtime(isAdmin = false) {
+      if (_rtInitialized && !isAdmin) return;
+
+      // Public channels (for ALL visitors)
+      _subscribe('rt-portfolio',     'portfolio',    _handlePortfolioChange);
+      _subscribe('rt-services',      'services',     _handleServicesChange);
+      _subscribe('rt-testimonials',  'testimonials', _handleTestimonialsChange);
+      _subscribe('rt-offers',        'offers',       _handleOffersChange);
+
+      if (isAdmin) {
+        // Admin-only channels
+        _subscribe('rt-orders',   'orders',   _handleOrdersChange);
+        _subscribe('rt-contacts', 'contacts', _handleContactsChange);
+
+        // Polling fallback every 30s
+        if (_refreshTimer) clearInterval(_refreshTimer);
+        _refreshTimer = setInterval(() => {
+          if (state.isLoggedIn) {
+            console.log('[BTECH RT] Auto-refresh tick');
+            refreshDashboard();
+          } else {
+            cleanupSubscriptions();
+          }
+        }, 30000);
+        console.log('[BTECH RT] Admin realtime + polling active.');
+      }
+
+      _rtInitialized = true;
+      console.log('[BTECH RT] Realtime initialized. isAdmin:', isAdmin);
+    }
+
+    /* ── Legacy compatibility wrappers ──────────────────────────── */
+    function setupPublicRealtime()         { initializeRealtime(false); }
+    function setupRealtimeSubscriptions()  { initializeRealtime(true);  }
+    function startAutoRefresh()            { /* handled inside initializeRealtime */ }
+    function stopAutoRefresh()             { cleanupSubscriptions(); }
 
     /* ================================================================
        BTECH ADMIN — LIVE DATA SYSTEM
        ================================================================
-       Architecture:
-         • fetchOrders() / fetchContacts() — pull full dataset from Supabase
-         • refreshDashboard()              — fetch both + re-render all KPIs
-         • setupRealtimeSubscriptions()    — Supabase realtime channels
-         • startAutoRefresh()              — 30s polling fallback
-         • stopAutoRefresh()               — clean up on logout
-
-       RLS NOTE:
-         SELECT policy must allow 'anon' role for this to work.
-         Run this SQL in Supabase if data isn't loading:
-
-         CREATE POLICY "anon_select_orders"   ON orders   FOR SELECT TO anon USING (true);
-         CREATE POLICY "anon_select_contacts" ON contacts FOR SELECT TO anon USING (true);
+       Realtime is handled by initializeRealtime(true) in the
+       BTECH REALTIME ENGINE above.
+       This section contains only the fetch + render + KPI logic.
     ================================================================ */
-
-    let _refreshTimer   = null;   // auto-refresh interval handle
-    let _realtimeOrders = null;   // realtime channel for orders
-    let _realtimeContacts = null; // realtime channel for contacts
 
     /* ── Fetch all orders from Supabase ─────────────────────────── */
     async function fetchOrders() {
@@ -4477,83 +4744,8 @@
       setTimeout(() => { initOrdersChart(); initServicesChart(); }, 100);
     }
 
-    /* ── Admin realtime subscriptions ──────────────────────────── */
-    function setupRealtimeSubscriptions() {
-      if (_realtimeOrders)   { db.removeChannel(_realtimeOrders);   _realtimeOrders   = null; }
-      if (_realtimeContacts) { db.removeChannel(_realtimeContacts); _realtimeContacts = null; }
-
-      // Orders channel
-      _realtimeOrders = db
-        .channel('btech-orders-live')
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'orders' }, payload => {
-          console.log('[BTECH] Realtime orders event:', payload.eventType);
-          if (payload.eventType === 'INSERT') {
-            // Prepend new order instantly
-            state.orders.unshift(payload.new);
-          } else if (payload.eventType === 'UPDATE') {
-            const idx = state.orders.findIndex(o => o.id === payload.new.id);
-            if (idx !== -1) state.orders[idx] = payload.new;
-          } else if (payload.eventType === 'DELETE') {
-            state.orders = state.orders.filter(o => o.id !== payload.old.id);
-          }
-          localStorage.setItem('btech_orders', JSON.stringify(state.orders));
-          updateKPIs();
-          renderAdminOrders();
-          if (payload.eventType === 'INSERT') {
-            showToast('🔔 New order received: ' + (payload.new.order_number || '') + ' from ' + (payload.new.name || 'customer'));
-          }
-        })
-        .subscribe(status => {
-          console.log('[BTECH] Orders realtime status:', status);
-        });
-
-      // Contacts channel
-      _realtimeContacts = db
-        .channel('btech-contacts-live')
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'contacts' }, payload => {
-          console.log('[BTECH] Realtime contacts event:', payload.eventType);
-          if (payload.eventType === 'INSERT') {
-            state.contacts.unshift(payload.new);
-          } else if (payload.eventType === 'UPDATE') {
-            const idx = state.contacts.findIndex(c => c.id === payload.new.id);
-            if (idx !== -1) state.contacts[idx] = payload.new;
-          } else if (payload.eventType === 'DELETE') {
-            state.contacts = state.contacts.filter(c => c.id !== payload.old.id);
-          }
-          localStorage.setItem('btech_contacts', JSON.stringify(state.contacts));
-          updateKPIs();
-          renderAdminOrders();
-          if (payload.eventType === 'INSERT') {
-            showToast('💬 New message from ' + (payload.new.name || 'visitor'));
-          }
-        })
-        .subscribe(status => {
-          console.log('[BTECH] Contacts realtime status:', status);
-        });
-    }
-
-    /* ── Auto-refresh every 30s (polling fallback if realtime fails) */
-    function startAutoRefresh() {
-      stopAutoRefresh();
-      _refreshTimer = setInterval(() => {
-        if (state.isLoggedIn) {
-          console.log('[BTECH] Auto-refresh tick');
-          refreshDashboard();
-        } else {
-          stopAutoRefresh();
-        }
-      }, 30000);
-      console.log('[BTECH] Auto-refresh started (30s interval)');
-    }
-
-    function stopAutoRefresh() {
-      if (_refreshTimer) { clearInterval(_refreshTimer); _refreshTimer = null; }
-      if (_realtimeOrders)   { db.removeChannel(_realtimeOrders);   _realtimeOrders   = null; }
-      if (_realtimeContacts) { db.removeChannel(_realtimeContacts); _realtimeContacts = null; }
-    }
-
-    /* ── Keep syncOrdersFromDB/syncContactsFromDB as aliases ────── */
-    async function syncOrdersFromDB()   { return fetchOrders(); }
+    /* ── Aliases for backward compat ───────────────────────────── */
+    async function syncOrdersFromDB()   { return fetchOrders();   }
     async function syncContactsFromDB() { return fetchContacts(); }
   </script>
 </body>
