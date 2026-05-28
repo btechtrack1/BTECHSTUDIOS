@@ -3544,16 +3544,25 @@
     }
 
     /* TESTIMONIALS */
+    const DEFAULT_TESTIMONIALS = [
+      { id: 't1', name: 'Michael Odhiambo', role: 'CEO, StartupKE',       text: 'BTECH STUDIOS delivered a world-class website that exceeded all our expectations. Professional, fast, and incredibly talented.', rating: 5, approved: true },
+      { id: 't2', name: 'Amina Hassan',     role: 'Marketing Manager',     text: 'Our brand identity completely transformed. The logo and graphics work was exceptional — exactly what we envisioned and more.',      rating: 5, approved: true },
+      { id: 't3', name: 'David Mutua',      role: 'Entrepreneur, Nairobi', text: 'The cyber services were a lifesaver. Got my KRA PIN and NSSF sorted in no time. Highly recommend.',                             rating: 5, approved: true },
+    ];
+
     function renderTestimonials() {
       const el = document.getElementById('testimonials-grid'); if (!el) return;
       const star = '<svg viewBox="0 0 24 24" width="15" height="15" fill="#F59E0B" stroke="#F59E0B" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
-      el.innerHTML = state.testimonials.filter(t => t.approved).map(t => `
+      // Use approved from DB, fall back to defaults if none approved yet
+      let items = (state.testimonials || []).filter(t => t.approved);
+      if (!items.length) items = DEFAULT_TESTIMONIALS;
+      el.innerHTML = items.map(t => `
     <div class="testimonial-card">
-      <div class="testimonial-stars">${star.repeat(t.rating)}</div>
-      <div class="testimonial-text">"${t.text}"</div>
+      <div class="testimonial-stars">${star.repeat(Math.min(t.rating || 5, 5))}</div>
+      <div class="testimonial-text">"${t.text || ''}"</div>
       <div class="testimonial-author">
-        <div class="testimonial-avatar">${t.name[0]}</div>
-        <div><div class="testimonial-name">${t.name}</div><div class="testimonial-role">${t.role}</div></div>
+        <div class="testimonial-avatar">${(t.name || '?')[0].toUpperCase()}</div>
+        <div><div class="testimonial-name">${t.name || ''}</div><div class="testimonial-role">${t.role || ''}</div></div>
       </div>
     </div>`).join('');
     }
@@ -3583,8 +3592,15 @@
 
     function renderPortfolio(targetId, limit = null) {
       const el = document.getElementById(targetId); if (!el) return;
-      const items = limit ? state.portfolio.slice(0, limit) : state.portfolio;
-      if (!items.length) { el.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;opacity:0.5;">No portfolio items yet.</div>'; return; }
+      const pool  = Array.isArray(state.portfolio) ? state.portfolio : [];
+      const items = limit ? pool.slice(0, limit) : pool;
+      if (!items.length) {
+        // Show placeholder cards while loading — not blank
+        el.innerHTML = [1,2,3,4,5,6].slice(0, limit || 6).map(() =>
+          '<div class="portfolio-item"><div class="skeleton skeleton-card"></div></div>'
+        ).join('');
+        return;
+      }
       el.innerHTML = items.map(p => portfolioItemHTML(p)).join('');
     }
 
@@ -4288,12 +4304,29 @@
     async function fetchPortfolio() {
       try {
         const { data, error } = await db.from('portfolio').select('*').order('created_at', { ascending: false });
-        if (error) { console.warn('[BTECH] fetchPortfolio:', error.message); return; }
-        if (data) { state.portfolio = data; localStorage.setItem('btech_portfolio', JSON.stringify(state.portfolio)); }
-        renderPortfolio('home-portfolio-grid', 6);
+        if (error) {
+          console.warn('[BTECH] fetchPortfolio error:', error.message, '— keeping defaults');
+          renderPortfolio('home-portfolio-grid', 6);
+          renderFullPortfolio();
+          return;
+        }
+        if (data !== null) {
+          // Only replace if DB has items — don't blank the portfolio with empty array
+          if (data.length > 0) {
+            state.portfolio = data;
+            localStorage.setItem('btech_portfolio', JSON.stringify(state.portfolio));
+          } else {
+            console.log('[BTECH] Portfolio table empty — keeping defaults for display');
+          }
+          renderPortfolio('home-portfolio-grid', 6);
+          renderFullPortfolio();
+          if (state.isLoggedIn) renderAdminPortfolio();
+        }
+      } catch(e) {
+        console.warn('[BTECH] fetchPortfolio unreachable — using defaults:', e.message);
+        renderPortfolio('home-portfolio-grid', 6); // always render something
         renderFullPortfolio();
-        renderAdminPortfolio();
-      } catch(e) { console.warn('[BTECH] fetchPortfolio unreachable:', e); }
+      }
     }
 
     /* TESTIMONIALS ADMIN */
@@ -4408,13 +4441,29 @@
     }
 
     async function fetchOffer() {
+      // fetchOffer is best-effort — offers table may not exist (404 is OK)
       try {
-        const { data, error } = await db.from('offers').select('*').eq('id', 1).single();
-        if (error || !data) return;
-        state.offer = { title: data.title, desc: data.description, oldPrice: data.old_price, newPrice: data.new_price };
-        localStorage.setItem('btech_offer', JSON.stringify(state.offer));
+        const { data, error } = await db.from('offers').select('*').order('id', { ascending: true }).limit(1).maybeSingle();
+        if (error) {
+          // 404 / table missing / RLS block — not critical, just use localStorage/defaults
+          console.log('[BTECH] fetchOffer skipped:', error.message, '(offers table may not exist — this is OK)');
+          renderOffer(); // render from state (localStorage or defaults)
+          return;
+        }
+        if (data) {
+          state.offer = {
+            title:    data.title        || state.offer.title,
+            desc:     data.description  || data.desc || state.offer.desc,
+            oldPrice: data.old_price    || state.offer.oldPrice,
+            newPrice: data.new_price    || state.offer.newPrice,
+          };
+          localStorage.setItem('btech_offer', JSON.stringify(state.offer));
+        }
         renderOffer();
-      } catch(e) { console.warn('[BTECH] fetchOffer unreachable:', e); }
+      } catch(e) {
+        console.log('[BTECH] fetchOffer caught error (non-critical):', e.message);
+        renderOffer(); // always render from existing state
+      }
     }
 
     /* CHARTS */
@@ -4460,11 +4509,24 @@
       document.addEventListener('keydown', e => { if (e.ctrlKey && e.shiftKey && e.key === 'A') navigate('auth'); });
       // Start realtime for all visitors (public channels)
       initializeRealtime(false);
-      // Fetch all dynamic content on page load
-      fetchPortfolio();
-      fetchServices();
-      fetchTestimonials();
-      fetchOffer();
+
+      // Fetch live data — use Promise.allSettled so one failure never blocks others
+      // Each fetch has its own internal try/catch + fallback render
+      Promise.allSettled([
+        fetchPortfolio(),
+        fetchServices(),
+        fetchTestimonials(),
+        fetchOffer(),   // best-effort — 404 is handled gracefully
+      ]).then(results => {
+        results.forEach((r, i) => {
+          const names = ['portfolio','services','testimonials','offer'];
+          if (r.status === 'rejected') {
+            console.warn('[BTECH] ' + names[i] + ' fetch rejected (non-fatal):', r.reason);
+          }
+        });
+        console.log('[BTECH] All page fetches settled.');
+      });
+
       // Init portfolio upload drag-drop
       setTimeout(initPortfolioUpload, 500);
     });
@@ -4507,14 +4569,27 @@
     async function fetchTestimonials() {
       try {
         const { data, error } = await db.from('testimonials').select('*').order('created_at', { ascending: false });
-        if (error) { console.warn('[BTECH] fetchTestimonials:', error.message); return; }
-        if (data) {
-          state.testimonials = data;
-          localStorage.setItem('btech_testimonials', JSON.stringify(state.testimonials));
+        if (error) {
+          console.warn('[BTECH] fetchTestimonials error:', error.message, '— keeping defaults');
+          // Don't wipe state — just render what we have (defaults or localStorage)
+          renderTestimonials();
+          return;
+        }
+        if (data !== null) {
+          // Only replace state if DB has records — never blank the site with empty array
+          if (data.length > 0) {
+            state.testimonials = data;
+            localStorage.setItem('btech_testimonials', JSON.stringify(state.testimonials));
+          } else {
+            console.log('[BTECH] Testimonials table empty — keeping defaults for display');
+          }
           renderTestimonials();
           if (state.isLoggedIn) renderAdminTestimonials();
         }
-      } catch(e) { console.warn('[BTECH] fetchTestimonials unreachable:', e); }
+      } catch(e) {
+        console.warn('[BTECH] fetchTestimonials unreachable — using defaults:', e.message);
+        renderTestimonials(); // always render something
+      }
     }
 
     /* ════════════════════════════════════════════════════════════
@@ -4641,18 +4716,20 @@
       updateKPIs(); renderAdminOrders();
     }
 
-    /* ── Offers realtime handler ─────────────────────────────────── */
+    /* ── Offers realtime handler — graceful if table missing ────── */
     function _handleOffersChange(payload) {
-      if (payload.new) {
-        state.offer = {
-          title:    payload.new.title        || state.offer.title,
-          desc:     payload.new.description  || state.offer.desc,
-          oldPrice: payload.new.old_price    || state.offer.oldPrice,
-          newPrice: payload.new.new_price    || state.offer.newPrice,
-        };
-        localStorage.setItem('btech_offer', JSON.stringify(state.offer));
-        renderOffer();
-      }
+      try {
+        if (payload && payload.new) {
+          state.offer = {
+            title:    payload.new.title       || state.offer.title,
+            desc:     payload.new.description || payload.new.desc || state.offer.desc,
+            oldPrice: payload.new.old_price   || state.offer.oldPrice,
+            newPrice: payload.new.new_price   || state.offer.newPrice,
+          };
+          localStorage.setItem('btech_offer', JSON.stringify(state.offer));
+          renderOffer();
+        }
+      } catch(e) { console.warn('[BTECH] _handleOffersChange error (non-fatal):', e.message); }
     }
 
     /* ── MAIN ENTRY POINT ───────────────────────────────────────── */
@@ -4663,7 +4740,8 @@
       _subscribe('rt-portfolio',     'portfolio',    _handlePortfolioChange);
       _subscribe('rt-services',      'services',     _handleServicesChange);
       _subscribe('rt-testimonials',  'testimonials', _handleTestimonialsChange);
-      _subscribe('rt-offers',        'offers',       _handleOffersChange);
+      // offers subscription is best-effort (table may not exist)
+      try { _subscribe('rt-offers', 'offers', _handleOffersChange); } catch(e) { console.log('[BTECH RT] offers channel skipped:', e.message); }
 
       if (isAdmin) {
         // Admin-only channels
@@ -4772,7 +4850,7 @@
       if (tbody && tbody.innerHTML === '') {
         tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text-muted);">⏳ Loading…</td></tr>';
       }
-      await Promise.all([fetchOrders(), fetchContacts(), fetchPortfolio(), fetchServices()]);
+      await Promise.allSettled([fetchOrders(), fetchContacts(), fetchPortfolio(), fetchServices()]);
       updateKPIs();
       renderAdminOrders();
       setTimeout(() => { initOrdersChart(); initServicesChart(); }, 100);
