@@ -14,9 +14,12 @@
   <meta property="og:description" content="Creative Digital Solutions For Modern Businesses" />
   <meta property="og:type" content="website" />
   <!-- Favicon - BTECH Studios text logo -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230A1F44'/%3E%3Crect x='0' y='54' width='64' height='10' rx='0' fill='%238B0000'/%3E%3Ctext x='8' y='46' font-family='Arial Black%2CArial' font-weight='900' font-size='38' fill='%23C0001A'%3EB%3C/text%3E%3Ctext x='32' y='44' font-family='Arial Black%2CArial' font-weight='900' font-size='20' fill='white'%3ET%3C/text%3E%3C/svg%3E" />
-  <link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230A1F44'/%3E%3Crect x='0' y='54' width='64' height='10' fill='%238B0000'/%3E%3Ctext x='8' y='46' font-family='Arial Black%2CArial' font-weight='900' font-size='38' fill='%23C0001A'%3EB%3C/text%3E%3Ctext x='32' y='44' font-family='Arial Black%2CArial' font-weight='900' font-size='20' fill='white'%3ET%3C/text%3E%3C/svg%3E" />
-  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230A1F44'/%3E%3Crect x='0' y='54' width='64' height='10' fill='%238B0000'/%3E%3Ctext x='8' y='46' font-family='Arial Black%2CArial' font-weight='900' font-size='38' fill='%23C0001A'%3EB%3C/text%3E%3Ctext x='32' y='44' font-family='Arial Black%2CArial' font-weight='900' font-size='20' fill='white'%3ET%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230A1F44'/%3E%3Crect x='0' y='54' width='64' height='10' rx='0' fill='%238B0000'/%3E%3Ctext x='8' y='46' font-family='Arial Black%2CArial' font-weight='900' font-size='38' fill='%23C0001A'%3EB%3C/text%3E%3Ctext x='32' y='44' font-family='Arial Black%2CArial' font-weight='900' font-size='20' fill='white'%3ET%3C/text%3E%3C/svg%3E" />
+  <link rel="shortcut icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230A1F44'/%3E%3Crect x='0' y='54' width='64' height='10' fill='%238B0000'/%3E%3Ctext x='8' y='46' font-family='Arial Black%2CArial' font-weight='900' font-size='38' fill='%23C0001A'%3EB%3C/text%3E%3Ctext x='32' y='44' font-family='Arial Black%2CArial' font-weight='900' font-size='20' fill='white'%3ET%3C/text%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230A1F44'/%3E%3Crect x='0' y='54' width='64' height='10' fill='%238B0000'/%3E%3Ctext x='8' y='46' font-family='Arial Black%2CArial' font-weight='900' font-size='38' fill='%23C0001A'%3EB%3C/text%3E%3Ctext x='32' y='44' font-family='Arial Black%2CArial' font-weight='900' font-size='20' fill='white'%3ET%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link
     href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap"
@@ -28,7 +31,7 @@
        SUPABASE CLIENT — initialized immediately after CDN
        so db is available to ALL functions below
     ===================================================== */
-    const SUPABASE_URL  = 'https://vsdwhwfakexpgxojorvy.supabase.co';
+    const SUPABASE_URL = 'https://vsdwhwfakexpgxojorvy.supabase.co';
     const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZzZHdod2Zha2V4cGd4b2pvcnZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3OTcwNzUsImV4cCI6MjA5NTM3MzA3NX0.ue0Q2PC8G_VAffZW0fSJHZsiZQIiEaERU40wwIehTW8';
     const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, {
       auth: {
@@ -143,11 +146,13 @@
       user-select: none;
       gap: 1px;
     }
+
     .btech-logo-main {
       display: flex;
       align-items: baseline;
       gap: 0px;
     }
+
     .btech-logo-b {
       font-family: var(--font-display);
       font-size: 2rem;
@@ -157,9 +162,10 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      filter: drop-shadow(0 0 8px rgba(139,0,0,0.5));
+      filter: drop-shadow(0 0 8px rgba(139, 0, 0, 0.5));
       letter-spacing: -0.02em;
     }
+
     .btech-logo-tech {
       font-family: var(--font-display);
       font-size: 1.1rem;
@@ -169,31 +175,46 @@
       line-height: 1;
       padding-bottom: 2px;
     }
+
     .btech-logo-studios {
       font-size: 0.55rem;
       font-weight: 700;
       letter-spacing: 0.38em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.45);
+      color: rgba(255, 255, 255, 0.45);
       padding-left: 2px;
     }
+
     .btech-logo-slogan {
       font-size: 0.42rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      background: linear-gradient(90deg, rgba(192,0,26,0.7), rgba(255,255,255,0.3));
+      background: linear-gradient(90deg, rgba(192, 0, 26, 0.7), rgba(255, 255, 255, 0.3));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       padding-left: 2px;
       margin-top: 1px;
     }
+
     /* Dark background variant (footer, auth, admin) */
-    .btech-logo.on-dark .btech-logo-tech  { color: var(--white); }
-    .btech-logo.on-dark .btech-logo-studios { color: rgba(255,255,255,0.38); }
+    .btech-logo.on-dark .btech-logo-tech {
+      color: var(--white);
+    }
+
+    .btech-logo.on-dark .btech-logo-studios {
+      color: rgba(255, 255, 255, 0.38);
+    }
+
     /* Light background variant (footer brand area) */
-    .btech-logo.on-light .btech-logo-tech  { color: var(--navy); }
-    .btech-logo.on-light .btech-logo-studios { color: rgba(10,31,68,0.45); }
+    .btech-logo.on-light .btech-logo-tech {
+      color: var(--navy);
+    }
+
+    .btech-logo.on-light .btech-logo-studios {
+      color: rgba(10, 31, 68, 0.45);
+    }
+
     .btech-logo.on-light .btech-logo-b {
       background: linear-gradient(135deg, #C0001A 0%, #8B0000 60%);
       -webkit-background-clip: text;
@@ -527,7 +548,6 @@
     .section-header {
       text-align: center;
       margin-bottom: 60px;
-      
     }
 
     .section-tag {
@@ -541,7 +561,7 @@
     }
 
     .section-title {
-      font-family: verdana;
+      font-family: var(--font-display);
       font-size: clamp(1.8rem, 3.5vw, 2.8rem);
       font-weight: 400;
       color: var(--text);
@@ -1546,7 +1566,7 @@
     }
 
     .auth-title {
-      font-family: verdana;
+      font-family: var(--font-display);
       font-size: 1.6rem;
       color: var(--white);
       text-align: center;
@@ -2184,172 +2204,430 @@
     }
 
     @media(max-width:900px) {
-      .stats-grid         { grid-template-columns: repeat(2, 1fr); }
-      .mvv-grid           { grid-template-columns: 1fr; }
-      .about-hero-grid    { grid-template-columns: 1fr; gap: 40px; }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .mvv-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
       .contact-grid,
-      .order-grid         { grid-template-columns: 1fr; }
-      .portfolio-grid     { grid-template-columns: 1fr 1fr; }
-      .portfolio-item:first-child { grid-column: span 2; }
-      .offer-card         { flex-direction: column; padding: 30px 24px; gap: 20px; }
-      .offer-cta          { align-items: flex-start; }
+      .order-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .portfolio-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .portfolio-item:first-child {
+        grid-column: span 2;
+      }
+
+      .offer-card {
+        flex-direction: column;
+        padding: 30px 24px;
+        gap: 20px;
+      }
+
+      .offer-cta {
+        align-items: flex-start;
+      }
+
       /* Reduce section padding on tablet */
-      .hero               { padding: 100px 5% 60px; }
-      .about-hero         { padding: 100px 5% 70px; }
+      .hero {
+        padding: 100px 5% 60px;
+      }
+
+      .about-hero {
+        padding: 100px 5% 70px;
+      }
     }
 
     @media(max-width:768px) {
+
       /* ── Navigation ── */
-      .nav-links { display: none; }
+      .nav-links {
+        display: none;
+      }
+
       .nav-links.open {
-        display: flex; flex-direction: column; position: fixed;
-        top: 66px; left: 0; right: 0;
-        background: rgba(10,31,68,0.98);
-        padding: 16px 20px; gap: 4px;
-        border-bottom: 1px solid rgba(255,255,255,0.08);
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 66px;
+        left: 0;
+        right: 0;
+        background: rgba(10, 31, 68, 0.98);
+        padding: 16px 20px;
+        gap: 4px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         z-index: 999;
       }
-      .hamburger { display: flex; }
-      .social-sidebar { display: none; }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .social-sidebar {
+        display: none;
+      }
 
       /* ── Hero — reduce massive 100vh empty space on mobile ── */
       .hero {
         min-height: 75vh;
         padding: 80px 5% 50px;
       }
-      .hero h1 { font-size: clamp(1.8rem, 6vw, 2.8rem); line-height: 1.2; }
-      .hero p  { font-size: 0.95rem; }
-      .hero-btns { flex-direction: column; gap: 10px; }
+
+      .hero h1 {
+        font-size: clamp(1.8rem, 6vw, 2.8rem);
+        line-height: 1.2;
+      }
+
+      .hero p {
+        font-size: 0.95rem;
+      }
+
+      .hero-btns {
+        flex-direction: column;
+        gap: 10px;
+      }
+
       .hero-btns .btn-primary,
-      .hero-btns .btn-outline { width: 100%; text-align: center; }
+      .hero-btns .btn-outline {
+        width: 100%;
+        text-align: center;
+      }
 
       /* ── Section padding — cut desktop values in half ── */
-      section, .section { padding-top: 50px !important; padding-bottom: 50px !important; }
-      .about-hero      { padding: 80px 5% 50px !important; }
-      .contact-hero    { padding: 50px 5% 30px !important; }
+      section,
+      .section {
+        padding-top: 50px !important;
+        padding-bottom: 50px !important;
+      }
+
+      .about-hero {
+        padding: 80px 5% 50px !important;
+      }
+
+      .contact-hero {
+        padding: 50px 5% 30px !important;
+      }
 
       /* ── Grids → single column ── */
       .services-grid,
       .testimonials-grid,
       .portfolio-grid,
       .stats-grid,
-      .footer-grid { grid-template-columns: 1fr; gap: 16px; }
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
 
-      .footer-grid { gap: 28px; }
+      .footer-grid {
+        gap: 28px;
+      }
 
-      .portfolio-item:first-child { grid-column: 1; aspect-ratio: 4/3; }
+      .portfolio-item:first-child {
+        grid-column: 1;
+        aspect-ratio: 4/3;
+      }
 
       /* ── Cards — remove excess inner padding ── */
-      .service-card    { padding: 24px 20px; }
-      .contact-form-card { padding: 22px 18px; }
-      .auth-card       { padding: 28px 20px; }
-      .order-form-card { padding: 22px 18px; }
-      .kpi-card        { padding: 16px; }
+      .service-card {
+        padding: 24px 20px;
+      }
+
+      .contact-form-card {
+        padding: 22px 18px;
+      }
+
+      .auth-card {
+        padding: 28px 20px;
+      }
+
+      .order-form-card {
+        padding: 22px 18px;
+      }
+
+      .kpi-card {
+        padding: 16px;
+      }
 
       /* ── Section header spacing ── */
-      .section-header  { margin-bottom: 24px !important; }
-      .section-title   { font-size: clamp(1.4rem, 5vw, 2rem); }
+      .section-header {
+        margin-bottom: 24px !important;
+      }
+
+      .section-title {
+        font-size: clamp(1.4rem, 5vw, 2rem);
+      }
 
       /* ── Stats section ── */
-      .stats-section   { padding: 40px 5% !important; }
-      .stat-number     { font-size: 2rem; }
+      .stats-section {
+        padding: 40px 5% !important;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+      }
 
       /* ── Offer card ── */
-      .offer-card      { flex-direction: column; padding: 24px 20px; gap: 20px; }
-      .offer-cta       { align-items: flex-start; }
+      .offer-card {
+        flex-direction: column;
+        padding: 24px 20px;
+        gap: 20px;
+      }
+
+      .offer-cta {
+        align-items: flex-start;
+      }
 
       /* ── About page ── */
-      .about-hero-grid { grid-template-columns: 1fr; gap: 30px; }
-      .mvv-grid        { grid-template-columns: 1fr; gap: 16px; }
+      .about-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .mvv-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
 
       /* ── Contact/Order grids ── */
       .contact-grid,
-      .order-grid { grid-template-columns: 1fr; gap: 20px; }
+      .order-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
 
       /* ── Admin — stack sidebar on mobile ── */
-      .admin-layout    { flex-direction: column; }
-      .admin-sidebar   { width: 100%; position: relative; height: auto; min-height: unset; flex-direction: row; flex-wrap: wrap; padding: 12px 16px; }
-      .admin-content   { margin-left: 0; padding: 16px; }
-      .admin-nav       { display: flex; flex-wrap: wrap; gap: 6px; flex-direction: row; margin-top: 8px; width: 100%; }
-      .admin-nav-item  { padding: 6px 10px; font-size: 0.72rem; border-radius: 6px; }
-      .admin-nav-label { display: none; }
-      .admin-logo      { padding: 8px 0; }
-      .admin-kpi-grid  { grid-template-columns: 1fr 1fr; gap: 10px; }
-      .admin-table     { overflow-x: auto; }
-      .admin-table table { min-width: 560px; }
-      .admin-charts-row { grid-template-columns: 1fr; }
-      .admin-panel-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .admin-layout {
+        flex-direction: column;
+      }
+
+      .admin-sidebar {
+        width: 100%;
+        position: relative;
+        height: auto;
+        min-height: unset;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 12px 16px;
+      }
+
+      .admin-content {
+        margin-left: 0;
+        padding: 16px;
+      }
+
+      .admin-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        flex-direction: row;
+        margin-top: 8px;
+        width: 100%;
+      }
+
+      .admin-nav-item {
+        padding: 6px 10px;
+        font-size: 0.72rem;
+        border-radius: 6px;
+      }
+
+      .admin-nav-label {
+        display: none;
+      }
+
+      .admin-logo {
+        padding: 8px 0;
+      }
+
+      .admin-kpi-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .admin-table {
+        overflow-x: auto;
+      }
+
+      .admin-table table {
+        min-width: 560px;
+      }
+
+      .admin-charts-row {
+        grid-template-columns: 1fr;
+      }
+
+      .admin-panel-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
     }
 
     /* ── Extra-small phones (≤480px) ── */
     @media(max-width:480px) {
-      .hero            { min-height: 65vh; padding: 70px 4% 40px; }
-      .hero h1         { font-size: clamp(1.5rem, 7vw, 2rem); }
-      .hero-badge      { font-size: 0.72rem; }
-      .nav-logo img    { height: 36px; }
-      .admin-kpi-grid  { grid-template-columns: 1fr; }
-      .kpi-card        { padding: 14px; }
-      .auth-card       { padding: 22px 16px; margin: 12px; }
-      .section-title   { font-size: clamp(1.2rem, 6vw, 1.6rem); }
-      .btn-primary, .btn-outline { padding: 12px 20px; font-size: 0.88rem; }
-      .footer-grid     { gap: 20px; }
-      .service-card    { padding: 18px 16px; }
-      .contact-form-card, .order-form-card { padding: 18px 14px; }
-      .testimonial-card { padding: 20px 16px; }
+      .hero {
+        min-height: 65vh;
+        padding: 70px 4% 40px;
+      }
+
+      .hero h1 {
+        font-size: clamp(1.5rem, 7vw, 2rem);
+      }
+
+      .hero-badge {
+        font-size: 0.72rem;
+      }
+
+      .nav-logo img {
+        height: 36px;
+      }
+
+      .admin-kpi-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .kpi-card {
+        padding: 14px;
+      }
+
+      .auth-card {
+        padding: 22px 16px;
+        margin: 12px;
+      }
+
+      .section-title {
+        font-size: clamp(1.2rem, 6vw, 1.6rem);
+      }
+
+      .btn-primary,
+      .btn-outline {
+        padding: 12px 20px;
+        font-size: 0.88rem;
+      }
+
+      .footer-grid {
+        gap: 20px;
+      }
+
+      .service-card {
+        padding: 18px 16px;
+      }
+
+      .contact-form-card,
+      .order-form-card {
+        padding: 18px 14px;
+      }
+
+      .testimonial-card {
+        padding: 20px 16px;
+      }
     }
 
     /* ── Skeleton loaders ────────────────────────────────── */
     @keyframes shimmer {
-      0%   { background-position: -468px 0; }
-      100% { background-position: 468px 0; }
+      0% {
+        background-position: -468px 0;
+      }
+
+      100% {
+        background-position: 468px 0;
+      }
     }
+
     .skeleton {
-      background: linear-gradient(90deg, rgba(255,255,255,0.06) 25%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.06) 75%);
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.06) 25%, rgba(255, 255, 255, 0.12) 50%, rgba(255, 255, 255, 0.06) 75%);
       background-size: 468px 100%;
       animation: shimmer 1.4s infinite;
       border-radius: 8px;
     }
-    .skeleton-card { height: 220px; border-radius: 16px; }
-    .skeleton-row  { height: 44px; border-radius: 8px; margin-bottom: 8px; }
+
+    .skeleton-card {
+      height: 220px;
+      border-radius: 16px;
+    }
+
+    .skeleton-row {
+      height: 44px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
 
     /* ── Portfolio image items ───────────────────────────── */
     .portfolio-item-img {
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       transition: transform 0.5s ease;
     }
-    .portfolio-item:hover .portfolio-item-img { transform: scale(1.06); }
+
+    .portfolio-item:hover .portfolio-item-img {
+      transform: scale(1.06);
+    }
 
     /* ── Admin portfolio upload zone ─────────────────────── */
     .upload-zone {
-      border: 2px dashed rgba(139,0,0,0.4);
+      border: 2px dashed rgba(139, 0, 0, 0.4);
       border-radius: 12px;
       padding: 28px;
       text-align: center;
       cursor: pointer;
       transition: all 0.2s;
-      background: rgba(139,0,0,0.04);
+      background: rgba(139, 0, 0, 0.04);
     }
-    .upload-zone:hover, .upload-zone.drag-over {
+
+    .upload-zone:hover,
+    .upload-zone.drag-over {
       border-color: var(--red);
-      background: rgba(139,0,0,0.08);
+      background: rgba(139, 0, 0, 0.08);
     }
-    .upload-zone input[type=file] { display: none; }
+
+    .upload-zone input[type=file] {
+      display: none;
+    }
+
     .upload-preview {
-      width: 100%; max-height: 160px;
-      object-fit: cover; border-radius: 8px;
-      margin-top: 10px; display: none;
+      width: 100%;
+      max-height: 160px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-top: 10px;
+      display: none;
     }
+
     /* ── Realtime indicator ──────────────────────────────── */
     .rt-dot {
-      display: inline-block; width: 8px; height: 8px;
-      border-radius: 50%; background: #22c55e;
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
       margin-right: 6px;
       animation: pulse-green 2s infinite;
     }
+
     @keyframes pulse-green {
-      0%,100% { opacity: 1; transform: scale(1); }
-      50%      { opacity: 0.5; transform: scale(0.8); }
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: scale(0.8);
+      }
     }
   </style>
 </head>
@@ -2360,13 +2638,13 @@
   <nav id="main-nav">
     <div class="nav-logo" onclick="navigate('home')">
       <div class="btech-logo on-dark" onclick="navigate('home')">
-      <div class="btech-logo-main">
-        <span class="btech-logo-b" style="font-size:2rem;">B</span>
-        <span class="btech-logo-tech" style="font-size:1.1rem;">TECH</span>
+        <div class="btech-logo-main">
+          <span class="btech-logo-b" style="font-size:2rem;">B</span>
+          <span class="btech-logo-tech" style="font-size:1.1rem;">TECH</span>
+        </div>
+        <div class="btech-logo-studios" style="font-size:0.55rem;">STUDIOS</div>
+        <div class="btech-logo-slogan" style="font-size:0.42rem;">— design simplicity —</div>
       </div>
-      <div class="btech-logo-studios" style="font-size:0.55rem;">STUDIOS</div>
-      <div class="btech-logo-slogan" style="font-size:0.42rem;">— design simplicity —</div>
-    </div>
     </div>
     <div class="nav-links" id="nav-links">
       <button class="nav-link active" onclick="navigate('home')">Home</button>
@@ -2402,11 +2680,11 @@
     <section class="stats-section">
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-number" data-target="10">10</div>
+          <div class="stat-number" data-target="10">0</div>
           <div class="stat-label">Clients Served</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number" data-target="28">15</div>
+          <div class="stat-number" data-target="28">0</div>
           <div class="stat-label">Projects Completed</div>
         </div>
         <div class="stat-card">
@@ -2414,7 +2692,7 @@
           <div class="stat-label">Customer Satisfaction</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number" data-target="4">2.5</div>
+          <div class="stat-number" data-target="4">0</div>
           <div class="stat-label">Years of Experience</div>
         </div>
       </div>
@@ -2460,7 +2738,7 @@
       <div class="section-header">
         <span class="section-tag">Our Work</span>
         <h2 class="section-title">Featured Projects</h2>
-        <p class="section-subtitle">A glimpse of the digital experiences we've crafted for clients across Africa and beyond.
+        <p class="section-subtitle">A glimpse of the digital experiences we've crafted for clients across East Africa.
         </p>
       </div>
       <div class="portfolio-grid" id="home-portfolio-grid"></div>
@@ -2482,13 +2760,13 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <div class="btech-logo on-light">
-      <div class="btech-logo-main">
-        <span class="btech-logo-b" style="font-size:2rem;">B</span>
-        <span class="btech-logo-tech" style="font-size:1.1rem;font-family:verdana;">TECH</span>
-      </div>
-      <div class="btech-logo-studios" style="font-size:0.55rem;">STUDIOS</div>
-      <div class="btech-logo-slogan" style="font-size:0.42rem;">— design simplicity —</div>
-    </div>
+            <div class="btech-logo-main">
+              <span class="btech-logo-b" style="font-size:2rem;">B</span>
+              <span class="btech-logo-tech" style="font-size:1.1rem;">TECH</span>
+            </div>
+            <div class="btech-logo-studios" style="font-size:0.55rem;">STUDIOS</div>
+            <div class="btech-logo-slogan" style="font-size:0.42rem;">— design simplicity —</div>
+          </div>
           <p>Creative digital solutions for modern businesses. Design, development &amp; digital marketing in Nairobi,
             Kenya.</p>
           <div class="footer-social">
@@ -2921,13 +3199,13 @@
       <div class="auth-card">
         <div class="auth-logo" style="display:flex;flex-direction:column;align-items:center;margin-bottom:24px;">
           <div class="btech-logo on-dark">
-      <div class="btech-logo-main">
-        <span class="btech-logo-b" style="font-size:2.8rem;">B</span>
-        <span class="btech-logo-tech" style="font-size:1.5rem;">TECH</span>
-      </div>
-      <div class="btech-logo-studios" style="font-size:0.7rem;">STUDIOS</div>
-      <div class="btech-logo-slogan" style="font-size:0.55rem;">— design simplicity —</div>
-    </div>
+            <div class="btech-logo-main">
+              <span class="btech-logo-b" style="font-size:2.8rem;">B</span>
+              <span class="btech-logo-tech" style="font-size:1.5rem;">TECH</span>
+            </div>
+            <div class="btech-logo-studios" style="font-size:0.7rem;">STUDIOS</div>
+            <div class="btech-logo-slogan" style="font-size:0.55rem;">— design simplicity —</div>
+          </div>
         </div>
         <div class="auth-title">Admin Portal</div>
         <div class="auth-subtitle">Sign in to access the dashboard</div>
@@ -2947,14 +3225,15 @@
       <aside class="admin-sidebar">
         <div class="admin-logo" style="padding:16px 0 10px;">
           <div class="btech-logo on-dark">
-      <div class="btech-logo-main">
-        <span class="btech-logo-b" style="font-size:1.5rem;">B</span>
-        <span class="btech-logo-tech" style="font-size:0.85rem;">TECH</span>
-      </div>
-      <div class="btech-logo-studios" style="font-size:0.45rem;">STUDIOS</div>
-      <div class="btech-logo-slogan" style="font-size:0.36rem;">— design simplicity —</div>
-    </div>
-          <div class="admin-logo-sub" style="margin-top:4px;font-size:0.65rem;opacity:0.5;letter-spacing:0.12em;">ADMIN DASHBOARD</div>
+            <div class="btech-logo-main">
+              <span class="btech-logo-b" style="font-size:1.5rem;">B</span>
+              <span class="btech-logo-tech" style="font-size:0.85rem;">TECH</span>
+            </div>
+            <div class="btech-logo-studios" style="font-size:0.45rem;">STUDIOS</div>
+            <div class="btech-logo-slogan" style="font-size:0.36rem;">— design simplicity —</div>
+          </div>
+          <div class="admin-logo-sub" style="margin-top:4px;font-size:0.65rem;opacity:0.5;letter-spacing:0.12em;">ADMIN
+            DASHBOARD</div>
         </div>
         <nav class="admin-nav">
           <div class="admin-nav-label">Main</div>
@@ -3205,28 +3484,37 @@
 
           <!-- PORTFOLIO PANEL -->
           <div class="admin-panel" id="panel-portfolio">
-            <div class="admin-panel-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+            <div class="admin-panel-header"
+              style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
               <h2 style="font-size:1.2rem;font-weight:800;">Portfolio Management</h2>
-              <span style="font-size:0.72rem;color:var(--text-muted);"><span class="rt-dot"></span>Live sync active</span>
+              <span style="font-size:0.72rem;color:var(--text-muted);"><span class="rt-dot"></span>Live sync
+                active</span>
             </div>
 
             <!-- Existing items list -->
             <div class="admin-table" style="margin-bottom:24px;">
-              <div class="admin-table-header"><h3>Current Portfolio Items</h3></div>
+              <div class="admin-table-header">
+                <h3>Current Portfolio Items</h3>
+              </div>
               <div id="admin-portfolio-list" style="padding:8px;"></div>
             </div>
 
             <!-- Upload new item -->
             <div class="admin-table">
-              <div class="admin-table-header"><h3>Add New Portfolio Item</h3></div>
+              <div class="admin-table-header">
+                <h3>Add New Portfolio Item</h3>
+              </div>
               <div style="padding:20px;display:grid;gap:14px;">
                 <!-- Upload zone -->
                 <div>
-                  <label style="font-size:0.78rem;font-weight:600;color:var(--text-muted);display:block;margin-bottom:6px;">PROJECT IMAGE</label>
+                  <label
+                    style="font-size:0.78rem;font-weight:600;color:var(--text-muted);display:block;margin-bottom:6px;">PROJECT
+                    IMAGE</label>
                   <div class="upload-zone" id="port-upload-zone">
                     <div style="font-size:2rem;margin-bottom:6px;">📁</div>
                     <div style="font-size:0.85rem;font-weight:600;">Click or drag image here</div>
-                    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">PNG, JPG, WEBP — max 5MB</div>
+                    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">PNG, JPG, WEBP — max 5MB
+                    </div>
                     <input type="file" id="port-file-input" accept="image/*" />
                   </div>
                   <img id="port-upload-preview" class="upload-preview" alt="Preview" />
@@ -3234,12 +3522,17 @@
 
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
                   <div>
-                    <label style="font-size:0.78rem;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">TITLE *</label>
-                    <input id="port-title-input" class="admin-input" placeholder="e.g. E-Commerce Website" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--white);font-family:var(--font);" />
+                    <label
+                      style="font-size:0.78rem;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">TITLE
+                      *</label>
+                    <input id="port-title-input" class="admin-input" placeholder="e.g. E-Commerce Website"
+                      style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--white);font-family:var(--font);" />
                   </div>
                   <div>
-                    <label style="font-size:0.78rem;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">CATEGORY</label>
-                    <select id="port-cat-input" class="admin-input" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--white);font-family:var(--font);">
+                    <label
+                      style="font-size:0.78rem;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">CATEGORY</label>
+                    <select id="port-cat-input" class="admin-input"
+                      style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--white);font-family:var(--font);">
                       <option value="Websites">Websites</option>
                       <option value="Logos">Logos</option>
                       <option value="Marketing">Marketing</option>
@@ -3251,12 +3544,15 @@
                 </div>
 
                 <div>
-                  <label style="font-size:0.78rem;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">DESCRIPTION</label>
-                  <input id="port-desc-input" class="admin-input" placeholder="Brief project description…" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--white);font-family:var(--font);" />
+                  <label
+                    style="font-size:0.78rem;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px;">DESCRIPTION</label>
+                  <input id="port-desc-input" class="admin-input" placeholder="Brief project description…"
+                    style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--white);font-family:var(--font);" />
                 </div>
 
                 <div id="port-upload-fb" style="font-size:0.78rem;min-height:16px;"></div>
-                <button id="port-upload-btn" class="admin-save-btn" style="padding:10px 20px;font-size:0.88rem;" onclick="uploadPortfolioItem()">Add to Portfolio</button>
+                <button id="port-upload-btn" class="admin-save-btn" style="padding:10px 20px;font-size:0.88rem;"
+                  onclick="uploadPortfolioItem()">Add to Portfolio</button>
               </div>
             </div>
           </div>
@@ -3383,21 +3679,21 @@
     const ADMIN_PASS = 'btech2026admin';
 
     const DEFAULT_CYBER = [
-      { id: 1, name: 'KRA PIN Registration', desc: 'New KRA PIN registration for individuals and businesses.', price: 100, status: 'active' },
-      { id: 2, name: 'KRA PIN Retrieval', desc: 'Recover or reset your existing KRA PIN.', price: 150, status: 'active' },
-      { id: 3, name: 'SHA Registration', desc: 'Social Health Authority registration for new members.', price: 100, status: 'active' },
-      { id: 4, name: 'SHA Update', desc: 'Update your SHA details and beneficiaries.', price: 150, status: 'active' },
-      { id: 5, name: 'NSSF Registration', desc: 'National Social Security Fund registration.', price: 100, status: 'active' },
-      { id: 6, name: 'NSSF Update', desc: 'Update NSSF information and records.', price: 100, status: 'active' },
-      { id: 7, name: 'Good Conduct Application including everything', desc: 'Certificate of Good Conduct via DCI Kenya.', price: 1200, status: 'active' },
-      { id: 8, name: 'HELB Services', desc: 'HELB loan application, deferment and clearance.', price: 200, status: 'active' },
-      { id: 9, name: 'eCitizen Services', desc: 'All eCitizen portal services and registrations.', price: 100, status: 'active' },
-      { id: 10, name: 'CV Writing', desc: 'Professional CV and cover letter creation.', price: 150, status: 'active' },
-      { id: 11, name: 'Passport Application Assistance', desc: 'New passport and renewal application assistance.', price: 500, status: 'active' },
+      { id: 1, name: 'KRA PIN Registration', desc: 'New KRA PIN registration for individuals and businesses.', price: 300, status: 'active' },
+      { id: 2, name: 'KRA PIN Retrieval', desc: 'Recover or reset your existing KRA PIN.', price: 300, status: 'active' },
+      { id: 3, name: 'SHA Registration', desc: 'Social Health Authority registration for new members.', price: 400, status: 'active' },
+      { id: 4, name: 'SHA Update', desc: 'Update your SHA details and beneficiaries.', price: 300, status: 'active' },
+      { id: 5, name: 'NSSF Registration', desc: 'National Social Security Fund registration.', price: 400, status: 'active' },
+      { id: 6, name: 'NSSF Update', desc: 'Update NSSF information and records.', price: 300, status: 'active' },
+      { id: 7, name: 'Good Conduct Application', desc: 'Certificate of Good Conduct via DCI Kenya.', price: 1200, status: 'active' },
+      { id: 8, name: 'HELB Services', desc: 'HELB loan application, deferment and clearance.', price: 500, status: 'active' },
+      { id: 9, name: 'eCitizen Services', desc: 'All eCitizen portal services and registrations.', price: 500, status: 'active' },
+      { id: 10, name: 'CV Writing', desc: 'Professional CV and cover letter creation.', price: 500, status: 'active' },
+      { id: 11, name: 'Passport Application Assistance', desc: 'New passport and renewal application assistance.', price: 800, status: 'active' },
       { id: 12, name: 'Business Registration', desc: 'Company and sole proprietorship registration.', price: 2000, status: 'active' },
       { id: 13, name: 'Certificate Printing', desc: 'Printing of official certificates and documents.', price: 200, status: 'active' },
-      { id: 14, name: 'Online Applications', desc: 'Any other online government portal application.', price: 200, status: 'active' },
-      { id: 15, name: 'Other Services', desc: 'Contact us for any other cyber service needs.', price: 100+, status: 'active' },
+      { id: 14, name: 'Online Applications', desc: 'Any other online government portal application.', price: 400, status: 'active' },
+      { id: 15, name: 'Other Services', desc: 'Contact us for any other cyber service needs.', price: 300, status: 'active' },
     ];
 
     const ICONS = {
@@ -3413,16 +3709,6 @@
       const s = ICONS[name] || ICONS['file-check'];
       return s.replace(/<svg/, `<svg width="${size}" height="${size}" stroke="${color}"`);
     }
-
-    const DEFAULT_SERVICES = [
-      { id: 1, icon: 'monitor-smartphone', name: 'Web Design',            description: 'Professional, mobile-first websites built with modern technology and stunning design — tailored for your business goals.',                                          desc: 'Professional, mobile-first websites built with modern technology and stunning design — tailored for your business goals.',                                          price: 6999, category: 'Design',    status: 'active' },
-      { id: 2, icon: 'palette',            name: 'Graphics Design',        description: 'Eye-catching graphics for social media, print, and digital — designed to make your brand stand out from the crowd.',                                                  desc: 'Eye-catching graphics for social media, print, and digital — designed to make your brand stand out from the crowd.',                                                  price: 500,  category: 'Design',    status: 'active' },
-      { id: 3, icon: 'pen-tool',           name: 'Logo Design',            description: 'Memorable, professional logo designs that capture your brand identity and leave a lasting impression.',                                                               desc: 'Memorable, professional logo designs that capture your brand identity and leave a lasting impression.',                                                               price: 250,  category: 'Design',    status: 'active' },
-      { id: 4, icon: 'video',              name: 'Video & Photo Editing',  description: 'Cinematic-quality video editing and professional photo retouching for content creators and businesses alike.',                                                        desc: 'Cinematic-quality video editing and professional photo retouching for content creators and businesses alike.',                                                        price: 100,  category: 'Media',     status: 'active' },
-      { id: 5, icon: 'megaphone',          name: 'Social Media Marketing', description: 'Strategic social media management and content creation to grow your audience and drive real engagement.',                                                             desc: 'Strategic social media management and content creation to grow your audience and drive real engagement.',                                                             price: 1000,  category: 'Marketing', status: 'active' },
-      { id: 6, icon: 'search',             name: 'SEO Services',           description: 'Data-driven SEO strategies that improve your Google rankings and drive organic traffic to your website.',                                                             desc: 'Data-driven SEO strategies that improve your Google rankings and drive organic traffic to your website.',                                                             price: 1000, category: 'Marketing', status: 'active' },
-      { id: 7, icon: 'file-check',         name: 'Online Cyber Services',  description: 'NSSF, SHA, KRA PIN, Good Conduct, CV Writing, HELB, eCitizen & more — professional e-government services handled for you.', desc: 'NSSF, SHA, KRA PIN, Good Conduct, CV Writing, HELB, eCitizen & more — professional e-government services handled for you.', price: 100, category: 'Cyber', status: 'active' },
-    ];
 
     let state = {
       isLoggedIn: false, currentPage: 'home',
@@ -3441,7 +3727,15 @@
         { id: 2, name: 'Amina Hassan', role: 'Marketing Manager', text: 'Our brand identity completely transformed. The logo and graphics work was exceptional — exactly what we envisioned and more.', rating: 5, approved: true },
         { id: 3, name: 'David Mutua', role: 'Entrepreneur, Nairobi', text: 'The cyber services were a lifesaver. Got my KRA PIN and NSSF sorted in no time. Highly recommend.', rating: 5, approved: true },
       ])),
-      services: JSON.parse(localStorage.getItem('btech_services') || JSON.stringify(DEFAULT_SERVICES)),
+      services: JSON.parse(localStorage.getItem('btech_services') || JSON.stringify([
+        { id: 1, icon: 'monitor-smartphone', name: 'Web Design', desc: 'Professional, mobile-first websites built with modern technology and stunning design — tailored for your business goals.', price: 12000, category: 'Design', status: 'active' },
+        { id: 2, icon: 'palette', name: 'Graphics Design', desc: 'Eye-catching graphics for social media, print, and digital — designed to make your brand stand out from the crowd.', price: 3500, category: 'Design', status: 'active' },
+        { id: 3, icon: 'pen-tool', name: 'Logo Design', desc: 'Memorable, professional logo designs that capture your brand identity and leave a lasting impression.', price: 2500, category: 'Design', status: 'active' },
+        { id: 4, icon: 'video', name: 'Video & Photo Editing', desc: 'Cinematic-quality video editing and professional photo retouching for content creators and businesses alike.', price: 4000, category: 'Media', status: 'active' },
+        { id: 5, icon: 'megaphone', name: 'Social Media Marketing', desc: 'Strategic social media management and content creation to grow your audience and drive real engagement.', price: 8000, category: 'Marketing', status: 'active' },
+        { id: 6, icon: 'search', name: 'SEO Services', desc: 'Data-driven SEO strategies that improve your Google rankings and drive organic traffic to your website.', price: 10000, category: 'Marketing', status: 'active' },
+        { id: 7, icon: 'file-check', name: 'Online Cyber Services', desc: 'NSSF, SHA, KRA PIN, Good Conduct, CV Writing, HELB, eCitizen & more — professional e-government services handled for you.', price: 300, category: 'Cyber', status: 'active' },
+      ])),
       cyberServices: JSON.parse(localStorage.getItem('btech_cyber') || JSON.stringify(DEFAULT_CYBER)),
       offer: JSON.parse(localStorage.getItem('btech_offer') || JSON.stringify({ title: 'Website + Logo Package', desc: 'Get a full professional website with custom logo design, mobile optimization, and 1-month free support. Limited slots available this week.', oldPrice: 25000, newPrice: 15000 })),
     };
@@ -3480,14 +3774,14 @@
         return `<div class="service-card${isCyber ? ' cyber-service-card' : ''}">
       <div class="service-icon">${icon(s.icon || 'file-check', 24)}</div>
       <div class="service-title">${s.name}${isCyber ? ' <span style="font-size:0.75rem;opacity:.6;">▾</span>' : ''}</div>
-      <div class="service-desc">${s.description || s.desc || ''}</div>
+      <div class="service-desc">${s.desc}</div>
       <div class="service-price">From KES ${Number(s.price).toLocaleString()}</div>
       ${isCyber
             ? `<button class="service-btn" onclick="toggleDD('${ddId}',event)">View All Services ▾</button>
           <div class="cyber-dropdown" id="${ddId}">
             ${state.cyberServices.filter(c => c.status === 'active').map(c => `
               <div class="cyber-dropdown-item" onclick="pickCyber('${c.name.replace(/'/g, "\\'")}',${c.price})">
-                <div class="cyber-item-info"><div class="cyber-item-name">${c.name}</div><div class="cyber-item-desc">${c.description || c.desc || ''}</div></div>
+                <div class="cyber-item-info"><div class="cyber-item-name">${c.name}</div><div class="cyber-item-desc">${c.desc}</div></div>
                 <div class="cyber-item-price">KES ${Number(c.price).toLocaleString()}</div>
               </div>`).join('')}
           </div>`
@@ -3545,25 +3839,16 @@
     }
 
     /* TESTIMONIALS */
-    const DEFAULT_TESTIMONIALS = [
-      { id: 't1', name: 'Michael Odhiambo', role: 'CEO, StartupKE',       text: 'BTECH STUDIOS delivered a world-class website that exceeded all our expectations. Professional, fast, and incredibly talented.', rating: 5, approved: true },
-      { id: 't2', name: 'Faith Mwelu L.',     role: 'Marketing Manager',     text: 'Our brand identity completely transformed. The logo and graphics work was exceptional — exactly what we envisioned and more.',      rating: 5, approved: true },
-      { id: 't3', name: 'David Mutua',      role: 'Entrepreneur, Nairobi', text: 'The cyber services were a lifesaver. Got my KRA PIN and NSSF sorted in no time. Highly recommend.',                             rating: 5, approved: true },
-    ];
-
     function renderTestimonials() {
       const el = document.getElementById('testimonials-grid'); if (!el) return;
       const star = '<svg viewBox="0 0 24 24" width="15" height="15" fill="#F59E0B" stroke="#F59E0B" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
-      // Use approved from DB, fall back to defaults if none approved yet
-      let items = (state.testimonials || []).filter(t => t.approved);
-      if (!items.length) items = DEFAULT_TESTIMONIALS;
-      el.innerHTML = items.map(t => `
+      el.innerHTML = state.testimonials.filter(t => t.approved).map(t => `
     <div class="testimonial-card">
-      <div class="testimonial-stars">${star.repeat(Math.min(t.rating || 5, 5))}</div>
-      <div class="testimonial-text">"${t.text || ''}"</div>
+      <div class="testimonial-stars">${star.repeat(t.rating)}</div>
+      <div class="testimonial-text">"${t.text}"</div>
       <div class="testimonial-author">
-        <div class="testimonial-avatar">${(t.name || '?')[0].toUpperCase()}</div>
-        <div><div class="testimonial-name">${t.name || ''}</div><div class="testimonial-role">${t.role || ''}</div></div>
+        <div class="testimonial-avatar">${t.name[0]}</div>
+        <div><div class="testimonial-name">${t.name}</div><div class="testimonial-role">${t.role}</div></div>
       </div>
     </div>`).join('');
     }
@@ -3593,22 +3878,15 @@
 
     function renderPortfolio(targetId, limit = null) {
       const el = document.getElementById(targetId); if (!el) return;
-      const pool  = Array.isArray(state.portfolio) ? state.portfolio : [];
-      const items = limit ? pool.slice(0, limit) : pool;
-      if (!items.length) {
-        // Show placeholder cards while loading — not blank
-        el.innerHTML = [1,2,3,4,5,6].slice(0, limit || 6).map(() =>
-          '<div class="portfolio-item"><div class="skeleton skeleton-card"></div></div>'
-        ).join('');
-        return;
-      }
+      const items = limit ? state.portfolio.slice(0, limit) : state.portfolio;
+      if (!items.length) { el.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;opacity:0.5;">No portfolio items yet.</div>'; return; }
       el.innerHTML = items.map(p => portfolioItemHTML(p)).join('');
     }
 
     function renderFullPortfolio(filter = 'All') {
       const el = document.getElementById('full-portfolio-grid'); if (!el) return;
       const all = state.portfolio;
-      const items = filter === 'All' ? all : all.filter(p => (p.category||p.cat) === filter);
+      const items = filter === 'All' ? all : all.filter(p => (p.category || p.cat) === filter);
       if (!items.length) { el.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;opacity:0.5;">No items in this category yet.</div>'; return; }
       el.innerHTML = items.map(p => portfolioItemHTML(p)).join('');
     }
@@ -3629,9 +3907,6 @@
         state.portfolio = state.portfolio.filter(p => String(p.id) !== String(id));
         localStorage.setItem('btech_portfolio', JSON.stringify(state.portfolio));
         renderPortfolio('home-portfolio-grid', 6);
-      renderServices('home-services-grid', 4);
-      renderFullServices();
-      renderOrderServices();
         renderFullPortfolio();
         renderAdminPortfolio();
         showToast('Portfolio item deleted. ✓');
@@ -3712,7 +3987,7 @@
 
     /* Generate unique order number — no DB query needed (anon cannot SELECT) */
     function generateOrderNumber() {
-      const ts   = Date.now().toString().slice(-5);        // last 5 digits of timestamp
+      const ts = Date.now().toString().slice(-5);        // last 5 digits of timestamp
       const rand = Math.floor(Math.random() * 90 + 10);   // 2-digit random
       return 'BS-' + ts + rand;                           // e.g. BS-5832147
     }
@@ -3723,13 +3998,13 @@
     async function submitOrder() {
       if (_orderSubmitting) return;                  // prevent double-tap
 
-      const name    = document.getElementById('order-name').value.trim();
-      const email   = document.getElementById('order-email').value.trim();
-      const phone   = document.getElementById('order-phone').value.trim();
+      const name = document.getElementById('order-name').value.trim();
+      const email = document.getElementById('order-email').value.trim();
+      const phone = document.getElementById('order-phone').value.trim();
       const details = document.getElementById('order-details').value.trim();
-      const budget  = document.getElementById('order-budget').value.trim();
-      const fb      = document.getElementById('order-feedback');
-      const btn     = document.querySelector('[onclick="submitOrder()"]');
+      const budget = document.getElementById('order-budget').value.trim();
+      const fb = document.getElementById('order-feedback');
+      const btn = document.querySelector('[onclick="submitOrder()"]');
 
       // ── Validation ──────────────────────────────────────────────
       if (!selectedService) {
@@ -3761,7 +4036,7 @@
 
       try {
         const order_number = generateOrderNumber();           // sync, no DB call
-        const created_at   = new Date().toISOString();
+        const created_at = new Date().toISOString();
 
         console.log('[BTECH] Inserting order:', { order_number, name, email, phone, service: selectedService });
 
@@ -3771,10 +4046,10 @@
           name,
           email,
           phone,
-          service:  selectedService,
-          details:  details  || null,
-          budget:   budget   || null,
-          status:   'pending'
+          service: selectedService,
+          details: details || null,
+          budget: budget || null,
+          status: 'pending'
         }]);
 
         if (error) {
@@ -3803,7 +4078,7 @@
         const budgetEl = document.getElementById('order-budget');
         if (budgetEl) budgetEl.value = '';
         selectedService = '';
-        selectedCyber   = '';
+        selectedCyber = '';
         document.querySelectorAll('.order-service-item').forEach(i => i.classList.remove('selected'));
         document.querySelectorAll('.cyber-sub-items').forEach(s => s.classList.remove('open'));
 
@@ -3824,15 +4099,15 @@
         const { jsPDF } = window.jspdf; const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
         const W = 210; const H = 297;
         // Header bg
-                doc.setFillColor(10, 31, 68); doc.rect(0, 0, W, 52, 'F');
+        doc.setFillColor(10, 31, 68); doc.rect(0, 0, W, 52, 'F');
         doc.setFillColor(139, 0, 0); doc.rect(0, 48, W, 4, 'F');
         // Text logo in PDF (no image dependency)
-        doc.setTextColor(192, 0, 26); doc.setFontSize(28); doc.setFont('helvetica', 'bold');{ align: 'center' });
-        doc.text('B', 14, 28);{ align: 'center' });
-        doc.setTextColor(255,255,255); doc.setFontSize(16);
-        doc.text('TECH', 26, 28);{ align: 'center' });
-        doc.setTextColor(160,170,200); doc.setFontSize(7); doc.setFont('helvetica','normal');
-        doc.text('STUDIOS  —  design simplicity', 14, 35);{ align: 'center' });
+        doc.setTextColor(192, 0, 26); doc.setFontSize(28); doc.setFont('helvetica', 'bold');
+        doc.text('B', 14, 28);
+        doc.setTextColor(255, 255, 255); doc.setFontSize(16);
+        doc.text('TECH', 26, 28);
+        doc.setTextColor(160, 170, 200); doc.setFontSize(7); doc.setFont('helvetica', 'normal');
+        doc.text('STUDIOS  —  design simplicity', 14, 35);
         doc.setFontSize(7.5); doc.setTextColor(160, 170, 200);
         doc.text('Muratha Road, Nairobi KE  |  +254 706 675 009  |  btechstudios01@gmail.com', W / 2, 42, { align: 'center' });
         doc.text('Facebook: BTECH STUDIOS  |  Instagram: @btech_studios1  |  TikTok: btech studios', W / 2, 47, { align: 'center' });
@@ -3848,7 +4123,7 @@
         doc.setFontSize(7.5); doc.setTextColor(90, 97, 128); doc.setFont('helvetica', 'normal');
         doc.text('ORDER NUMBER', 26, 87); doc.text('DATE', 100, 87); doc.text('STATUS', 165, 87);
         doc.setTextColor(10, 18, 36); doc.setFont('helvetica', 'bold'); doc.setFontSize(10);
-        doc.text(order.order_number || order.id?.slice(0,8) || 'BS-000000', 26, 94);
+        doc.text(order.order_number || order.id?.slice(0, 8) || 'BS-000000', 26, 94);
         doc.text(new Date(order.created_at).toLocaleDateString('en-KE', { day: '2-digit', month: 'short', year: 'numeric' }), 100, 94);
         doc.setTextColor(22, 163, 74); doc.text('CONFIRMED', 165, 94);
         // Customer section
@@ -3886,7 +4161,7 @@
         doc.setTextColor(140, 160, 200); doc.setFontSize(7);
         doc.text('© 2026 BTECH STUDIOS. All Rights Reserved. | Design Simplicity', W / 2, H - 9, { align: 'center' });
         doc.text('+254 706 675 009 | btechstudios01@gmail.com | Muratha Road, Nairobi KE', W / 2, H - 4, { align: 'center' });
-        doc.save('BTECH_Receipt_' + (order.order_number || order.id?.slice(0,8) || 'ORDER') + '.pdf');
+        doc.save('BTECH_Receipt_' + (order.order_number || order.id?.slice(0, 8) || 'ORDER') + '.pdf');
         showToast('Receipt downloaded! ✓');
       } catch (e) { console.error('PDF error:', e); showToast('Order saved! Check admin dashboard.'); }
     }
@@ -3894,10 +4169,10 @@
     /* AUTH */
     function doLogin() {
       const email = document.getElementById('auth-email').value.trim();
-      const pass  = document.getElementById('auth-password').value;
+      const pass = document.getElementById('auth-password').value;
       if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
         _adminInitialized = false;   // force fresh init on each login
-        state.isLoggedIn  = true;
+        state.isLoggedIn = true;
         sessionStorage.setItem('btech_admin', '1');
         document.getElementById('auth-error').textContent = '';
         navigate('admin');
@@ -3909,7 +4184,7 @@
     function adminLogout() {
       cleanupSubscriptions();
       _adminInitialized = false;
-      state.isLoggedIn  = false;
+      state.isLoggedIn = false;
       sessionStorage.removeItem('btech_admin');
       navigate('home');
       // Re-init public-only realtime for the visitor view
@@ -3925,16 +4200,16 @@
       if (el) el.classList.add('active');
       const titles = { overview: 'Dashboard Overview', orders: 'All Orders', contacts: 'Contact Messages', services: 'Services & Prices', cyber: 'Cyber Services Management', portfolio: 'Portfolio Management', testimonials: 'Testimonials', offers: 'Weekly Offers', analytics: 'Analytics' };
       document.getElementById('admin-panel-title').textContent = titles[panel] || 'Admin';
-      if (panel === 'overview')     initAdmin();
-      if (panel === 'orders')       refreshDashboard();
-      if (panel === 'contacts')     refreshDashboard();
-      if (panel === 'portfolio')    { renderAdminPortfolio(); setTimeout(initPortfolioUpload, 100); }
-      if (panel === 'services')     renderAdminServices();
-      if (panel === 'cyber')        renderAdminCyber();
+      if (panel === 'overview') initAdmin();
+      if (panel === 'orders') refreshDashboard();
+      if (panel === 'contacts') refreshDashboard();
+      if (panel === 'portfolio') { renderAdminPortfolio(); setTimeout(initPortfolioUpload, 100); }
+      if (panel === 'services') renderAdminServices();
+      if (panel === 'cyber') renderAdminCyber();
 
       if (panel === 'testimonials') renderAdminTestimonials();
       if (panel === 'offers') { const o = state.offer; document.getElementById('offer-title-input').value = o.title; document.getElementById('offer-desc-input').value = o.desc; document.getElementById('offer-old-input').value = o.oldPrice; document.getElementById('offer-new-input').value = o.newPrice; }
-      if (panel === 'analytics')    initAnalytics();
+      if (panel === 'analytics') initAnalytics();
     }
 
     /* Called once when admin first logs in OR navigates back to overview */
@@ -3960,7 +4235,7 @@
       const tbody = document.getElementById('admin-orders-tbody');
       if (tbody) tbody.innerHTML = state.orders.slice(0, 5).map(o => `
         <tr>
-          <td><strong>${o.order_number || o.id?.slice(0,8) || '—'}</strong></td>
+          <td><strong>${o.order_number || o.id?.slice(0, 8) || '—'}</strong></td>
           <td>${o.name}</td>
           <td style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.service}</td>
           <td>${o.budget || '—'}</td>
@@ -3981,10 +4256,10 @@
           <td>${o.budget || '—'}</td>
           <td>
             <select onchange="updateStatus('${o.id}',this.value)" style="padding:3px 6px;border:1px solid var(--gray-200);border-radius:5px;font-family:var(--font);font-size:0.72rem;">
-              <option value="pending"${o.status==='pending'?' selected':''}>Pending</option>
-              <option value="processing"${o.status==='processing'?' selected':''}>Processing</option>
-              <option value="completed"${o.status==='completed'?' selected':''}>Completed</option>
-              <option value="cancelled"${o.status==='cancelled'?' selected':''}>Cancelled</option>
+              <option value="pending"${o.status === 'pending' ? ' selected' : ''}>Pending</option>
+              <option value="processing"${o.status === 'processing' ? ' selected' : ''}>Processing</option>
+              <option value="completed"${o.status === 'completed' ? ' selected' : ''}>Completed</option>
+              <option value="cancelled"${o.status === 'cancelled' ? ' selected' : ''}>Cancelled</option>
             </select>
           </td>
           <td>${new Date(o.created_at).toLocaleDateString('en-KE')}</td>
@@ -3997,16 +4272,16 @@
       // All contacts table
       const allC = document.getElementById('all-contacts-tbody');
       if (allC) allC.innerHTML = state.contacts.map(c => `
-        <tr style="${c.status==='new'?'font-weight:600;background:rgba(139,0,0,0.03);':''}">
+        <tr style="${c.status === 'new' ? 'font-weight:600;background:rgba(139,0,0,0.03);' : ''}">
           <td>${c.name}</td>
           <td>${c.email}</td>
           <td>${c.phone || '—'}</td>
           <td>${c.service || '—'}</td>
-          <td style="max-width:180px;">${(c.message || '').slice(0,60)}${(c.message||'').length>60?'…':''}</td>
-          <td><span class="status-badge ${c.status||'new'}">${c.status||'new'}</span></td>
+          <td style="max-width:180px;">${(c.message || '').slice(0, 60)}${(c.message || '').length > 60 ? '…' : ''}</td>
+          <td><span class="status-badge ${c.status || 'new'}">${c.status || 'new'}</span></td>
           <td>${new Date(c.created_at).toLocaleDateString('en-KE')}</td>
           <td style="white-space:nowrap;display:flex;gap:4px;">
-            ${c.status!=='read'?`<button class="admin-save-btn" style="padding:4px 8px;font-size:0.7rem;" onclick="markContactRead('${c.id}')">✓ Read</button>`:''}
+            ${c.status !== 'read' ? `<button class="admin-save-btn" style="padding:4px 8px;font-size:0.7rem;" onclick="markContactRead('${c.id}')">✓ Read</button>` : ''}
             <button class="admin-danger-btn" style="padding:4px 8px;font-size:0.7rem;" onclick="deleteContact('${c.id}')">✕</button>
           </td>
         </tr>`).join('') || '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--text-muted);">No messages yet.</td></tr>';
@@ -4065,41 +4340,24 @@
     /* SERVICES ADMIN */
     function renderAdminServices() {
       const el = document.getElementById('admin-services-list'); if (!el) return;
-      if (!state.services.length) { el.innerHTML = '<div style="text-align:center;padding:30px;opacity:0.5;">No services yet.</div>'; return; }
-      el.innerHTML = state.services.map(s => {
-        const desc = s.description || s.desc || '';
-        return `<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;margin-bottom:8px;">
-    <div style="width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--navy),var(--red));display:flex;align-items:center;justify-content:center;flex-shrink:0;">${icon(s.icon||'file-check',16)}</div>
-    <div style="flex:1;min-width:0;">
-      <div style="font-weight:700;font-size:0.85rem;color:var(--black);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${s.name}</div>
-      <div style="font-size:0.7rem;color:var(--text-muted);">KES ${Number(s.price||0).toLocaleString()} · ${s.category||''} · <span style="color:${s.status==='active'?'#16A34A':'#F59E0B'}">${s.status}</span></div>
-    </div>
-    <div style="display:flex;gap:4px;flex-shrink:0;">
-      <button class="admin-save-btn" style="padding:4px 9px;font-size:0.7rem;" onclick="editSvc('${s.id}')">Edit</button>
-      <button class="admin-save-btn" style="padding:4px 9px;font-size:0.7rem;background:${s.status==='active'?'rgba(139,0,0,0.15)':'rgba(22,163,74,0.15)'};" onclick="toggleSvcStatus('${s.id}')">${s.status==='active'?'Hide':'Show'}</button>
-      <button class="admin-danger-btn" style="padding:4px 7px;font-size:0.7rem;" onclick="deleteSvc('${s.id}')">✕</button>
-    </div></div>`;
-      }).join('');
+      el.innerHTML = state.services.map(s => `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--off-white);border-radius:8px;margin-bottom:8px;border:1px solid var(--gray-200);">
+    <div><div style="font-weight:700;font-size:0.85rem;">${s.name}</div><div style="font-size:0.72rem;color:var(--text-muted);">KES ${Number(s.price).toLocaleString()} · <span style="color:${s.status === 'active' ? '#16A34A' : 'var(--red)'};">${s.status}</span></div></div>
+    <div style="display:flex;gap:5px;flex-shrink:0;">
+      <button class="admin-save-btn" style="padding:4px 10px;font-size:0.72rem;" onclick="editSvc(${s.id})">Edit</button>
+      <button class="admin-danger-btn" onclick="toggleSvcStatus(${s.id})">${s.status === 'active' ? 'Disable' : 'Enable'}</button>
+      <button class="admin-danger-btn" onclick="deleteSvc(${s.id})">✕</button>
+    </div></div>`).join('');
     }
     function clearServiceForm() { document.getElementById('svc-id').value = '';['svc-name', 'svc-desc', 'svc-price', 'svc-cat'].forEach(id => document.getElementById(id).value = ''); document.getElementById('svc-status').value = 'active'; document.getElementById('svc-form-title').textContent = 'Add Service'; }
-    function editSvc(id) {
-      const s = state.services.find(s => String(s.id) === String(id)); if (!s) return;
-      const descEl = document.getElementById('svc-desc'); if (descEl) descEl.value = s.description || s.desc || '';
-      const idEl   = document.getElementById('svc-id');   if (idEl)   idEl.value   = s.id;
-      const nameEl = document.getElementById('svc-name'); if (nameEl) nameEl.value = s.name;
-      const priceEl= document.getElementById('svc-price');if (priceEl)priceEl.value= s.price;
-      const catEl  = document.getElementById('svc-cat');  if (catEl)  catEl.value  = s.category || '';
-      const statEl = document.getElementById('svc-status');if(statEl) statEl.value = s.status || 'active';
-      const titleEl= document.getElementById('svc-form-title'); if(titleEl) titleEl.textContent = 'Edit Service';
-    }
+    function editSvc(id) { const s = state.services.find(s => s.id === id); if (!s) return; document.getElementById('svc-id').value = s.id; document.getElementById('svc-name').value = s.name; document.getElementById('svc-desc').value = s.desc; document.getElementById('svc-price').value = s.price; document.getElementById('svc-cat').value = s.category || ''; document.getElementById('svc-status').value = s.status || 'active'; document.getElementById('svc-form-title').textContent = 'Edit Service'; }
     async function saveService() {
-      const id       = document.getElementById('svc-id')?.value.trim();
-      const name     = document.getElementById('svc-name')?.value.trim();
-      const desc     = document.getElementById('svc-desc')?.value.trim();
-      const price    = parseInt(document.getElementById('svc-price')?.value) || 0;
+      const id = document.getElementById('svc-id')?.value.trim();
+      const name = document.getElementById('svc-name')?.value.trim();
+      const desc = document.getElementById('svc-desc')?.value.trim();
+      const price = parseInt(document.getElementById('svc-price')?.value) || 0;
       const category = document.getElementById('svc-cat')?.value.trim();
-      const status   = document.getElementById('svc-status')?.value || 'active';
-      const btn      = document.getElementById('svc-save-btn');
+      const status = document.getElementById('svc-status')?.value || 'active';
+      const btn = document.getElementById('svc-save-btn');
       if (!name) { showToast('Service name required.'); return; }
       if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
 
@@ -4108,7 +4366,7 @@
         const s = state.services.find(s => String(s.id) === String(id));
         if (s) Object.assign(s, { name, description: desc, desc, price, category, status });
       } else {
-        state.services.push({ id: '_tmp_' + Date.now(), name, description: desc, desc: desc, price, category, status, created_at: new Date().toISOString() });
+        state.services.push({ id: '_tmp_' + Date.now(), name, description: desc, desc, price, category, status, created_at: new Date().toISOString() });
       }
       localStorage.setItem('btech_services', JSON.stringify(state.services));
       renderAdminServices(); renderServices('home-services-grid', 6); renderFullServices(); renderOrderServices();
@@ -4124,7 +4382,7 @@
         if (error) throw error;
         showToast('Service saved! ✓');
         await fetchServices();  // refresh from DB to get real IDs
-      } catch(err) {
+      } catch (err) {
         console.error('[BTECH] saveService error:', err);
         showToast('Saved locally (DB: ' + err.message + ')');
       } finally {
@@ -4143,7 +4401,7 @@
         const { error } = await db.from('services').update({ status: newStatus }).eq('id', id);
         if (error) throw error;
         showToast('Service ' + newStatus + '! ✓');
-      } catch(err) {
+      } catch (err) {
         console.error('[BTECH] toggleSvcStatus error:', err);
         showToast('Updated locally.');
       }
@@ -4158,7 +4416,7 @@
         const { error } = await db.from('services').delete().eq('id', id);
         if (error) throw error;
         showToast('Service deleted. ✓');
-      } catch(err) {
+      } catch (err) {
         console.error('[BTECH] deleteSvc error:', err);
         showToast('Deleted locally.');
       }
@@ -4204,7 +4462,7 @@
           ${thumb}
           <div style="flex:1;min-width:0;">
             <div style="font-weight:700;font-size:0.88rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.title}</div>
-            <div style="font-size:0.72rem;color:var(--text-muted);">${cat}${desc?' · '+desc.slice(0,35)+'…':''}</div>
+            <div style="font-size:0.72rem;color:var(--text-muted);">${cat}${desc ? ' · ' + desc.slice(0, 35) + '…' : ''}</div>
           </div>
           <button class="admin-danger-btn" style="padding:4px 10px;font-size:0.7rem;flex-shrink:0;" onclick="deletePortfolioItem('${p.id}',event)">✕</button>
         </div>`;
@@ -4219,11 +4477,11 @@
     let _uploadFile = null;
 
     function initPortfolioUpload() {
-      const zone  = document.getElementById('port-upload-zone');
+      const zone = document.getElementById('port-upload-zone');
       const input = document.getElementById('port-file-input');
-      const prev  = document.getElementById('port-upload-preview');
+      const prev = document.getElementById('port-upload-preview');
       if (!zone || !input) return;
-      zone.addEventListener('dragover',  e => { e.preventDefault(); zone.classList.add('drag-over'); });
+      zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
       zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
       zone.addEventListener('drop', e => {
         e.preventDefault(); zone.classList.remove('drag-over');
@@ -4242,50 +4500,50 @@
 
     async function uploadPortfolioItem() {
       const title = (document.getElementById('port-title-input') || document.getElementById('port-title'))?.value.trim();
-      const desc  = (document.getElementById('port-desc-input')  || document.getElementById('port-desc'))?.value.trim();
-      const cat   = (document.getElementById('port-cat-input')   || document.getElementById('port-cat'))?.value.trim() || 'Websites';
-      const fb    = document.getElementById('port-upload-fb');
-      const btn   = document.getElementById('port-upload-btn');
-      if (!title) { if(fb){fb.style.color='var(--red-bright)';fb.textContent='Please enter a title.';} return; }
-      if (btn) { btn.disabled=true; btn.textContent='Uploading…'; }
-      if (fb)  { fb.style.color='var(--text-muted)'; fb.textContent='Saving…'; }
+      const desc = (document.getElementById('port-desc-input') || document.getElementById('port-desc'))?.value.trim();
+      const cat = (document.getElementById('port-cat-input') || document.getElementById('port-cat'))?.value.trim() || 'Websites';
+      const fb = document.getElementById('port-upload-fb');
+      const btn = document.getElementById('port-upload-btn');
+      if (!title) { if (fb) { fb.style.color = 'var(--red-bright)'; fb.textContent = 'Please enter a title.'; } return; }
+      if (btn) { btn.disabled = true; btn.textContent = 'Uploading…'; }
+      if (fb) { fb.style.color = 'var(--text-muted)'; fb.textContent = 'Saving…'; }
 
       let image_url = null;
       if (_uploadFile) {
         try {
-          if(fb) fb.textContent='Uploading image to storage…';
-          const ext  = _uploadFile.name.split('.').pop().toLowerCase();
+          if (fb) fb.textContent = 'Uploading image to storage…';
+          const ext = _uploadFile.name.split('.').pop().toLowerCase();
           const path = `portfolio/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-          const { error: upErr } = await db.storage.from('portfolio-images').upload(path, _uploadFile, { cacheControl:'3600', upsert:false });
+          const { error: upErr } = await db.storage.from('portfolio-images').upload(path, _uploadFile, { cacheControl: '3600', upsert: false });
           if (upErr) { console.warn('[BTECH] Upload error:', upErr.message); }
           else { const { data: urlData } = db.storage.from('portfolio-images').getPublicUrl(path); image_url = urlData?.publicUrl || null; }
-        } catch(e) { console.warn('[BTECH] Storage unavailable:', e); }
+        } catch (e) { console.warn('[BTECH] Storage unavailable:', e); }
       }
 
       try {
-        const { error } = await db.from('portfolio').insert([{ title, description: desc||'', category: cat, image_url }]);
+        const { error } = await db.from('portfolio').insert([{ title, description: desc || '', category: cat, image_url }]);
         if (error) throw error;
-        if(fb){fb.style.color='#16A34A';fb.textContent='✓ Portfolio item saved!';}
+        if (fb) { fb.style.color = '#16A34A'; fb.textContent = '✓ Portfolio item saved!'; }
         showToast('Portfolio item added! ✓');
         await fetchPortfolio();
-      } catch(dbErr) {
+      } catch (dbErr) {
         console.error('[BTECH] Portfolio DB error:', dbErr);
-        const newItem = { id: Date.now(), title, description: desc, category: cat, image_url, emoji:'🖼️', color:'linear-gradient(135deg,#0A1F44,#8B0000)', created_at: new Date().toISOString() };
+        const newItem = { id: Date.now(), title, description: desc, category: cat, image_url, emoji: '🖼️', color: 'linear-gradient(135deg,#0A1F44,#8B0000)', created_at: new Date().toISOString() };
         state.portfolio.unshift(newItem);
         localStorage.setItem('btech_portfolio', JSON.stringify(state.portfolio));
         renderAdminPortfolio(); renderPortfolio('home-portfolio-grid', 6);
-        if(fb){fb.style.color='#F59E0B';fb.textContent='⚠ Saved locally (DB error: '+dbErr.message+')';}
+        if (fb) { fb.style.color = '#F59E0B'; fb.textContent = '⚠ Saved locally (DB error: ' + dbErr.message + ')'; }
       } finally {
-        ['port-title-input','port-title','port-desc-input','port-desc','port-cat-input','port-cat'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
-        const p=document.getElementById('port-upload-preview'); if(p){p.style.display='none';p.src='';}
-        _uploadFile=null;
-        const fi=document.getElementById('port-file-input'); if(fi) fi.value='';
-        if(btn){btn.disabled=false;btn.textContent='Add to Portfolio';}
+        ['port-title-input', 'port-title', 'port-desc-input', 'port-desc', 'port-cat-input', 'port-cat'].forEach(id => { const e = document.getElementById(id); if (e) e.value = ''; });
+        const p = document.getElementById('port-upload-preview'); if (p) { p.style.display = 'none'; p.src = ''; }
+        _uploadFile = null;
+        const fi = document.getElementById('port-file-input'); if (fi) fi.value = '';
+        if (btn) { btn.disabled = false; btn.textContent = 'Add to Portfolio'; }
       }
     }
 
     async function deletePortfolioItem(id, e) {
-      if(e) e.stopPropagation();
+      if (e) e.stopPropagation();
       if (!confirm('Delete this portfolio item?')) return;
       try {
         const { error } = await db.from('portfolio').delete().eq('id', id);
@@ -4294,7 +4552,7 @@
         localStorage.setItem('btech_portfolio', JSON.stringify(state.portfolio));
         renderAdminPortfolio(); renderPortfolio('home-portfolio-grid', 6); renderFullPortfolio();
         showToast('Deleted. ✓');
-      } catch(err) {
+      } catch (err) {
         state.portfolio = state.portfolio.filter(p => String(p.id) !== String(id));
         localStorage.setItem('btech_portfolio', JSON.stringify(state.portfolio));
         renderAdminPortfolio(); renderPortfolio('home-portfolio-grid', 6); renderFullPortfolio();
@@ -4305,29 +4563,12 @@
     async function fetchPortfolio() {
       try {
         const { data, error } = await db.from('portfolio').select('*').order('created_at', { ascending: false });
-        if (error) {
-          console.warn('[BTECH] fetchPortfolio error:', error.message, '— keeping defaults');
-          renderPortfolio('home-portfolio-grid', 6);
-          renderFullPortfolio();
-          return;
-        }
-        if (data !== null) {
-          // Only replace if DB has items — don't blank the portfolio with empty array
-          if (data.length > 0) {
-            state.portfolio = data;
-            localStorage.setItem('btech_portfolio', JSON.stringify(state.portfolio));
-          } else {
-            console.log('[BTECH] Portfolio table empty — keeping defaults for display');
-          }
-          renderPortfolio('home-portfolio-grid', 6);
-          renderFullPortfolio();
-          if (state.isLoggedIn) renderAdminPortfolio();
-        }
-      } catch(e) {
-        console.warn('[BTECH] fetchPortfolio unreachable — using defaults:', e.message);
-        renderPortfolio('home-portfolio-grid', 6); // always render something
+        if (error) { console.warn('[BTECH] fetchPortfolio:', error.message); return; }
+        if (data) { state.portfolio = data; localStorage.setItem('btech_portfolio', JSON.stringify(state.portfolio)); }
+        renderPortfolio('home-portfolio-grid', 6);
         renderFullPortfolio();
-      }
+        renderAdminPortfolio();
+      } catch (e) { console.warn('[BTECH] fetchPortfolio unreachable:', e); }
     }
 
     /* TESTIMONIALS ADMIN */
@@ -4342,34 +4583,34 @@
           <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:4px;">
             <div>
               <div style="font-weight:700;font-size:0.88rem;color:var(--white);">${t.name}</div>
-              <div style="font-size:0.72rem;color:var(--text-muted);">${t.role || ''} ${'⭐'.repeat(Math.min(t.rating||5,5))}</div>
+              <div style="font-size:0.72rem;color:var(--text-muted);">${t.role || ''} ${'⭐'.repeat(Math.min(t.rating || 5, 5))}</div>
             </div>
             <div style="display:flex;gap:5px;flex-shrink:0;">
               <button class="admin-save-btn" style="padding:4px 10px;font-size:0.7rem;" onclick="toggleTestimonial('${t.id}')">${t.approved ? 'Hide' : 'Approve'}</button>
               <button class="admin-danger-btn" style="padding:4px 8px;font-size:0.7rem;" onclick="deleteTestimonial('${t.id}')">✕</button>
             </div>
           </div>
-          <div style="font-size:0.78rem;color:var(--text-muted);margin-top:4px;font-style:italic;">"${(t.text||'').slice(0,100)}${(t.text||'').length>100?'…':''}"</div>
-          <div style="margin-top:6px;font-size:0.68rem;font-weight:600;color:${t.approved?'#16A34A':'#F59E0B'};">
+          <div style="font-size:0.78rem;color:var(--text-muted);margin-top:4px;font-style:italic;">"${(t.text || '').slice(0, 100)}${(t.text || '').length > 100 ? '…' : ''}"</div>
+          <div style="margin-top:6px;font-size:0.68rem;font-weight:600;color:${t.approved ? '#16A34A' : '#F59E0B'};">
             ${t.approved ? '✓ Published on website' : '○ Hidden — click Approve to publish'}
           </div>
         </div>`).join('');
     }
     async function addTestimonial() {
-      const name   = document.getElementById('test-name')?.value.trim();
-      const role   = document.getElementById('test-role')?.value.trim();
+      const name = document.getElementById('test-name')?.value.trim();
+      const role = document.getElementById('test-role')?.value.trim();
       const rating = parseInt(document.getElementById('test-rating')?.value) || 5;
-      const text   = document.getElementById('test-text')?.value.trim();
-      const btn    = document.getElementById('test-add-btn');
+      const text = document.getElementById('test-text')?.value.trim();
+      const btn = document.getElementById('test-add-btn');
       if (!name || !text) { showToast('Fill in name and testimonial text.'); return; }
       if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
       try {
         const { error } = await db.from('testimonials').insert([{ name, role, rating, text, approved: false }]);
         if (error) throw error;
         showToast('Testimonial added! ✓ Approve it to show on site.');
-        ['test-name','test-role','test-text'].forEach(id => { const e=document.getElementById(id); if(e) e.value=''; });
+        ['test-name', 'test-role', 'test-text'].forEach(id => { const e = document.getElementById(id); if (e) e.value = ''; });
         await fetchTestimonials();
-      } catch(err) {
+      } catch (err) {
         console.error('[BTECH] addTestimonial error:', err);
         // Fallback local
         state.testimonials.push({ id: Date.now(), name, role, rating, text, approved: false, created_at: new Date().toISOString() });
@@ -4392,7 +4633,7 @@
         const { error } = await db.from('testimonials').update({ approved: newVal }).eq('id', id);
         if (error) throw error;
         showToast(newVal ? 'Testimonial published! ✓' : 'Testimonial hidden.');
-      } catch(err) {
+      } catch (err) {
         console.error('[BTECH] toggleTestimonial error:', err);
         showToast('Updated locally.');
       }
@@ -4407,18 +4648,18 @@
         const { error } = await db.from('testimonials').delete().eq('id', id);
         if (error) throw error;
         showToast('Testimonial deleted. ✓');
-      } catch(err) {
+      } catch (err) {
         console.error('[BTECH] deleteTestimonial error:', err);
         showToast('Deleted locally.');
       }
     }
 
     async function saveOffer() {
-      const title    = document.getElementById('offer-title-input')?.value || '';
-      const desc     = document.getElementById('offer-desc-input')?.value  || '';
-      const oldPrice = document.getElementById('offer-old-input')?.value   || '';
-      const newPrice = document.getElementById('offer-new-input')?.value   || '';
-      const btn      = document.getElementById('offer-save-btn');
+      const title = document.getElementById('offer-title-input')?.value || '';
+      const desc = document.getElementById('offer-desc-input')?.value || '';
+      const oldPrice = document.getElementById('offer-old-input')?.value || '';
+      const newPrice = document.getElementById('offer-new-input')?.value || '';
+      const btn = document.getElementById('offer-save-btn');
       if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
 
       // Optimistic local update
@@ -4433,7 +4674,7 @@
         }], { onConflict: 'id' });
         if (error) throw error;
         showToast('Offer updated across all browsers! ✓');
-      } catch(err) {
+      } catch (err) {
         console.error('[BTECH] saveOffer error:', err);
         showToast('Saved locally (DB: ' + err.message + ')');
       } finally {
@@ -4442,29 +4683,13 @@
     }
 
     async function fetchOffer() {
-      // fetchOffer is best-effort — offers table may not exist (404 is OK)
       try {
-        const { data, error } = await db.from('offers').select('*').order('id', { ascending: true }).limit(1).maybeSingle();
-        if (error) {
-          // 404 / table missing / RLS block — not critical, just use localStorage/defaults
-          console.log('[BTECH] fetchOffer skipped:', error.message, '(offers table may not exist — this is OK)');
-          renderOffer(); // render from state (localStorage or defaults)
-          return;
-        }
-        if (data) {
-          state.offer = {
-            title:    data.title        || state.offer.title,
-            desc:     data.description  || data.desc || state.offer.desc,
-            oldPrice: data.old_price    || state.offer.oldPrice,
-            newPrice: data.new_price    || state.offer.newPrice,
-          };
-          localStorage.setItem('btech_offer', JSON.stringify(state.offer));
-        }
+        const { data, error } = await db.from('offers').select('*').eq('id', 1).single();
+        if (error || !data) return;
+        state.offer = { title: data.title, desc: data.description, oldPrice: data.old_price, newPrice: data.new_price };
+        localStorage.setItem('btech_offer', JSON.stringify(state.offer));
         renderOffer();
-      } catch(e) {
-        console.log('[BTECH] fetchOffer caught error (non-critical):', e.message);
-        renderOffer(); // always render from existing state
-      }
+      } catch (e) { console.warn('[BTECH] fetchOffer unreachable:', e); }
     }
 
     /* CHARTS */
@@ -4473,7 +4698,7 @@
     function initServicesChart() { const ctx = document.getElementById('servicesChart'); if (!ctx) return; if (sChart) sChart.destroy(); sChart = new Chart(ctx, { type: 'doughnut', data: { labels: ['Web Design', 'Graphics', 'Logo', 'SEO', 'Social', 'Cyber'], datasets: [{ data: [35, 20, 18, 12, 10, 5], backgroundColor: ['#8B0000', '#0A1F44', '#C0001A', '#1a3a6e', '#0F2D5E', '#5a0000'], borderWidth: 0 }] }, options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 12 } } } } }); }
     function initAnalytics() {
       const completed = state.orders.filter(o => o.status === 'completed');
-      const rev = completed.reduce((s, o) => { const m = (o.budget || '').match(/\d[\d,]*/g); return s + (m ? parseInt(m[0].replace(/,/g,'')) : 0); }, 0);
+      const rev = completed.reduce((s, o) => { const m = (o.budget || '').match(/\d[\d,]*/g); return s + (m ? parseInt(m[0].replace(/,/g, '')) : 0); }, 0);
       const avg = state.orders.length ? Math.round(rev / Math.max(completed.length, 1)) : 0;
       const kR = document.getElementById('kpi-revenue'); if (kR) kR.textContent = 'KES ' + rev.toLocaleString();
       const kA = document.getElementById('kpi-avg'); if (kA) kA.textContent = 'KES ' + avg.toLocaleString();
@@ -4510,24 +4735,11 @@
       document.addEventListener('keydown', e => { if (e.ctrlKey && e.shiftKey && e.key === 'A') navigate('auth'); });
       // Start realtime for all visitors (public channels)
       initializeRealtime(false);
-
-      // Fetch live data — use Promise.allSettled so one failure never blocks others
-      // Each fetch has its own internal try/catch + fallback render
-      Promise.allSettled([
-        fetchPortfolio(),
-        fetchServices(),
-        fetchTestimonials(),
-        fetchOffer(),   // best-effort — 404 is handled gracefully
-      ]).then(results => {
-        results.forEach((r, i) => {
-          const names = ['portfolio','services','testimonials','offer'];
-          if (r.status === 'rejected') {
-            console.warn('[BTECH] ' + names[i] + ' fetch rejected (non-fatal):', r.reason);
-          }
-        });
-        console.log('[BTECH] All page fetches settled.');
-      });
-
+      // Fetch all dynamic content on page load
+      fetchPortfolio();
+      fetchServices();
+      fetchTestimonials();
+      fetchOffer();
       // Init portfolio upload drag-drop
       setTimeout(initPortfolioUpload, 500);
     });
@@ -4544,53 +4756,34 @@
        update instantly without refresh.
     ═════════════════════════════════════════════════════════════*/
 
-    /* Fetch services — normalises Supabase 'description' to also set 'desc' for compatibility */
+    /* Fetch services — gets all, renders only active ones on site */
     async function fetchServices() {
       try {
         const { data, error } = await db.from('services').select('*').order('created_at', { ascending: true });
-        if (error) { console.warn('[BTECH] fetchServices error:', error.message); return; }
-        if (data !== null) {
-          // Normalise: copy description → desc so both field names always work
-          state.services = data.map(s => ({ ...s, desc: s.description || s.desc || '' }));
-          if (!state.services.length) {
-            // DB is empty — fall back to hardcoded defaults so site doesn't go blank
-            console.warn('[BTECH] Services table empty — using defaults.');
-            state.services = JSON.parse(JSON.stringify(DEFAULT_SERVICES));
-          }
+        if (error) { console.warn('[BTECH] fetchServices:', error.message); return; }
+        if (data) {
+          state.services = data;
           localStorage.setItem('btech_services', JSON.stringify(state.services));
           renderServices('home-services-grid', 4);
           renderFullServices();
           renderOrderServices();
           if (state.isLoggedIn) renderAdminServices();
         }
-      } catch(e) { console.warn('[BTECH] fetchServices unreachable — using local state:', e); }
+      } catch (e) { console.warn('[BTECH] fetchServices unreachable:', e); }
     }
 
     /* Fetch testimonials — gets ALL, renders only approved ones on site */
     async function fetchTestimonials() {
       try {
         const { data, error } = await db.from('testimonials').select('*').order('created_at', { ascending: false });
-        if (error) {
-          console.warn('[BTECH] fetchTestimonials error:', error.message, '— keeping defaults');
-          // Don't wipe state — just render what we have (defaults or localStorage)
-          renderTestimonials();
-          return;
-        }
-        if (data !== null) {
-          // Only replace state if DB has records — never blank the site with empty array
-          if (data.length > 0) {
-            state.testimonials = data;
-            localStorage.setItem('btech_testimonials', JSON.stringify(state.testimonials));
-          } else {
-            console.log('[BTECH] Testimonials table empty — keeping defaults for display');
-          }
+        if (error) { console.warn('[BTECH] fetchTestimonials:', error.message); return; }
+        if (data) {
+          state.testimonials = data;
+          localStorage.setItem('btech_testimonials', JSON.stringify(state.testimonials));
           renderTestimonials();
           if (state.isLoggedIn) renderAdminTestimonials();
         }
-      } catch(e) {
-        console.warn('[BTECH] fetchTestimonials unreachable — using defaults:', e.message);
-        renderTestimonials(); // always render something
-      }
+      } catch (e) { console.warn('[BTECH] fetchTestimonials unreachable:', e); }
     }
 
     /* ════════════════════════════════════════════════════════════
@@ -4605,13 +4798,13 @@
     ═════════════════════════════════════════════════════════════*/
 
     const _rtChannels = {};   // name → channel reference
-    let   _rtInitialized = false;
-    let   _refreshTimer  = null;
+    let _rtInitialized = false;
+    let _refreshTimer = null;
 
     /* ── Safe channel subscribe (deduplicates) ─────────────────── */
     function _subscribe(name, table, handler) {
       if (_rtChannels[name]) {
-        try { db.removeChannel(_rtChannels[name]); } catch(e) {}
+        try { db.removeChannel(_rtChannels[name]); } catch (e) { }
         delete _rtChannels[name];
       }
       const ch = db.channel(name)
@@ -4629,7 +4822,7 @@
     /* ── Clean up all channels (called on logout) ───────────────── */
     function cleanupSubscriptions() {
       Object.entries(_rtChannels).forEach(([name, ch]) => {
-        try { db.removeChannel(ch); } catch(e) {}
+        try { db.removeChannel(ch); } catch (e) { }
         delete _rtChannels[name];
       });
       if (_refreshTimer) { clearInterval(_refreshTimer); _refreshTimer = null; }
@@ -4655,22 +4848,16 @@
       if (state.isLoggedIn) renderAdminPortfolio();
     }
 
-    /* ── Services realtime handler — normalises description→desc ── */
+    /* ── Services realtime handler ──────────────────────────────── */
     function _handleServicesChange(payload) {
-      const norm = s => ({ ...s, desc: s.description || s.desc || '' });
       if (payload.eventType === 'INSERT') {
-        const n = norm(payload.new);
-        if (!state.services.find(s => s.id === n.id)) state.services.push(n);
+        if (!state.services.find(s => s.id === payload.new.id))
+          state.services.push(payload.new);
       } else if (payload.eventType === 'UPDATE') {
-        const n = norm(payload.new);
-        const idx = state.services.findIndex(s => s.id === n.id);
-        if (idx !== -1) state.services[idx] = n; else state.services.push(n);
+        const idx = state.services.findIndex(s => s.id === payload.new.id);
+        if (idx !== -1) state.services[idx] = payload.new;
       } else if (payload.eventType === 'DELETE') {
         state.services = state.services.filter(s => s.id !== payload.old?.id);
-      }
-      // Never leave site blank — fall back to defaults if all active services gone
-      if (!state.services.filter(s => s.status === 'active').length) {
-        state.services = JSON.parse(JSON.stringify(DEFAULT_SERVICES));
       }
       localStorage.setItem('btech_services', JSON.stringify(state.services));
       renderServices('home-services-grid', 4);
@@ -4717,20 +4904,18 @@
       updateKPIs(); renderAdminOrders();
     }
 
-    /* ── Offers realtime handler — graceful if table missing ────── */
+    /* ── Offers realtime handler ─────────────────────────────────── */
     function _handleOffersChange(payload) {
-      try {
-        if (payload && payload.new) {
-          state.offer = {
-            title:    payload.new.title       || state.offer.title,
-            desc:     payload.new.description || payload.new.desc || state.offer.desc,
-            oldPrice: payload.new.old_price   || state.offer.oldPrice,
-            newPrice: payload.new.new_price   || state.offer.newPrice,
-          };
-          localStorage.setItem('btech_offer', JSON.stringify(state.offer));
-          renderOffer();
-        }
-      } catch(e) { console.warn('[BTECH] _handleOffersChange error (non-fatal):', e.message); }
+      if (payload.new) {
+        state.offer = {
+          title: payload.new.title || state.offer.title,
+          desc: payload.new.description || state.offer.desc,
+          oldPrice: payload.new.old_price || state.offer.oldPrice,
+          newPrice: payload.new.new_price || state.offer.newPrice,
+        };
+        localStorage.setItem('btech_offer', JSON.stringify(state.offer));
+        renderOffer();
+      }
     }
 
     /* ── MAIN ENTRY POINT ───────────────────────────────────────── */
@@ -4738,15 +4923,14 @@
       if (_rtInitialized && !isAdmin) return;
 
       // Public channels (for ALL visitors)
-      _subscribe('rt-portfolio',     'portfolio',    _handlePortfolioChange);
-      _subscribe('rt-services',      'services',     _handleServicesChange);
-      _subscribe('rt-testimonials',  'testimonials', _handleTestimonialsChange);
-      // offers subscription is best-effort (table may not exist)
-      try { _subscribe('rt-offers', 'offers', _handleOffersChange); } catch(e) { console.log('[BTECH RT] offers channel skipped:', e.message); }
+      _subscribe('rt-portfolio', 'portfolio', _handlePortfolioChange);
+      _subscribe('rt-services', 'services', _handleServicesChange);
+      _subscribe('rt-testimonials', 'testimonials', _handleTestimonialsChange);
+      _subscribe('rt-offers', 'offers', _handleOffersChange);
 
       if (isAdmin) {
         // Admin-only channels
-        _subscribe('rt-orders',   'orders',   _handleOrdersChange);
+        _subscribe('rt-orders', 'orders', _handleOrdersChange);
         _subscribe('rt-contacts', 'contacts', _handleContactsChange);
 
         // Polling fallback every 30s
@@ -4767,10 +4951,10 @@
     }
 
     /* ── Legacy compatibility wrappers ──────────────────────────── */
-    function setupPublicRealtime()         { initializeRealtime(false); }
-    function setupRealtimeSubscriptions()  { initializeRealtime(true);  }
-    function startAutoRefresh()            { /* handled inside initializeRealtime */ }
-    function stopAutoRefresh()             { cleanupSubscriptions(); }
+    function setupPublicRealtime() { initializeRealtime(false); }
+    function setupRealtimeSubscriptions() { initializeRealtime(true); }
+    function startAutoRefresh() { /* handled inside initializeRealtime */ }
+    function stopAutoRefresh() { cleanupSubscriptions(); }
 
     /* ================================================================
        BTECH ADMIN — LIVE DATA SYSTEM
@@ -4830,17 +5014,17 @@
 
     /* ── Update all KPI counters ────────────────────────────────── */
     function updateKPIs() {
-      const totalOrders   = state.orders.length;
+      const totalOrders = state.orders.length;
       const totalContacts = state.contacts.length;
-      const pending       = state.orders.filter(o => o.status === 'pending').length;
-      const newMessages   = state.contacts.filter(c => c.status === 'new').length;
+      const pending = state.orders.filter(o => o.status === 'pending').length;
+      const newMessages = state.contacts.filter(c => c.status === 'new').length;
 
       const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-      set('kpi-orders',       totalOrders);
-      set('kpi-contacts',     totalContacts);
-      set('kpi-pending',      pending);
+      set('kpi-orders', totalOrders);
+      set('kpi-contacts', totalContacts);
+      set('kpi-pending', pending);
       set('kpi-new-messages', newMessages);
-      set('kpi-portfolio',    state.portfolio.length);
+      set('kpi-portfolio', state.portfolio.length);
       set('kpi-testimonials', state.testimonials.filter(t => t.approved).length);
     }
 
@@ -4851,14 +5035,14 @@
       if (tbody && tbody.innerHTML === '') {
         tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text-muted);">⏳ Loading…</td></tr>';
       }
-      await Promise.allSettled([fetchOrders(), fetchContacts(), fetchPortfolio(), fetchServices()]);
+      await Promise.all([fetchOrders(), fetchContacts(), fetchPortfolio(), fetchServices()]);
       updateKPIs();
       renderAdminOrders();
       setTimeout(() => { initOrdersChart(); initServicesChart(); }, 100);
     }
 
     /* ── Aliases for backward compat ───────────────────────────── */
-    async function syncOrdersFromDB()   { return fetchOrders();   }
+    async function syncOrdersFromDB() { return fetchOrders(); }
     async function syncContactsFromDB() { return fetchContacts(); }
   </script>
 </body>
