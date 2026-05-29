@@ -527,6 +527,7 @@
     .section-header {
       text-align: center;
       margin-bottom: 60px;
+      
     }
 
     .section-tag {
@@ -540,7 +541,7 @@
     }
 
     .section-title {
-      font-family: var(--font-display);
+      font-family: verdana;
       font-size: clamp(1.8rem, 3.5vw, 2.8rem);
       font-weight: 400;
       color: var(--text);
@@ -1545,7 +1546,7 @@
     }
 
     .auth-title {
-      font-family: var(--font-display);
+      font-family: verdana;
       font-size: 1.6rem;
       color: var(--white);
       text-align: center;
@@ -2401,11 +2402,11 @@
     <section class="stats-section">
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-number" data-target="10">0</div>
+          <div class="stat-number" data-target="10">10</div>
           <div class="stat-label">Clients Served</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number" data-target="28">0</div>
+          <div class="stat-number" data-target="28">15</div>
           <div class="stat-label">Projects Completed</div>
         </div>
         <div class="stat-card">
@@ -2413,7 +2414,7 @@
           <div class="stat-label">Customer Satisfaction</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number" data-target="4">0</div>
+          <div class="stat-number" data-target="4">2.5</div>
           <div class="stat-label">Years of Experience</div>
         </div>
       </div>
@@ -2459,7 +2460,7 @@
       <div class="section-header">
         <span class="section-tag">Our Work</span>
         <h2 class="section-title">Featured Projects</h2>
-        <p class="section-subtitle">A glimpse of the digital experiences we've crafted for clients across East Africa.
+        <p class="section-subtitle">A glimpse of the digital experiences we've crafted for clients across Africa and beyond.
         </p>
       </div>
       <div class="portfolio-grid" id="home-portfolio-grid"></div>
@@ -2483,7 +2484,7 @@
           <div class="btech-logo on-light">
       <div class="btech-logo-main">
         <span class="btech-logo-b" style="font-size:2rem;">B</span>
-        <span class="btech-logo-tech" style="font-size:1.1rem;">TECH</span>
+        <span class="btech-logo-tech" style="font-size:1.1rem;font-family:verdana;">TECH</span>
       </div>
       <div class="btech-logo-studios" style="font-size:0.55rem;">STUDIOS</div>
       <div class="btech-logo-slogan" style="font-size:0.42rem;">— design simplicity —</div>
@@ -3382,21 +3383,21 @@
     const ADMIN_PASS = 'btech2026admin';
 
     const DEFAULT_CYBER = [
-      { id: 1, name: 'KRA PIN Registration', desc: 'New KRA PIN registration for individuals and businesses.', price: 300, status: 'active' },
-      { id: 2, name: 'KRA PIN Retrieval', desc: 'Recover or reset your existing KRA PIN.', price: 300, status: 'active' },
-      { id: 3, name: 'SHA Registration', desc: 'Social Health Authority registration for new members.', price: 400, status: 'active' },
-      { id: 4, name: 'SHA Update', desc: 'Update your SHA details and beneficiaries.', price: 300, status: 'active' },
-      { id: 5, name: 'NSSF Registration', desc: 'National Social Security Fund registration.', price: 400, status: 'active' },
-      { id: 6, name: 'NSSF Update', desc: 'Update NSSF information and records.', price: 300, status: 'active' },
-      { id: 7, name: 'Good Conduct Application', desc: 'Certificate of Good Conduct via DCI Kenya.', price: 1200, status: 'active' },
-      { id: 8, name: 'HELB Services', desc: 'HELB loan application, deferment and clearance.', price: 500, status: 'active' },
-      { id: 9, name: 'eCitizen Services', desc: 'All eCitizen portal services and registrations.', price: 500, status: 'active' },
-      { id: 10, name: 'CV Writing', desc: 'Professional CV and cover letter creation.', price: 500, status: 'active' },
-      { id: 11, name: 'Passport Application Assistance', desc: 'New passport and renewal application assistance.', price: 800, status: 'active' },
+      { id: 1, name: 'KRA PIN Registration', desc: 'New KRA PIN registration for individuals and businesses.', price: 100, status: 'active' },
+      { id: 2, name: 'KRA PIN Retrieval', desc: 'Recover or reset your existing KRA PIN.', price: 150, status: 'active' },
+      { id: 3, name: 'SHA Registration', desc: 'Social Health Authority registration for new members.', price: 100, status: 'active' },
+      { id: 4, name: 'SHA Update', desc: 'Update your SHA details and beneficiaries.', price: 150, status: 'active' },
+      { id: 5, name: 'NSSF Registration', desc: 'National Social Security Fund registration.', price: 100, status: 'active' },
+      { id: 6, name: 'NSSF Update', desc: 'Update NSSF information and records.', price: 100, status: 'active' },
+      { id: 7, name: 'Good Conduct Application including everything', desc: 'Certificate of Good Conduct via DCI Kenya.', price: 1200, status: 'active' },
+      { id: 8, name: 'HELB Services', desc: 'HELB loan application, deferment and clearance.', price: 200, status: 'active' },
+      { id: 9, name: 'eCitizen Services', desc: 'All eCitizen portal services and registrations.', price: 100, status: 'active' },
+      { id: 10, name: 'CV Writing', desc: 'Professional CV and cover letter creation.', price: 150, status: 'active' },
+      { id: 11, name: 'Passport Application Assistance', desc: 'New passport and renewal application assistance.', price: 500, status: 'active' },
       { id: 12, name: 'Business Registration', desc: 'Company and sole proprietorship registration.', price: 2000, status: 'active' },
       { id: 13, name: 'Certificate Printing', desc: 'Printing of official certificates and documents.', price: 200, status: 'active' },
-      { id: 14, name: 'Online Applications', desc: 'Any other online government portal application.', price: 400, status: 'active' },
-      { id: 15, name: 'Other Services', desc: 'Contact us for any other cyber service needs.', price: 300, status: 'active' },
+      { id: 14, name: 'Online Applications', desc: 'Any other online government portal application.', price: 200, status: 'active' },
+      { id: 15, name: 'Other Services', desc: 'Contact us for any other cyber service needs.', price: 100+, status: 'active' },
     ];
 
     const ICONS = {
@@ -3414,13 +3415,13 @@
     }
 
     const DEFAULT_SERVICES = [
-      { id: 1, icon: 'monitor-smartphone', name: 'Web Design',            description: 'Professional, mobile-first websites built with modern technology and stunning design — tailored for your business goals.',                                          desc: 'Professional, mobile-first websites built with modern technology and stunning design — tailored for your business goals.',                                          price: 12000, category: 'Design',    status: 'active' },
-      { id: 2, icon: 'palette',            name: 'Graphics Design',        description: 'Eye-catching graphics for social media, print, and digital — designed to make your brand stand out from the crowd.',                                                  desc: 'Eye-catching graphics for social media, print, and digital — designed to make your brand stand out from the crowd.',                                                  price: 3500,  category: 'Design',    status: 'active' },
-      { id: 3, icon: 'pen-tool',           name: 'Logo Design',            description: 'Memorable, professional logo designs that capture your brand identity and leave a lasting impression.',                                                               desc: 'Memorable, professional logo designs that capture your brand identity and leave a lasting impression.',                                                               price: 2500,  category: 'Design',    status: 'active' },
-      { id: 4, icon: 'video',              name: 'Video & Photo Editing',  description: 'Cinematic-quality video editing and professional photo retouching for content creators and businesses alike.',                                                        desc: 'Cinematic-quality video editing and professional photo retouching for content creators and businesses alike.',                                                        price: 4000,  category: 'Media',     status: 'active' },
-      { id: 5, icon: 'megaphone',          name: 'Social Media Marketing', description: 'Strategic social media management and content creation to grow your audience and drive real engagement.',                                                             desc: 'Strategic social media management and content creation to grow your audience and drive real engagement.',                                                             price: 8000,  category: 'Marketing', status: 'active' },
-      { id: 6, icon: 'search',             name: 'SEO Services',           description: 'Data-driven SEO strategies that improve your Google rankings and drive organic traffic to your website.',                                                             desc: 'Data-driven SEO strategies that improve your Google rankings and drive organic traffic to your website.',                                                             price: 10000, category: 'Marketing', status: 'active' },
-      { id: 7, icon: 'file-check',         name: 'Online Cyber Services',  description: 'NSSF, SHA, KRA PIN, Good Conduct, CV Writing, HELB, eCitizen & more — professional e-government services handled for you.', desc: 'NSSF, SHA, KRA PIN, Good Conduct, CV Writing, HELB, eCitizen & more — professional e-government services handled for you.', price: 300, category: 'Cyber', status: 'active' },
+      { id: 1, icon: 'monitor-smartphone', name: 'Web Design',            description: 'Professional, mobile-first websites built with modern technology and stunning design — tailored for your business goals.',                                          desc: 'Professional, mobile-first websites built with modern technology and stunning design — tailored for your business goals.',                                          price: 6999, category: 'Design',    status: 'active' },
+      { id: 2, icon: 'palette',            name: 'Graphics Design',        description: 'Eye-catching graphics for social media, print, and digital — designed to make your brand stand out from the crowd.',                                                  desc: 'Eye-catching graphics for social media, print, and digital — designed to make your brand stand out from the crowd.',                                                  price: 500,  category: 'Design',    status: 'active' },
+      { id: 3, icon: 'pen-tool',           name: 'Logo Design',            description: 'Memorable, professional logo designs that capture your brand identity and leave a lasting impression.',                                                               desc: 'Memorable, professional logo designs that capture your brand identity and leave a lasting impression.',                                                               price: 250,  category: 'Design',    status: 'active' },
+      { id: 4, icon: 'video',              name: 'Video & Photo Editing',  description: 'Cinematic-quality video editing and professional photo retouching for content creators and businesses alike.',                                                        desc: 'Cinematic-quality video editing and professional photo retouching for content creators and businesses alike.',                                                        price: 100,  category: 'Media',     status: 'active' },
+      { id: 5, icon: 'megaphone',          name: 'Social Media Marketing', description: 'Strategic social media management and content creation to grow your audience and drive real engagement.',                                                             desc: 'Strategic social media management and content creation to grow your audience and drive real engagement.',                                                             price: 1000,  category: 'Marketing', status: 'active' },
+      { id: 6, icon: 'search',             name: 'SEO Services',           description: 'Data-driven SEO strategies that improve your Google rankings and drive organic traffic to your website.',                                                             desc: 'Data-driven SEO strategies that improve your Google rankings and drive organic traffic to your website.',                                                             price: 1000, category: 'Marketing', status: 'active' },
+      { id: 7, icon: 'file-check',         name: 'Online Cyber Services',  description: 'NSSF, SHA, KRA PIN, Good Conduct, CV Writing, HELB, eCitizen & more — professional e-government services handled for you.', desc: 'NSSF, SHA, KRA PIN, Good Conduct, CV Writing, HELB, eCitizen & more — professional e-government services handled for you.', price: 100, category: 'Cyber', status: 'active' },
     ];
 
     let state = {
@@ -3546,7 +3547,7 @@
     /* TESTIMONIALS */
     const DEFAULT_TESTIMONIALS = [
       { id: 't1', name: 'Michael Odhiambo', role: 'CEO, StartupKE',       text: 'BTECH STUDIOS delivered a world-class website that exceeded all our expectations. Professional, fast, and incredibly talented.', rating: 5, approved: true },
-      { id: 't2', name: 'Amina Hassan',     role: 'Marketing Manager',     text: 'Our brand identity completely transformed. The logo and graphics work was exceptional — exactly what we envisioned and more.',      rating: 5, approved: true },
+      { id: 't2', name: 'Faith Mwelu L.',     role: 'Marketing Manager',     text: 'Our brand identity completely transformed. The logo and graphics work was exceptional — exactly what we envisioned and more.',      rating: 5, approved: true },
       { id: 't3', name: 'David Mutua',      role: 'Entrepreneur, Nairobi', text: 'The cyber services were a lifesaver. Got my KRA PIN and NSSF sorted in no time. Highly recommend.',                             rating: 5, approved: true },
     ];
 
@@ -3826,12 +3827,12 @@
                 doc.setFillColor(10, 31, 68); doc.rect(0, 0, W, 52, 'F');
         doc.setFillColor(139, 0, 0); doc.rect(0, 48, W, 4, 'F');
         // Text logo in PDF (no image dependency)
-        doc.setTextColor(192, 0, 26); doc.setFontSize(28); doc.setFont('helvetica', 'bold');
-        doc.text('B', 14, 28);
+        doc.setTextColor(192, 0, 26); doc.setFontSize(28); doc.setFont('helvetica', 'bold');{ align: 'center' });
+        doc.text('B', 14, 28);{ align: 'center' });
         doc.setTextColor(255,255,255); doc.setFontSize(16);
-        doc.text('TECH', 26, 28);
+        doc.text('TECH', 26, 28);{ align: 'center' });
         doc.setTextColor(160,170,200); doc.setFontSize(7); doc.setFont('helvetica','normal');
-        doc.text('STUDIOS  —  design simplicity', 14, 35);
+        doc.text('STUDIOS  —  design simplicity', 14, 35);{ align: 'center' });
         doc.setFontSize(7.5); doc.setTextColor(160, 170, 200);
         doc.text('Muratha Road, Nairobi KE  |  +254 706 675 009  |  btechstudios01@gmail.com', W / 2, 42, { align: 'center' });
         doc.text('Facebook: BTECH STUDIOS  |  Instagram: @btech_studios1  |  TikTok: btech studios', W / 2, 47, { align: 'center' });
@@ -4070,7 +4071,7 @@
         return `<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;margin-bottom:8px;">
     <div style="width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--navy),var(--red));display:flex;align-items:center;justify-content:center;flex-shrink:0;">${icon(s.icon||'file-check',16)}</div>
     <div style="flex:1;min-width:0;">
-      <div style="font-weight:700;font-size:0.85rem;color:var(--white);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${s.name}</div>
+      <div style="font-weight:700;font-size:0.85rem;color:var(--black);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${s.name}</div>
       <div style="font-size:0.7rem;color:var(--text-muted);">KES ${Number(s.price||0).toLocaleString()} · ${s.category||''} · <span style="color:${s.status==='active'?'#16A34A':'#F59E0B'}">${s.status}</span></div>
     </div>
     <div style="display:flex;gap:4px;flex-shrink:0;">
