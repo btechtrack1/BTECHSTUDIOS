@@ -154,7 +154,7 @@
     }
 
     .btech-logo-b {
-      font-family: var(--font-display);
+      font-family: verdana;
       font-size: 2rem;
       font-weight: 900;
       line-height: 1;
@@ -167,34 +167,35 @@
     }
 
     .btech-logo-tech {
-      font-family: var(--font-display);
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
       font-size: 1.1rem;
       font-weight: 800;
-      color: var(--white);
+      color: white;
       letter-spacing: 0.12em;
       line-height: 1;
       padding-bottom: 2px;
     }
 
     .btech-logo-studios {
-      font-size: 0.55rem;
+      font-size: 20px;
       font-weight: 700;
       letter-spacing: 0.38em;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.45);
+      color: rgba(224, 179, 179, 0.45);
       padding-left: 2px;
     }
 
     .btech-logo-slogan {
-      font-size: 0.42rem;
+      font-size: 20px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      background: linear-gradient(90deg, rgba(192, 0, 26, 0.7), rgba(255, 255, 255, 0.3));
+      background: linear-gradient(90deg, rgba(189, 164, 167, 0.7), WHITE);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       padding-left: 2px;
       margin-top: 1px;
+      font-style: bold;
     }
 
     /* Dark background variant (footer, auth, admin) */
@@ -561,7 +562,7 @@
     }
 
     .section-title {
-      font-family: var(--font-display);
+      font-family: verdana;
       font-size: clamp(1.8rem, 3.5vw, 2.8rem);
       font-weight: 400;
       color: var(--text);
@@ -1426,7 +1427,7 @@
       padding: 13px 16px;
       border: 1.5px solid var(--gray-200);
       border-radius: 10px;
-      font-family: var(--font);
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
       font-size: 0.9rem;
       color: var(--text);
       background: var(--off-white);
@@ -1566,7 +1567,7 @@
     }
 
     .auth-title {
-      font-family: var(--font-display);
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
       font-size: 1.6rem;
       color: var(--white);
       text-align: center;
@@ -1587,7 +1588,7 @@
       border: 1.5px solid rgba(255, 255, 255, 0.1);
       background: rgba(255, 255, 255, 0.05);
       color: var(--white);
-      font-family: var(--font);
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
       font-size: 0.9rem;
       outline: none;
       transition: var(--transition);
@@ -1612,7 +1613,7 @@
       border: none;
       font-size: 0.95rem;
       font-weight: 700;
-      font-family: var(--font);
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
       cursor: pointer;
       transition: var(--transition);
       box-shadow: 0 0 30px var(--red-glow);
@@ -2641,8 +2642,9 @@
         <div class="btech-logo-main">
           <span class="btech-logo-b" style="font-size:2rem;">B</span>
           <span class="btech-logo-tech" style="font-size:1.1rem;">TECH</span>
+          <span class="btech-logo-studios" style="font-size:0.55rem;">STUDIOS</span>
         </div>
-        <div class="btech-logo-studios" style="font-size:0.55rem;">STUDIOS</div>
+
         <div class="btech-logo-slogan" style="font-size:0.42rem;">— design simplicity —</div>
       </div>
     </div>
@@ -2680,11 +2682,11 @@
     <section class="stats-section">
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-number" data-target="10">0</div>
+          <div class="stat-number" data-target="10">10+</div>
           <div class="stat-label">Clients Served</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number" data-target="28">0</div>
+          <div class="stat-number" data-target="28">28</div>
           <div class="stat-label">Projects Completed</div>
         </div>
         <div class="stat-card">
@@ -2692,7 +2694,7 @@
           <div class="stat-label">Customer Satisfaction</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number" data-target="4">0</div>
+          <div class="stat-number" data-target="4">2+</div>
           <div class="stat-label">Years of Experience</div>
         </div>
       </div>
@@ -3679,21 +3681,21 @@
     const ADMIN_PASS = 'btech2026admin';
 
     const DEFAULT_CYBER = [
-      { id: 1, name: 'KRA PIN Registration', desc: 'New KRA PIN registration for individuals and businesses.', price: 300, status: 'active' },
-      { id: 2, name: 'KRA PIN Retrieval', desc: 'Recover or reset your existing KRA PIN.', price: 300, status: 'active' },
-      { id: 3, name: 'SHA Registration', desc: 'Social Health Authority registration for new members.', price: 400, status: 'active' },
-      { id: 4, name: 'SHA Update', desc: 'Update your SHA details and beneficiaries.', price: 300, status: 'active' },
-      { id: 5, name: 'NSSF Registration', desc: 'National Social Security Fund registration.', price: 400, status: 'active' },
-      { id: 6, name: 'NSSF Update', desc: 'Update NSSF information and records.', price: 300, status: 'active' },
-      { id: 7, name: 'Good Conduct Application', desc: 'Certificate of Good Conduct via DCI Kenya.', price: 1200, status: 'active' },
+      { id: 1, name: 'KRA PIN Registration', desc: 'New KRA PIN registration for individuals and businesses.', price: 100, status: 'active' },
+      { id: 2, name: 'KRA PIN Retrieval', desc: 'Recover or reset your existing KRA PIN.', price: 150, status: 'active' },
+      { id: 3, name: 'SHA Registration', desc: 'Social Health Authority registration for new members.', price: 100, status: 'active' },
+      { id: 4, name: 'SHA Update', desc: 'Update your SHA details and beneficiaries.', price: 150, status: 'active' },
+      { id: 5, name: 'NSSF Registration', desc: 'National Social Security Fund registration.', price: 150, status: 'active' },
+      { id: 6, name: 'NSSF Update', desc: 'Update NSSF information and records.', price: 50, status: 'active' },
+      { id: 7, name: 'Good Conduct Application including everything', desc: 'Certificate of Good Conduct via DCI Kenya.', price: 1200, status: 'active' },
       { id: 8, name: 'HELB Services', desc: 'HELB loan application, deferment and clearance.', price: 500, status: 'active' },
-      { id: 9, name: 'eCitizen Services', desc: 'All eCitizen portal services and registrations.', price: 500, status: 'active' },
-      { id: 10, name: 'CV Writing', desc: 'Professional CV and cover letter creation.', price: 500, status: 'active' },
-      { id: 11, name: 'Passport Application Assistance', desc: 'New passport and renewal application assistance.', price: 800, status: 'active' },
+      { id: 9, name: 'eCitizen Services', desc: 'All eCitizen portal services and registrations.', price: 150, status: 'active' },
+      { id: 10, name: 'CV Writing', desc: 'Professional CV and cover letter creation.', price: 100, status: 'active' },
+      { id: 11, name: 'Passport Application Assistance', desc: 'New passport and renewal application assistance.', price: 500, status: 'active' },
       { id: 12, name: 'Business Registration', desc: 'Company and sole proprietorship registration.', price: 2000, status: 'active' },
       { id: 13, name: 'Certificate Printing', desc: 'Printing of official certificates and documents.', price: 200, status: 'active' },
-      { id: 14, name: 'Online Applications', desc: 'Any other online government portal application.', price: 400, status: 'active' },
-      { id: 15, name: 'Other Services', desc: 'Contact us for any other cyber service needs.', price: 300, status: 'active' },
+      { id: 14, name: 'Online Applications', desc: 'Any other online government portal application.', price: 100, status: 'active' },
+      { id: 15, name: 'Other Services', desc: 'Contact us for any other cyber service needs.', price: 100, status: 'active' },
     ];
 
     const ICONS = {
@@ -3710,6 +3712,16 @@
       return s.replace(/<svg/, `<svg width="${size}" height="${size}" stroke="${color}"`);
     }
 
+    const DEFAULT_SERVICES = [
+      { id: 1, icon: 'monitor-smartphone', name: 'Web Design', description: 'Professional, mobile-first websites built with modern technology and stunning design — tailored for your business goals.', desc: 'Professional, mobile-first websites built with modern technology and stunning design — tailored for your business goals.', price: 7599.00, category: 'Design', status: 'active' },
+      { id: 2, icon: 'palette', name: 'Graphics Design', description: 'Eye-catching graphics for social media, print, and digital — designed to make your brand stand out from the crowd.', desc: 'Eye-catching graphics for social media, print, and digital — designed to make your brand stand out from the crowd.', price: 350.00, category: 'Design', status: 'active' },
+      { id: 3, icon: 'pen-tool', name: 'Logo Design', description: 'Memorable, professional logo designs that capture your brand identity and leave a lasting impression.', desc: 'Memorable, professional logo designs that capture your brand identity and leave a lasting impression.', price: 250.00, category: 'Design', status: 'active' },
+      { id: 4, icon: 'video', name: 'Video & Photo Editing', description: 'Cinematic-quality video editing and professional photo retouching for content creators and businesses alike.', desc: 'Cinematic-quality video editing and professional photo retouching for content creators and businesses alike.', price: 100.00, category: 'Media', status: 'active' },
+      { id: 5, icon: 'megaphone', name: 'Social Media Marketing', description: 'Strategic social media management and content creation to grow your audience and drive real engagement.', desc: 'Strategic social media management and content creation to grow your audience and drive real engagement.', price: 1000.00, category: 'Marketing', status: 'active' },
+      { id: 6, icon: 'search', name: 'SEO Services', description: 'Data-driven SEO strategies that improve your Google rankings and drive organic traffic to your website.', desc: 'Data-driven SEO strategies that improve your Google rankings and drive organic traffic to your website.', price: 1000.00, category: 'Marketing', status: 'active' },
+      { id: 7, icon: 'file-check', name: 'Online Cyber Services', description: 'NSSF, SHA, KRA PIN, Good Conduct, CV Writing, HELB, eCitizen & more — professional e-government services handled for you.', desc: 'NSSF, SHA, KRA PIN, Good Conduct, CV Writing, HELB, eCitizen & more — professional e-government services handled for you.', price: 100.00, category: 'Cyber', status: 'active' },
+    ];
+
     let state = {
       isLoggedIn: false, currentPage: 'home',
       orders: JSON.parse(localStorage.getItem('btech_orders') || '[]'),
@@ -3724,18 +3736,10 @@
       ])),
       testimonials: JSON.parse(localStorage.getItem('btech_testimonials') || JSON.stringify([
         { id: 1, name: 'Michael Odhiambo', role: 'CEO, StartupKE', text: 'BTECH STUDIOS delivered a world-class website that exceeded all our expectations. Professional, fast, and incredibly talented.', rating: 5, approved: true },
-        { id: 2, name: 'Amina Hassan', role: 'Marketing Manager', text: 'Our brand identity completely transformed. The logo and graphics work was exceptional — exactly what we envisioned and more.', rating: 5, approved: true },
+        { id: 2, name: 'Faith Becam', role: 'Marketing Manager', text: 'Our brand identity completely transformed. The logo and graphics work was exceptional — exactly what we envisioned and more.', rating: 5, approved: true },
         { id: 3, name: 'David Mutua', role: 'Entrepreneur, Nairobi', text: 'The cyber services were a lifesaver. Got my KRA PIN and NSSF sorted in no time. Highly recommend.', rating: 5, approved: true },
       ])),
-      services: JSON.parse(localStorage.getItem('btech_services') || JSON.stringify([
-        { id: 1, icon: 'monitor-smartphone', name: 'Web Design', desc: 'Professional, mobile-first websites built with modern technology and stunning design — tailored for your business goals.', price: 12000, category: 'Design', status: 'active' },
-        { id: 2, icon: 'palette', name: 'Graphics Design', desc: 'Eye-catching graphics for social media, print, and digital — designed to make your brand stand out from the crowd.', price: 3500, category: 'Design', status: 'active' },
-        { id: 3, icon: 'pen-tool', name: 'Logo Design', desc: 'Memorable, professional logo designs that capture your brand identity and leave a lasting impression.', price: 2500, category: 'Design', status: 'active' },
-        { id: 4, icon: 'video', name: 'Video & Photo Editing', desc: 'Cinematic-quality video editing and professional photo retouching for content creators and businesses alike.', price: 4000, category: 'Media', status: 'active' },
-        { id: 5, icon: 'megaphone', name: 'Social Media Marketing', desc: 'Strategic social media management and content creation to grow your audience and drive real engagement.', price: 8000, category: 'Marketing', status: 'active' },
-        { id: 6, icon: 'search', name: 'SEO Services', desc: 'Data-driven SEO strategies that improve your Google rankings and drive organic traffic to your website.', price: 10000, category: 'Marketing', status: 'active' },
-        { id: 7, icon: 'file-check', name: 'Online Cyber Services', desc: 'NSSF, SHA, KRA PIN, Good Conduct, CV Writing, HELB, eCitizen & more — professional e-government services handled for you.', price: 300, category: 'Cyber', status: 'active' },
-      ])),
+      services: JSON.parse(localStorage.getItem('btech_services') || JSON.stringify(DEFAULT_SERVICES)),
       cyberServices: JSON.parse(localStorage.getItem('btech_cyber') || JSON.stringify(DEFAULT_CYBER)),
       offer: JSON.parse(localStorage.getItem('btech_offer') || JSON.stringify({ title: 'Website + Logo Package', desc: 'Get a full professional website with custom logo design, mobile optimization, and 1-month free support. Limited slots available this week.', oldPrice: 25000, newPrice: 15000 })),
     };
@@ -3774,14 +3778,14 @@
         return `<div class="service-card${isCyber ? ' cyber-service-card' : ''}">
       <div class="service-icon">${icon(s.icon || 'file-check', 24)}</div>
       <div class="service-title">${s.name}${isCyber ? ' <span style="font-size:0.75rem;opacity:.6;">▾</span>' : ''}</div>
-      <div class="service-desc">${s.desc}</div>
+      <div class="service-desc">${s.description || s.desc || ''}</div>
       <div class="service-price">From KES ${Number(s.price).toLocaleString()}</div>
       ${isCyber
             ? `<button class="service-btn" onclick="toggleDD('${ddId}',event)">View All Services ▾</button>
           <div class="cyber-dropdown" id="${ddId}">
             ${state.cyberServices.filter(c => c.status === 'active').map(c => `
               <div class="cyber-dropdown-item" onclick="pickCyber('${c.name.replace(/'/g, "\\'")}',${c.price})">
-                <div class="cyber-item-info"><div class="cyber-item-name">${c.name}</div><div class="cyber-item-desc">${c.desc}</div></div>
+                <div class="cyber-item-info"><div class="cyber-item-name">${c.name}</div><div class="cyber-item-desc">${c.description || c.desc || ''}</div></div>
                 <div class="cyber-item-price">KES ${Number(c.price).toLocaleString()}</div>
               </div>`).join('')}
           </div>`
@@ -3839,16 +3843,25 @@
     }
 
     /* TESTIMONIALS */
+    const DEFAULT_TESTIMONIALS = [
+      { id: 't1', name: 'Michael Odhiambo', role: 'CEO, StartupKE', text: 'BTECH STUDIOS delivered a world-class website that exceeded all our expectations. Professional, fast, and incredibly talented.', rating: 5, approved: true },
+      { id: 't2', name: 'Amina Hassan', role: 'Marketing Manager', text: 'Our brand identity completely transformed. The logo and graphics work was exceptional — exactly what we envisioned and more.', rating: 5, approved: true },
+      { id: 't3', name: 'David Mutua', role: 'Entrepreneur, Nairobi', text: 'The cyber services were a lifesaver. Got my KRA PIN and NSSF sorted in no time. Highly recommend.', rating: 5, approved: true },
+    ];
+
     function renderTestimonials() {
       const el = document.getElementById('testimonials-grid'); if (!el) return;
       const star = '<svg viewBox="0 0 24 24" width="15" height="15" fill="#F59E0B" stroke="#F59E0B" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
-      el.innerHTML = state.testimonials.filter(t => t.approved).map(t => `
+      // Use approved from DB, fall back to defaults if none approved yet
+      let items = (state.testimonials || []).filter(t => t.approved);
+      if (!items.length) items = DEFAULT_TESTIMONIALS;
+      el.innerHTML = items.map(t => `
     <div class="testimonial-card">
-      <div class="testimonial-stars">${star.repeat(t.rating)}</div>
-      <div class="testimonial-text">"${t.text}"</div>
+      <div class="testimonial-stars">${star.repeat(Math.min(t.rating || 5, 5))}</div>
+      <div class="testimonial-text">"${t.text || ''}"</div>
       <div class="testimonial-author">
-        <div class="testimonial-avatar">${t.name[0]}</div>
-        <div><div class="testimonial-name">${t.name}</div><div class="testimonial-role">${t.role}</div></div>
+        <div class="testimonial-avatar">${(t.name || '?')[0].toUpperCase()}</div>
+        <div><div class="testimonial-name">${t.name || ''}</div><div class="testimonial-role">${t.role || ''}</div></div>
       </div>
     </div>`).join('');
     }
@@ -3878,8 +3891,15 @@
 
     function renderPortfolio(targetId, limit = null) {
       const el = document.getElementById(targetId); if (!el) return;
-      const items = limit ? state.portfolio.slice(0, limit) : state.portfolio;
-      if (!items.length) { el.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;opacity:0.5;">No portfolio items yet.</div>'; return; }
+      const pool = Array.isArray(state.portfolio) ? state.portfolio : [];
+      const items = limit ? pool.slice(0, limit) : pool;
+      if (!items.length) {
+        // Show placeholder cards while loading — not blank
+        el.innerHTML = [1, 2, 3, 4, 5, 6].slice(0, limit || 6).map(() =>
+          '<div class="portfolio-item"><div class="skeleton skeleton-card"></div></div>'
+        ).join('');
+        return;
+      }
       el.innerHTML = items.map(p => portfolioItemHTML(p)).join('');
     }
 
@@ -3907,6 +3927,9 @@
         state.portfolio = state.portfolio.filter(p => String(p.id) !== String(id));
         localStorage.setItem('btech_portfolio', JSON.stringify(state.portfolio));
         renderPortfolio('home-portfolio-grid', 6);
+        renderServices('home-services-grid', 4);
+        renderFullServices();
+        renderOrderServices();
         renderFullPortfolio();
         renderAdminPortfolio();
         showToast('Portfolio item deleted. ✓');
@@ -4340,16 +4363,33 @@
     /* SERVICES ADMIN */
     function renderAdminServices() {
       const el = document.getElementById('admin-services-list'); if (!el) return;
-      el.innerHTML = state.services.map(s => `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--off-white);border-radius:8px;margin-bottom:8px;border:1px solid var(--gray-200);">
-    <div><div style="font-weight:700;font-size:0.85rem;">${s.name}</div><div style="font-size:0.72rem;color:var(--text-muted);">KES ${Number(s.price).toLocaleString()} · <span style="color:${s.status === 'active' ? '#16A34A' : 'var(--red)'};">${s.status}</span></div></div>
-    <div style="display:flex;gap:5px;flex-shrink:0;">
-      <button class="admin-save-btn" style="padding:4px 10px;font-size:0.72rem;" onclick="editSvc(${s.id})">Edit</button>
-      <button class="admin-danger-btn" onclick="toggleSvcStatus(${s.id})">${s.status === 'active' ? 'Disable' : 'Enable'}</button>
-      <button class="admin-danger-btn" onclick="deleteSvc(${s.id})">✕</button>
-    </div></div>`).join('');
+      if (!state.services.length) { el.innerHTML = '<div style="text-align:center;padding:30px;opacity:0.5;">No services yet.</div>'; return; }
+      el.innerHTML = state.services.map(s => {
+        const desc = s.description || s.desc || '';
+        return `<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;margin-bottom:8px;">
+    <div style="width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--navy),var(--red));display:flex;align-items:center;justify-content:center;flex-shrink:0;">${icon(s.icon || 'file-check', 16)}</div>
+    <div style="flex:1;min-width:0;">
+      <div style="font-weight:700;font-size:0.85rem;color:var(--white);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${s.name}</div>
+      <div style="font-size:0.7rem;color:var(--text-muted);">KES ${Number(s.price || 0).toLocaleString()} · ${s.category || ''} · <span style="color:${s.status === 'active' ? '#16A34A' : '#F59E0B'}">${s.status}</span></div>
+    </div>
+    <div style="display:flex;gap:4px;flex-shrink:0;">
+      <button class="admin-save-btn" style="padding:4px 9px;font-size:0.7rem;" onclick="editSvc('${s.id}')">Edit</button>
+      <button class="admin-save-btn" style="padding:4px 9px;font-size:0.7rem;background:${s.status === 'active' ? 'rgba(139,0,0,0.15)' : 'rgba(22,163,74,0.15)'};" onclick="toggleSvcStatus('${s.id}')">${s.status === 'active' ? 'Hide' : 'Show'}</button>
+      <button class="admin-danger-btn" style="padding:4px 7px;font-size:0.7rem;" onclick="deleteSvc('${s.id}')">✕</button>
+    </div></div>`;
+      }).join('');
     }
     function clearServiceForm() { document.getElementById('svc-id').value = '';['svc-name', 'svc-desc', 'svc-price', 'svc-cat'].forEach(id => document.getElementById(id).value = ''); document.getElementById('svc-status').value = 'active'; document.getElementById('svc-form-title').textContent = 'Add Service'; }
-    function editSvc(id) { const s = state.services.find(s => s.id === id); if (!s) return; document.getElementById('svc-id').value = s.id; document.getElementById('svc-name').value = s.name; document.getElementById('svc-desc').value = s.desc; document.getElementById('svc-price').value = s.price; document.getElementById('svc-cat').value = s.category || ''; document.getElementById('svc-status').value = s.status || 'active'; document.getElementById('svc-form-title').textContent = 'Edit Service'; }
+    function editSvc(id) {
+      const s = state.services.find(s => String(s.id) === String(id)); if (!s) return;
+      const descEl = document.getElementById('svc-desc'); if (descEl) descEl.value = s.description || s.desc || '';
+      const idEl = document.getElementById('svc-id'); if (idEl) idEl.value = s.id;
+      const nameEl = document.getElementById('svc-name'); if (nameEl) nameEl.value = s.name;
+      const priceEl = document.getElementById('svc-price'); if (priceEl) priceEl.value = s.price;
+      const catEl = document.getElementById('svc-cat'); if (catEl) catEl.value = s.category || '';
+      const statEl = document.getElementById('svc-status'); if (statEl) statEl.value = s.status || 'active';
+      const titleEl = document.getElementById('svc-form-title'); if (titleEl) titleEl.textContent = 'Edit Service';
+    }
     async function saveService() {
       const id = document.getElementById('svc-id')?.value.trim();
       const name = document.getElementById('svc-name')?.value.trim();
@@ -4366,7 +4406,7 @@
         const s = state.services.find(s => String(s.id) === String(id));
         if (s) Object.assign(s, { name, description: desc, desc, price, category, status });
       } else {
-        state.services.push({ id: '_tmp_' + Date.now(), name, description: desc, desc, price, category, status, created_at: new Date().toISOString() });
+        state.services.push({ id: '_tmp_' + Date.now(), name, description: desc, desc: desc, price, category, status, created_at: new Date().toISOString() });
       }
       localStorage.setItem('btech_services', JSON.stringify(state.services));
       renderAdminServices(); renderServices('home-services-grid', 6); renderFullServices(); renderOrderServices();
@@ -4563,12 +4603,29 @@
     async function fetchPortfolio() {
       try {
         const { data, error } = await db.from('portfolio').select('*').order('created_at', { ascending: false });
-        if (error) { console.warn('[BTECH] fetchPortfolio:', error.message); return; }
-        if (data) { state.portfolio = data; localStorage.setItem('btech_portfolio', JSON.stringify(state.portfolio)); }
-        renderPortfolio('home-portfolio-grid', 6);
+        if (error) {
+          console.warn('[BTECH] fetchPortfolio error:', error.message, '— keeping defaults');
+          renderPortfolio('home-portfolio-grid', 6);
+          renderFullPortfolio();
+          return;
+        }
+        if (data !== null) {
+          // Only replace if DB has items — don't blank the portfolio with empty array
+          if (data.length > 0) {
+            state.portfolio = data;
+            localStorage.setItem('btech_portfolio', JSON.stringify(state.portfolio));
+          } else {
+            console.log('[BTECH] Portfolio table empty — keeping defaults for display');
+          }
+          renderPortfolio('home-portfolio-grid', 6);
+          renderFullPortfolio();
+          if (state.isLoggedIn) renderAdminPortfolio();
+        }
+      } catch (e) {
+        console.warn('[BTECH] fetchPortfolio unreachable — using defaults:', e.message);
+        renderPortfolio('home-portfolio-grid', 6); // always render something
         renderFullPortfolio();
-        renderAdminPortfolio();
-      } catch (e) { console.warn('[BTECH] fetchPortfolio unreachable:', e); }
+      }
     }
 
     /* TESTIMONIALS ADMIN */
@@ -4683,13 +4740,29 @@
     }
 
     async function fetchOffer() {
+      // fetchOffer is best-effort — offers table may not exist (404 is OK)
       try {
-        const { data, error } = await db.from('offers').select('*').eq('id', 1).single();
-        if (error || !data) return;
-        state.offer = { title: data.title, desc: data.description, oldPrice: data.old_price, newPrice: data.new_price };
-        localStorage.setItem('btech_offer', JSON.stringify(state.offer));
+        const { data, error } = await db.from('offers').select('*').order('id', { ascending: true }).limit(1).maybeSingle();
+        if (error) {
+          // 404 / table missing / RLS block — not critical, just use localStorage/defaults
+          console.log('[BTECH] fetchOffer skipped:', error.message, '(offers table may not exist — this is OK)');
+          renderOffer(); // render from state (localStorage or defaults)
+          return;
+        }
+        if (data) {
+          state.offer = {
+            title: data.title || state.offer.title,
+            desc: data.description || data.desc || state.offer.desc,
+            oldPrice: data.old_price || state.offer.oldPrice,
+            newPrice: data.new_price || state.offer.newPrice,
+          };
+          localStorage.setItem('btech_offer', JSON.stringify(state.offer));
+        }
         renderOffer();
-      } catch (e) { console.warn('[BTECH] fetchOffer unreachable:', e); }
+      } catch (e) {
+        console.log('[BTECH] fetchOffer caught error (non-critical):', e.message);
+        renderOffer(); // always render from existing state
+      }
     }
 
     /* CHARTS */
@@ -4735,11 +4808,24 @@
       document.addEventListener('keydown', e => { if (e.ctrlKey && e.shiftKey && e.key === 'A') navigate('auth'); });
       // Start realtime for all visitors (public channels)
       initializeRealtime(false);
-      // Fetch all dynamic content on page load
-      fetchPortfolio();
-      fetchServices();
-      fetchTestimonials();
-      fetchOffer();
+
+      // Fetch live data — use Promise.allSettled so one failure never blocks others
+      // Each fetch has its own internal try/catch + fallback render
+      Promise.allSettled([
+        fetchPortfolio(),
+        fetchServices(),
+        fetchTestimonials(),
+        fetchOffer(),   // best-effort — 404 is handled gracefully
+      ]).then(results => {
+        results.forEach((r, i) => {
+          const names = ['portfolio', 'services', 'testimonials', 'offer'];
+          if (r.status === 'rejected') {
+            console.warn('[BTECH] ' + names[i] + ' fetch rejected (non-fatal):', r.reason);
+          }
+        });
+        console.log('[BTECH] All page fetches settled.');
+      });
+
       // Init portfolio upload drag-drop
       setTimeout(initPortfolioUpload, 500);
     });
@@ -4756,34 +4842,53 @@
        update instantly without refresh.
     ═════════════════════════════════════════════════════════════*/
 
-    /* Fetch services — gets all, renders only active ones on site */
+    /* Fetch services — normalises Supabase 'description' to also set 'desc' for compatibility */
     async function fetchServices() {
       try {
         const { data, error } = await db.from('services').select('*').order('created_at', { ascending: true });
-        if (error) { console.warn('[BTECH] fetchServices:', error.message); return; }
-        if (data) {
-          state.services = data;
+        if (error) { console.warn('[BTECH] fetchServices error:', error.message); return; }
+        if (data !== null) {
+          // Normalise: copy description → desc so both field names always work
+          state.services = data.map(s => ({ ...s, desc: s.description || s.desc || '' }));
+          if (!state.services.length) {
+            // DB is empty — fall back to hardcoded defaults so site doesn't go blank
+            console.warn('[BTECH] Services table empty — using defaults.');
+            state.services = JSON.parse(JSON.stringify(DEFAULT_SERVICES));
+          }
           localStorage.setItem('btech_services', JSON.stringify(state.services));
           renderServices('home-services-grid', 4);
           renderFullServices();
           renderOrderServices();
           if (state.isLoggedIn) renderAdminServices();
         }
-      } catch (e) { console.warn('[BTECH] fetchServices unreachable:', e); }
+      } catch (e) { console.warn('[BTECH] fetchServices unreachable — using local state:', e); }
     }
 
     /* Fetch testimonials — gets ALL, renders only approved ones on site */
     async function fetchTestimonials() {
       try {
         const { data, error } = await db.from('testimonials').select('*').order('created_at', { ascending: false });
-        if (error) { console.warn('[BTECH] fetchTestimonials:', error.message); return; }
-        if (data) {
-          state.testimonials = data;
-          localStorage.setItem('btech_testimonials', JSON.stringify(state.testimonials));
+        if (error) {
+          console.warn('[BTECH] fetchTestimonials error:', error.message, '— keeping defaults');
+          // Don't wipe state — just render what we have (defaults or localStorage)
+          renderTestimonials();
+          return;
+        }
+        if (data !== null) {
+          // Only replace state if DB has records — never blank the site with empty array
+          if (data.length > 0) {
+            state.testimonials = data;
+            localStorage.setItem('btech_testimonials', JSON.stringify(state.testimonials));
+          } else {
+            console.log('[BTECH] Testimonials table empty — keeping defaults for display');
+          }
           renderTestimonials();
           if (state.isLoggedIn) renderAdminTestimonials();
         }
-      } catch (e) { console.warn('[BTECH] fetchTestimonials unreachable:', e); }
+      } catch (e) {
+        console.warn('[BTECH] fetchTestimonials unreachable — using defaults:', e.message);
+        renderTestimonials(); // always render something
+      }
     }
 
     /* ════════════════════════════════════════════════════════════
@@ -4848,16 +4953,22 @@
       if (state.isLoggedIn) renderAdminPortfolio();
     }
 
-    /* ── Services realtime handler ──────────────────────────────── */
+    /* ── Services realtime handler — normalises description→desc ── */
     function _handleServicesChange(payload) {
+      const norm = s => ({ ...s, desc: s.description || s.desc || '' });
       if (payload.eventType === 'INSERT') {
-        if (!state.services.find(s => s.id === payload.new.id))
-          state.services.push(payload.new);
+        const n = norm(payload.new);
+        if (!state.services.find(s => s.id === n.id)) state.services.push(n);
       } else if (payload.eventType === 'UPDATE') {
-        const idx = state.services.findIndex(s => s.id === payload.new.id);
-        if (idx !== -1) state.services[idx] = payload.new;
+        const n = norm(payload.new);
+        const idx = state.services.findIndex(s => s.id === n.id);
+        if (idx !== -1) state.services[idx] = n; else state.services.push(n);
       } else if (payload.eventType === 'DELETE') {
         state.services = state.services.filter(s => s.id !== payload.old?.id);
+      }
+      // Never leave site blank — fall back to defaults if all active services gone
+      if (!state.services.filter(s => s.status === 'active').length) {
+        state.services = JSON.parse(JSON.stringify(DEFAULT_SERVICES));
       }
       localStorage.setItem('btech_services', JSON.stringify(state.services));
       renderServices('home-services-grid', 4);
@@ -4904,18 +5015,20 @@
       updateKPIs(); renderAdminOrders();
     }
 
-    /* ── Offers realtime handler ─────────────────────────────────── */
+    /* ── Offers realtime handler — graceful if table missing ────── */
     function _handleOffersChange(payload) {
-      if (payload.new) {
-        state.offer = {
-          title: payload.new.title || state.offer.title,
-          desc: payload.new.description || state.offer.desc,
-          oldPrice: payload.new.old_price || state.offer.oldPrice,
-          newPrice: payload.new.new_price || state.offer.newPrice,
-        };
-        localStorage.setItem('btech_offer', JSON.stringify(state.offer));
-        renderOffer();
-      }
+      try {
+        if (payload && payload.new) {
+          state.offer = {
+            title: payload.new.title || state.offer.title,
+            desc: payload.new.description || payload.new.desc || state.offer.desc,
+            oldPrice: payload.new.old_price || state.offer.oldPrice,
+            newPrice: payload.new.new_price || state.offer.newPrice,
+          };
+          localStorage.setItem('btech_offer', JSON.stringify(state.offer));
+          renderOffer();
+        }
+      } catch (e) { console.warn('[BTECH] _handleOffersChange error (non-fatal):', e.message); }
     }
 
     /* ── MAIN ENTRY POINT ───────────────────────────────────────── */
@@ -4926,7 +5039,8 @@
       _subscribe('rt-portfolio', 'portfolio', _handlePortfolioChange);
       _subscribe('rt-services', 'services', _handleServicesChange);
       _subscribe('rt-testimonials', 'testimonials', _handleTestimonialsChange);
-      _subscribe('rt-offers', 'offers', _handleOffersChange);
+      // offers subscription is best-effort (table may not exist)
+      try { _subscribe('rt-offers', 'offers', _handleOffersChange); } catch (e) { console.log('[BTECH RT] offers channel skipped:', e.message); }
 
       if (isAdmin) {
         // Admin-only channels
@@ -5035,7 +5149,7 @@
       if (tbody && tbody.innerHTML === '') {
         tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text-muted);">⏳ Loading…</td></tr>';
       }
-      await Promise.all([fetchOrders(), fetchContacts(), fetchPortfolio(), fetchServices()]);
+      await Promise.allSettled([fetchOrders(), fetchContacts(), fetchPortfolio(), fetchServices()]);
       updateKPIs();
       renderAdminOrders();
       setTimeout(() => { initOrdersChart(); initServicesChart(); }, 100);
